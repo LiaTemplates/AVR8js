@@ -1,7 +1,7 @@
 <!--
-author:   Your Name
+author:   André Dietrich
 
-email:    your@mail.org
+email:    LiaScript@web.de
 
 version:  0.0.1
 
@@ -12,60 +12,16 @@ narrator: US English Female
 comment:  Try to write a short comment about
           your course, multiline is also okay.
 
-link:     https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css
-
 script:   dist/index.js
 
-translation: Deutsch  translations/German.md
-
-translation: Français translations/French.md
--->
-
-# Course Main Title
-
-<div class="leds" id="main">
-  <wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
-  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
-  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
-
-  <wokwi-7segment port="B" digits="2" ></wokwi-7segment>
-  <wokwi-7segment port="B" digits="2" ></wokwi-7segment>
-</div>
-
-<div class="leds">
-  <wokwi-buzzer color="red"   pin="13" port="B" label="13"></wokwi-buzzer>
-  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
-  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
-</div>
-
-
-
-``` cpp
-// LEDs connected to pins 11..13
-
-byte leds[] = {13, 12, 11, 10};
-void setup() {
-  Serial.begin(115200);
-  for (byte i = 0; i < sizeof(leds); i++) {
-    pinMode(leds[i], OUTPUT);
-  }
-}
-
-int i = 0;
-void loop() {
-  Serial.print("LED: ");
-  Serial.println(i);
-  digitalWrite(leds[i], HIGH);
-  delay(250);
-  digitalWrite(leds[i], LOW);
-  i = (i + 1) % sizeof(leds);
-}
-```
+@AVR8js.run
 <script>
+let id = "@0"
+
+if (id[0] == "@" && id[0] == "1")
+  id = null
+
+alert("-"+id)
 
 AVR8js.build(`@input`)
    .then((e) => {
@@ -88,7 +44,7 @@ AVR8js.build(`@input`)
        console.debug(e.stdout)
 
        if (e.hex) {
-         let runner = AVR8js.execute(e.hex, console.log)
+         let runner = AVR8js.execute(e.hex, console.log, id)
 
          send.lia("LIA: terminal")
 
@@ -96,7 +52,7 @@ AVR8js.build(`@input`)
            if(runner) {
              runner.stop()
              runner = null
-             console.log("execution stopped")
+             console.debug("execution stopped")
            }
          })
        } else {
@@ -106,6 +62,78 @@ AVR8js.build(`@input`)
    })
 "LIA: wait"
 </script>
+
+@end
+
+
+-->
+
+# AVR8js - Template
+
+## LEDs
+
+<div id="example1">
+  <wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
+  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
+  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
+
+  <wokwi-7segment port="B" digits="2" ></wokwi-7segment>
+
+  <wokwi-pushbutton port="B" pin="12" ></wokwi-pushbutton>
+</div>
+
+``` cpp
+byte leds[] = {13, 12, 11, 10};
+void setup() {
+  Serial.begin(115200);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+int i = 0;
+void loop() {
+  Serial.print("LED: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
+}
+```
+@AVR8js.run(example1)
+
+
+<div id="exmaple2">
+  <wokwi-buzzer color="red"   pin="13" port="B" label="13"></wokwi-buzzer>
+  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
+  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
+</div>
+
+``` cpp
+byte leds[] = {13, 12, 11, 10};
+void setup() {
+  Serial.begin(115200);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+int i = 0;
+void loop() {
+  Serial.print("LED: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
+}
+```
+@AVR8js.run(example2)
 
 ## asdfa
 

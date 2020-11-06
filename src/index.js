@@ -14,7 +14,8 @@ import { formatTime } from "./format-time";
 import {
   BuzzerElement,
   LEDElement,
-  NeopixelMatrixElement
+  NeopixelMatrixElement,
+  PushbuttonElement
 } from "@wokwi/elements";
 
 
@@ -38,9 +39,25 @@ window.AVR8js = {
     const LEDs = container.querySelectorAll("wokwi-led") || [];
     const SEG7 = container.querySelectorAll("wokwi-7segment") || [];
     const BUZZER = container.querySelectorAll("wokwi-buzzer") || [];
+    const PushButton = container.querySelectorAll("wokwi-pushbutton") || [];
 
     let runner = new AVRRunner(hex);
     MHZ = MHZ || 16000000;
+
+    for (const btn of PushButton) {
+      btn.addEventListener("mousedown", (e) => {
+        runner.portB.setPin(12, 1)
+        log("mousedown")
+      })
+      btn.addEventListener("mouseup", (e) => {
+        runner.portB.setPin(12, 0)
+        log("mouseup")
+      })
+        //const pin = parseInt(led.getAttribute("pin"), 10);
+        //led.value = value & (1 << (pin - 8)) ? true : false;
+
+    }
+
 
     // Hook to PORTB register
     runner.portD.addListener(value => {
@@ -50,6 +67,8 @@ window.AVR8js = {
           led.value = value & (1 << (pin - 8)) ? true : false;
         }
       }
+
+
 
       for (const e of BUZZER) {
         if (e.getAttribute("port") == "D") {
