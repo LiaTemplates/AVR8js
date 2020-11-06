@@ -12,7 +12,7 @@ narrator: US English Female
 comment:  Try to write a short comment about
           your course, multiline is also okay.
 
-script:   dist/index.js
+script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@main/dist/index.js
 
 @AVR8js.run
 <script>
