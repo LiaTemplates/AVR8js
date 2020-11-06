@@ -1,0 +1,30 @@
+{
+  "name": "avr8js-template",
+  "version": "1.0.0",
+  "description": "A LiaScript wrapper for AVR8js",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "npx parcel build --no-source-maps src/index.js",
+    "watch": "npx parcel serve -p 3333 src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "liascript",
+    "arduino",
+    "avr",
+    "avr8js"
+  ],
+  "author": "André Dietrich",
+  "license": "ISC",
+  "dependencies": {
+    "@wokwi/elements": "^0.27.2",
+    "avr8js": "^0.11.4"
+  },
+  "browserslist": [
+    "last 2 years"
+  ],
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "typescript": "^4.0.5"
+  }
+}
