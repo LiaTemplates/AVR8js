@@ -97,7 +97,7 @@ void loop() {
   i = (i + 1) % sizeof(leds);
 }
 ```
-@AVR8js.run
+@AVR8js.run(example1)
 
 
 <div id="exmaple2">
