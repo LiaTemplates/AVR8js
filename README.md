@@ -23,21 +23,46 @@ translation: Français translations/French.md
 
 # Course Main Title
 
+<div class="leds" id="main">
+  <wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
+  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
+  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
+
+  <wokwi-7segment port="B" digits="2" ></wokwi-7segment>
+  <wokwi-7segment port="B" digits="2" ></wokwi-7segment>
+</div>
+
+<div class="leds">
+  <wokwi-buzzer color="red"   pin="13" port="B" label="13"></wokwi-buzzer>
+  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
+  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
+  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
+</div>
+
 
 
 ``` cpp
-// Green LED connected to LED_BUILTIN,
-// Red LED connected to pin 12. Enjoy!
+// LEDs connected to pins 11..13
+
+byte leds[] = {13, 12, 11, 10};
 void setup() {
   Serial.begin(115200);
-  pinMode(LED_BUILTIN, OUTPUT);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
 }
+
+int i = 0;
 void loop() {
-  Serial.println("Blink");
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(500);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(500);
+  Serial.print("LED: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
 }
 ```
 <script>
@@ -56,8 +81,6 @@ AVR8js.build(`@input`)
            type :   err.value[3]
          })
        }
-
-       console.log("fuck", JSON.stringify(msgs))
        send.lia(e.stderr, [msgs], false)
        send.lia("LIA: stop")
      }
@@ -84,7 +107,10 @@ AVR8js.build(`@input`)
 "LIA: wait"
 </script>
 
+## asdfa
 
+
+<div class="pixels"><wokwi-neopixel-matrix cols="9" rows="9"></wokwi-neopixel-matrix></div>
 
 This is your **course** initialization stub.
 
