@@ -3,17 +3,15 @@ author:   André Dietrich
 
 email:    LiaScript@web.de
 
-version:  0.0.1
+version:  0.0.2
 
 language: en
 
 narrator: US English Female
 
-comment:  Try to write a short comment about
-          your course, multiline is also okay.
+comment:  LiaScript template for the AVR8js simulator.
 
 script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@main/dist/index.js
-
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
@@ -102,14 +100,25 @@ AVR8js.build(sketch, files)
 
 # AVR8js - Template
 
+todo
+
+## `@AVR8js.sketch`
+
+todo
+
+## `@AVR8js.project`
+
+todo
+
+## Examples
+
+### LED
+
 <div id="example1">
   <wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
-  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
-  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
-
-
+  <wokwi-led color="green" pin="12" port="B" label="12"></wokwi-led>
+  <wokwi-led color="blue"  pin="11" port="B" label="11"></wokwi-led>
+  <wokwi-led color="blue"  pin="10" port="B" label="10"></wokwi-led>
 </div>
 
 ``` cpp
@@ -131,66 +140,37 @@ void loop() {
   i = (i + 1) % sizeof(leds);
 }
 ```
-@AVR8js.sketch(example1)
+@AVR8js.sketch
 
--------------------------------------
-second example:
-
-<div id="exmaple2">
-  <wokwi-buzzer color="red"   pin="13" port="B" label="13"></wokwi-buzzer>
-  <wokwi-led color="green" pin="12" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="11" port="B"></wokwi-led>
-  <wokwi-led color="blue"  pin="10" port="B"></wokwi-led>
-  <wokwi-led color="white" pin="9"  port="B"></wokwi-led>
-
-  <wokwi-7segment port="B" digits="2" ></wokwi-7segment>
-
-  <wokwi-pushbutton port="B" pin="12" ></wokwi-pushbutton>
-</div>
-
-``` cpp
-byte leds[] = {13, 12, 11, 10};
-void setup() {
-  Serial.begin(115200);
-  for (byte i = 0; i < sizeof(leds); i++) {
-    pinMode(leds[i], OUTPUT);
-  }
-}
-
-int i = 0;
-void loop() {
-  Serial.print("LED: ");
-  Serial.println(i);
-  digitalWrite(leds[i], HIGH);
-  delay(250);
-  digitalWrite(leds[i], LOW);
-  i = (i + 1) % sizeof(leds);
-}
-```
-@AVR8js.sketch(example2)
-
-## assumes
+### Buttons
 
 <div>
-  <wokwi-pushbutton port="D" pin="2" ></wokwi-pushbutton>
-  <wokwi-led color="green" pin="11" port="B"></wokwi-led>
-  <wokwi-led color="black" pin="12" port="B"></wokwi-led>
+  <wokwi-pushbutton color="green" pin="2"  port="D"></wokwi-pushbutton>
+  <wokwi-led        color="green" pin="11" port="B"></wokwi-led>
+  <wokwi-led        color="blue"  pin="12" port="B"></wokwi-led>
+  <wokwi-led        color="red"   pin="13" port="B"></wokwi-led>
+  <wokwi-pushbutton color="red"   pin="3"  port="D"></wokwi-pushbutton>
 </div>
 
 ``` cpp
 void setup() {
   Serial.begin(115200);
   pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
   pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
 }
 
 int i = 0;
 void loop() {
-  int b = digitalRead(2);
+  bool green = digitalRead(2);
+  bool red   = digitalRead(3);
   Serial.print("LED: ");
-  Serial.println(b);
-  digitalWrite(11, b);
+  Serial.println(i);
+
+  digitalWrite(11, green);
+  digitalWrite(13, red);
   delay(250);
 
   i += 1;
@@ -200,17 +180,76 @@ void loop() {
 ```
 @AVR8js.sketch
 
+### 7-Segment
 
-## Buttons
+<wokwi-7segment port="B" digits="1" pin="13"></wokwi-7segment>
+
+
+``` cpp
+byte leds[] = {13, 12, 11, 10};
+void setup() {
+  Serial.begin(115200);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+int i = 0;
+void loop() {
+  Serial.print("LED: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
+}
+```
+@AVR8js.sketch
+
+
+### Buzzer
+
+<div id="example1">
+  <wokwi-buzzer color="red"   pin="13" port="B" label="13"></wokwi-buzzer>
+  <wokwi-buzzer color="green" pin="12" port="B" label="12"></wokwi-buzzer>
+  <wokwi-buzzer color="blue"  pin="11" port="B" label="11"></wokwi-buzzer>
+  <wokwi-buzzer color="blue"  pin="10" port="B" label="10"></wokwi-buzzer>
+</div>
+
+``` cpp
+byte leds[] = {13, 12, 11, 10};
+void setup() {
+  Serial.begin(115200);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+int i = 0;
+void loop() {
+  Serial.print("BUZZER: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
+}
+```
+@AVR8js.sketch
+
+
+### Projects
+
+> Example not working yet ...
 
 <div id="game-container">
   <wokwi-pushbutton color="red" pin="2" port="D"></wokwi-pushbutton>
-  <wokwi-led color="red" label="9" pin="9" port="D"></wokwi-led>
-  <wokwi-led color="green" label="10" pin="10" port="D"></wokwi-led>
+  <wokwi-led color="red" label="9" pin="9" port="B"></wokwi-led>
+  <wokwi-led color="green" label="10" pin="10" port="B"></wokwi-led>
   <wokwi-pushbutton color="green" pin="3" port="D"></wokwi-pushbutton>
   <wokwi-pushbutton color="blue" pin="4" port="D"></wokwi-pushbutton>
-  <wokwi-led color="blue" label="11" pin="11" port="D"></wokwi-led>
-  <wokwi-led color="yellow" label="12" pin="12" port="D"></wokwi-led>
+  <wokwi-led color="blue" label="11" pin="11" port="B"></wokwi-led>
+  <wokwi-led color="yellow" label="12" pin="12" port="B"></wokwi-led>
   <wokwi-pushbutton color="yellow" pin="5" port="D"></wokwi-pushbutton>
 </div>
 
@@ -467,3 +506,93 @@ void loop() {
 #define NOTE_DS8 4978
 ```
 @AVR8js.project( ,sketch.ino,pitches.h)
+
+
+## Implementation
+
+``` html
+script:   dist/index.js
+
+@AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
+
+@AVR8js.project
+<script>
+let id = "@0"
+
+let name = [
+  "@1", "@2", "@3", "@4", "@5", "@6", "@7", "@8", "@9"
+  ]
+  .map((e) => e.trim())
+  .filter((e) => { return (e[0] !== '@' && e !== "") })
+
+let content = [
+  `@input(0)`,
+  `@input(1)`,
+  `@input(2)`,
+  `@input(3)`,
+  `@input(4)`,
+  `@input(5)`,
+  `@input(6)`,
+  `@input(7)`,
+  `@input(8)`,
+  `@input(9)`
+  ]
+
+let sketch;
+let files = []
+
+for(let i=0; i<name.length; i++) {
+  if (name[i] == "sketch.ino") {
+    sketch = content[i]
+  } else {
+    files.push({name: name[i], content: content[i]})
+  }
+}
+
+AVR8js.build(sketch, files)
+   .then((e) => {
+     if (e.stderr) {
+       let msgs = []
+
+       for(let i = 0; i<name.length; i++) {
+         msgs.push([])
+       }
+
+       let iter = e.stderr.matchAll(/(\w+\.\w+):(\d+):(\d+): ([^:]+):(.+)/g)
+
+       for(let err=iter.next(); !err.done; err=iter.next()) {
+         msgs[name.findIndex((e) => e==err.value[1])].push({
+           row :    parseInt(err.value[2]) - 1,
+           column : parseInt(err.value[3]),
+           text :   err.value[5],
+           type :   err.value[4]
+         })
+       }
+       send.lia(e.stderr, msgs, false)
+       send.lia("LIA: stop")
+     }
+     else {
+       console.debug(e.stdout)
+
+       if (e.hex) {
+         let runner = AVR8js.execute(e.hex, console.log, id)
+
+         send.lia("LIA: terminal")
+
+         send.handle("stop", e => {
+           if(runner) {
+             runner.stop()
+             runner = null
+             console.debug("execution stopped")
+           }
+         })
+       } else {
+         send.lia("LIA: stop")
+       }
+     }
+   })
+"LIA: wait"
+</script>
+
+@end
+```
