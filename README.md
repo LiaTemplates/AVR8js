@@ -172,7 +172,7 @@ void loop() {
 ## assumes
 
 <div>
-  <wokwi-pushbutton port="B" pin="2" ></wokwi-pushbutton>
+  <wokwi-pushbutton port="D" pin="2" ></wokwi-pushbutton>
   <wokwi-led color="green" pin="11" port="B"></wokwi-led>
   <wokwi-led color="black" pin="12" port="B"></wokwi-led>
 </div>

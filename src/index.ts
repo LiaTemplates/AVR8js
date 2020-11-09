@@ -59,22 +59,18 @@ window.AVR8js = {
 
           if (pin && p === PORT) {
             port.setPin(pin, true);
-            
+
             button.addEventListener("button-press", () => {
               if (runner) {
-                log("false");
                 port.setPin(pin, false);
               }
             });
 
             button.addEventListener("button-release", () => {
               if (runner) {
-                log("true");
                 port.setPin(pin, true);
               }
             });
-
-
           }
         })
 
