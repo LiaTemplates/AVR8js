@@ -63,7 +63,7 @@ window.AVR8js = {
     const BUZZER = container.querySelectorAll<BuzzerElement & HTMLElement>("wokwi-buzzer");
     const PushButton = container.querySelectorAll<PushbuttonElement & HTMLElement>("wokwi-pushbutton");
 
-    
+
 
     const runner = new AVRRunner(hex);
     MHZ = MHZ || 16000000;
@@ -77,7 +77,7 @@ window.AVR8js = {
           const [pin, p] = pinPort(button)
 
           if (pin && p === PORT) {
-            port.setPin(pin, true);
+            port.setPin(pin, false);
 
             button.addEventListener("button-press", () => {
               if (runner) {
