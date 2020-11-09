@@ -81,13 +81,13 @@ window.AVR8js = {
 
             button.addEventListener("button-press", () => {
               if (runner) {
-                port.setPin(pin, false);
+                port.setPin(pin, true);
               }
             });
 
             button.addEventListener("button-release", () => {
               if (runner) {
-                port.setPin(pin, true);
+                port.setPin(pin, false);
               }
             });
           }

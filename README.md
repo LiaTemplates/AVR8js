@@ -3,7 +3,7 @@ author:   André Dietrich
 
 email:    LiaScript@web.de
 
-version:  0.0.4
+version:  0.0.5
 
 language: en
 
@@ -11,7 +11,7 @@ narrator: US English Female
 
 comment:  LiaScript template for the AVR8js simulator.
 
-script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.4/dist/index.js
+script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.5/dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
