@@ -24,16 +24,30 @@ function pinPort(e) : [number | null, string | null]{
 
 window.AVR8js = {
   build: async function (sketch:string, files = []) {
-    const resp = await fetch('https://hexi.wokwi.com/build', {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'force-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ sketch: sketch, files }),
-    });
-    return (await resp.json());
+    if (!window.__AVR8jsCache) {
+      window.__AVR8jsCache = {}
+    }
+
+    let body = JSON.stringify({ sketch: sketch, files })
+
+    if (window.__AVR8jsCache[body]) {
+      return window.__AVR8jsCache[body]
+    } else {
+      const resp = await fetch('https://hexi.wokwi.com/build', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'force-cache',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body
+      });
+      const rslt = await resp.json()
+
+      window.__AVR8jsCache[body] = rslt
+
+      return rslt;
+    }
   },
 
   execute: function (hex:string, log:any, id:string, MHZ: number | null) {
