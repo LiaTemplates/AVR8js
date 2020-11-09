@@ -1,7 +1,10 @@
 import "@wokwi/elements";
 import { AVRRunner, PORT } from "./execute";
 import { formatTime } from "./format-time";
+import { WS2812Controller } from "./ws2812";
+
 import {
+  ArduinoMegaElement,
   BuzzerElement,
   LEDElement,
   PushbuttonElement,
@@ -59,6 +62,8 @@ window.AVR8js = {
     const SEG7 = container.querySelectorAll<SevenSegmentElement & HTMLElement>("wokwi-7segment");
     const BUZZER = container.querySelectorAll<BuzzerElement & HTMLElement>("wokwi-buzzer");
     const PushButton = container.querySelectorAll<PushbuttonElement & HTMLElement>("wokwi-pushbutton");
+
+    
 
     const runner = new AVRRunner(hex);
     MHZ = MHZ || 16000000;
@@ -140,6 +145,4 @@ window.AVR8js = {
 
     return runner
   }
-
-
 }

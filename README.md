@@ -238,6 +238,59 @@ void loop() {
 ```
 @AVR8js.sketch
 
+### Arduino-Mega
+
+<wokwi-arduino-mega></wokwi-arduino-mega>
+
+### Arduino-Uno
+
+<wokwi-arduino-uno></wokwi-arduino-uno>
+
+### Arduino-Nano
+
+<wokwi-arduino-nano></wokwi-arduino-nano>
+
+
+### DHT22
+
+<wokwi-dht22></wokwi-dht22>
+
+### LCD1602
+
+<wokwi-lcd1602></wokwi-lcd1602>
+
+### Membrane-Keypad
+
+<wokwi-membrane-keypad></wokwi-membrane-keypad>
+
+### Neopixel
+
+<wokwi-neopixel></wokwi-neopixel>
+
+### Neopixel-Matrix
+
+<wokwi-neopixel-matrix></wokwi-neopixel-matrix>
+
+### Potentiometer
+
+<wokwi-potentiometer></wokwi-potentiometer>
+
+### Resistor
+
+<wokwi-resistor></wokwi-resistor>
+
+### Rotary-Dialer
+
+<wokwi-rotary-dialer></wokwi-rotary-dialer>
+
+### Servo
+
+<wokwi-servo></wokwi-servo>
+
+### SSD1306
+
+<wokwi-ssd1306></wokwi-ssd1306>
+
 
 ### Projects
 
