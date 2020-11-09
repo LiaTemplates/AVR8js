@@ -2,10 +2,10 @@
   "name": "avr8js-template",
   "version": "1.0.0",
   "description": "A LiaScript wrapper for AVR8js",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "build": "npx parcel build --no-source-maps src/index.js",
-    "watch": "npx parcel serve -p 3333 src/index.js",
+    "build": "npx parcel build --no-source-maps src/index.ts",
+    "watch": "npx parcel serve -p 3333 src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

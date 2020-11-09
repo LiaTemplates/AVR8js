@@ -8,22 +8,30 @@ import {
   AVRIOPort,
   portBConfig,
   portCConfig,
-  portDConfig
+  portDConfig,
+  portEConfig,
+  portFConfig,
+  portGConfig,
+  portHConfig,
+  portJConfig,
+  portKConfig,
+  portLConfig
 } from 'avr8js';
 import { loadHex } from './intelhex';
 
 // ATmega328p params
 const FLASH = 0x8000;
 
+export type PORT = 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'J' | 'K' | 'L';
+
+//const PORTS:Array<PORT> = ['B','C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L'];
+
 export class AVRRunner {
   readonly program = new Uint16Array(FLASH);
   readonly cpu: CPU;
   readonly timer: AVRTimer;
-  readonly portB: AVRIOPort;
-  readonly portC: AVRIOPort;
-  readonly portD: AVRIOPort;
   readonly usart: AVRUSART;
-
+  readonly port = new Map<PORT, AVRIOPort>();
   readonly MHZ = 16e6;
 
   private stopped = false;
@@ -31,10 +39,19 @@ export class AVRRunner {
   constructor(hex: string) {
     loadHex(hex, new Uint8Array(this.program.buffer));
     this.cpu = new CPU(this.program);
-    this.timer = new AVRTimer(this.cpu, timer0Config);
-    this.portB = new AVRIOPort(this.cpu, portBConfig);
-    this.portC = new AVRIOPort(this.cpu, portCConfig);
-    this.portD = new AVRIOPort(this.cpu, portDConfig);
+    this.timer  = new AVRTimer(this.cpu, timer0Config);
+
+    this.port.set('B', new AVRIOPort(this.cpu, portBConfig));
+    this.port.set('C', new AVRIOPort(this.cpu, portCConfig));
+    this.port.set('D', new AVRIOPort(this.cpu, portDConfig));
+    this.port.set('E', new AVRIOPort(this.cpu, portEConfig));
+    this.port.set('F', new AVRIOPort(this.cpu, portFConfig));
+    this.port.set('G', new AVRIOPort(this.cpu, portGConfig));
+    this.port.set('H', new AVRIOPort(this.cpu, portHConfig));
+    this.port.set('J', new AVRIOPort(this.cpu, portJConfig));
+    this.port.set('K', new AVRIOPort(this.cpu, portKConfig));
+    this.port.set('L', new AVRIOPort(this.cpu, portLConfig));
+
     this.usart = new AVRUSART(this.cpu, usart0Config, this.MHZ);
   }
 
