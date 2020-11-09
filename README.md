@@ -98,6 +98,8 @@ AVR8js.build(sketch, files)
 
 -->
 
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://LiaScript.github.io/course/?https://raw.githubusercontent.com/LiaTemplates/AVR8js/main/README.md)
+
 # AVR8js - Template
 
 todo
