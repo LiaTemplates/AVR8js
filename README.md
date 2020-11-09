@@ -98,6 +98,8 @@ AVR8js.build(sketch, files)
 
 -->
 
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://LiaScript.github.io/course/?https://raw.githubusercontent.com/LiaTemplates/AVR8js/main/README.md)
+
 # AVR8js - Template
 
 todo
@@ -115,10 +117,11 @@ todo
 ### LED
 
 <div id="example1">
-  <wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
-  <wokwi-led color="green" pin="12" port="B" label="12"></wokwi-led>
-  <wokwi-led color="blue"  pin="11" port="B" label="11"></wokwi-led>
-  <wokwi-led color="blue"  pin="10" port="B" label="10"></wokwi-led>
+<wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
+<wokwi-led color="green" pin="12" port="B" label="12"></wokwi-led>
+<wokwi-led color="blue"  pin="11" port="B" label="11"></wokwi-led>
+<wokwi-led color="blue"  pin="10" port="B" label="10"></wokwi-led>
+<span id="simulation-time"></span>
 </div>
 
 ``` cpp
@@ -236,6 +239,59 @@ void loop() {
 }
 ```
 @AVR8js.sketch
+
+### Arduino-Mega
+
+<wokwi-arduino-mega></wokwi-arduino-mega>
+
+### Arduino-Uno
+
+<wokwi-arduino-uno></wokwi-arduino-uno>
+
+### Arduino-Nano
+
+<wokwi-arduino-nano></wokwi-arduino-nano>
+
+
+### DHT22
+
+<wokwi-dht22></wokwi-dht22>
+
+### LCD1602
+
+<wokwi-lcd1602></wokwi-lcd1602>
+
+### Membrane-Keypad
+
+<wokwi-membrane-keypad></wokwi-membrane-keypad>
+
+### Neopixel
+
+<wokwi-neopixel></wokwi-neopixel>
+
+### Neopixel-Matrix
+
+<wokwi-neopixel-matrix></wokwi-neopixel-matrix>
+
+### Potentiometer
+
+<wokwi-potentiometer></wokwi-potentiometer>
+
+### Resistor
+
+<wokwi-resistor></wokwi-resistor>
+
+### Rotary-Dialer
+
+<wokwi-rotary-dialer></wokwi-rotary-dialer>
+
+### Servo
+
+<wokwi-servo></wokwi-servo>
+
+### SSD1306
+
+<wokwi-ssd1306></wokwi-ssd1306>
 
 
 ### Projects
