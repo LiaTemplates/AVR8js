@@ -117,9 +117,11 @@ window.AVR8js = {
     };
 
 
+    const timeSpan = container.querySelector("#simulation-time")
     runner.execute(cpu => {
       const time = formatTime(cpu.cycles / MHZ);
-      //statusLabel.textContent = "Simulation time: " + time;
+      if(timeSpan)
+        timeSpan.textContent = "Simulation time: " + time;
     })
 
     return runner

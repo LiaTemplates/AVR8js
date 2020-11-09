@@ -115,10 +115,11 @@ todo
 ### LED
 
 <div id="example1">
-  <wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
-  <wokwi-led color="green" pin="12" port="B" label="12"></wokwi-led>
-  <wokwi-led color="blue"  pin="11" port="B" label="11"></wokwi-led>
-  <wokwi-led color="blue"  pin="10" port="B" label="10"></wokwi-led>
+<wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
+<wokwi-led color="green" pin="12" port="B" label="12"></wokwi-led>
+<wokwi-led color="blue"  pin="11" port="B" label="11"></wokwi-led>
+<wokwi-led color="blue"  pin="10" port="B" label="10"></wokwi-led>
+<span id="simulation-time"></span>
 </div>
 
 ``` cpp
