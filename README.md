@@ -11,7 +11,7 @@ narrator: US English Female
 
 comment:  LiaScript template for the AVR8js simulator.
 
-script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.5/dist/index.js
+script:   dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
@@ -77,6 +77,10 @@ AVR8js.build(sketch, files)
        if (e.hex) {
          let runner = AVR8js.execute(e.hex, console.log, id)
 
+         send.handle("input", (input) => {
+            runner.serial(input.slice(0, -1))
+         })
+
          send.lia("LIA: terminal")
 
          send.handle("stop", e => {
@@ -113,6 +117,28 @@ todo
 todo
 
 ## Examples
+
+### Serial.read
+
+``` cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+   while (Serial.available() > 0 ) {
+
+     String str = Serial.readString();
+
+     if (str.equals("send")) {
+        Serial.println("identified");
+     } else {
+        Serial.println("unknown");
+     }
+   }
+}
+```
+@AVR8js.sketch
 
 ### LED
 

@@ -1,10 +1,9 @@
 import "@wokwi/elements";
 import { AVRRunner, PORT } from "./execute";
 import { formatTime } from "./format-time";
-import { WS2812Controller } from "./ws2812";
+//import { WS2812Controller } from "./ws2812";
 
 import {
-  ArduinoMegaElement,
   BuzzerElement,
   LEDElement,
   PushbuttonElement,
@@ -53,8 +52,8 @@ window.AVR8js = {
     }
   },
 
-  execute: function (hex:string, log:any, id:string, MHZ: number | null) {
-    const PORTS:Array<PORT> = ["B", "C", "D", "E", "F", "G", "H", "J", "K"]
+  execute: function (hex:string, log:any, id:string, MHZ: any) {
+    const PORTS:Array<PORT> = ["A", "B", "C", "D"]
 
     const container = document.getElementById(id) || document
 
@@ -63,10 +62,9 @@ window.AVR8js = {
     const BUZZER = container.querySelectorAll<BuzzerElement & HTMLElement>("wokwi-buzzer");
     const PushButton = container.querySelectorAll<PushbuttonElement & HTMLElement>("wokwi-pushbutton");
 
-
-
     const runner = new AVRRunner(hex);
-    MHZ = MHZ || 16000000;
+
+    MHZ = MHZ || 16000000
 
     for(const PORT of PORTS) {
       // Hook to PORTB register
@@ -132,9 +130,8 @@ window.AVR8js = {
 
     // Serial port output support
     runner.usart.onLineTransmit = (value) => {
-      log((value));
+      log(value);
     };
-
 
     const timeSpan = container.querySelector("#simulation-time")
     runner.execute(cpu => {
