@@ -13,14 +13,24 @@ import {
 
 declare const window: any;
 
-function pinPort(e) : [number | null, string | null]{
-  const pin  = e.getAttribute("pin")
-  const port = e.getAttribute("port")
+function pinPort(e:any) : [number | null, string | null]{
+  let port: PORT | null;
+  let pin = e.getAttribute("pin")
+  pin = pin ? parseInt(pin, 10)  : null;
 
-  return [
-    pin  ? parseInt(pin, 10)  : null,
-    port
-  ]
+  if (pin == null) {
+    port = null;
+  } else if (pin < 8) {
+    port = 'D';
+  } else if (pin < 14) {
+    port = 'B';
+  } else if (pin < 20) {
+    port = 'C';
+  } else {
+    port = null;
+  }
+
+  return [pin , port]
 }
 
 
@@ -53,7 +63,7 @@ window.AVR8js = {
   },
 
   execute: function (hex:string, log:any, id:string, MHZ: any) {
-    const PORTS:Array<PORT> = ["A", "B", "C", "D"]
+    const PORTS:Array<PORT> = ["B", "C", "D"]
 
     const container = document.getElementById(id) || document
 
@@ -72,20 +82,20 @@ window.AVR8js = {
 
       if(port) {
         PushButton.forEach (button => {
-          const [pin, p] = pinPort(button)
+          let [pin, p] = pinPort(button)
 
           if (pin && p === PORT) {
-            port.setPin(pin, false);
+            port.setPin(pin % 8, false);
 
             button.addEventListener("button-press", () => {
               if (runner) {
-                port.setPin(pin, true);
+                port.setPin(pin % 8, true);
               }
             });
 
             button.addEventListener("button-release", () => {
               if (runner) {
-                port.setPin(pin, false);
+                port.setPin(pin % 8, false);
               }
             });
           }

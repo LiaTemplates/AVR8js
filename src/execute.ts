@@ -8,7 +8,6 @@ import {
   AVRUSART,
   usart0Config,
   AVRIOPort,
-  portAConfig,
   portBConfig,
   portCConfig,
   portDConfig,
@@ -40,12 +39,13 @@ export class AVRRunner {
   constructor(hex: string) {
     loadHex(hex, new Uint8Array(this.program.buffer));
     this.cpu = new CPU(this.program);
+
     this.timer0  = new AVRTimer(this.cpu, timer0Config);
     this.timer1  = new AVRTimer(this.cpu, timer1Config);
     this.timer2  = new AVRTimer(this.cpu, timer2Config);
 
 
-    this.port.set('A', new AVRIOPort(this.cpu, portAConfig));
+    //this.port.set('A', new AVRIOPort(this.cpu, portAConfig));
     this.port.set('B', new AVRIOPort(this.cpu, portBConfig));
     this.port.set('C', new AVRIOPort(this.cpu, portCConfig));
     this.port.set('D', new AVRIOPort(this.cpu, portDConfig));
