@@ -3,6 +3,8 @@ import {
   AVRTimer,
   CPU,
   timer0Config,
+  timer1Config,
+  timer2Config,
   AVRUSART,
   usart0Config,
   AVRIOPort,
@@ -25,7 +27,9 @@ export type PORT = 'A' | 'B' | 'C' | 'D' //| 'E' | 'F' | 'G' | 'H' | 'J' | 'K' |
 export class AVRRunner {
   readonly program = new Uint16Array(FLASH);
   readonly cpu: CPU;
-  readonly timer: AVRTimer;
+  readonly timer0: AVRTimer;
+  readonly timer1: AVRTimer;
+  readonly timer2: AVRTimer;
   readonly usart: AVRUSART;
   readonly port = new Map<PORT, AVRIOPort>();
   readonly MHZ = 16e6;
@@ -36,7 +40,10 @@ export class AVRRunner {
   constructor(hex: string) {
     loadHex(hex, new Uint8Array(this.program.buffer));
     this.cpu = new CPU(this.program);
-    this.timer  = new AVRTimer(this.cpu, timer0Config);
+    this.timer0  = new AVRTimer(this.cpu, timer0Config);
+    this.timer1  = new AVRTimer(this.cpu, timer1Config);
+    this.timer2  = new AVRTimer(this.cpu, timer2Config);
+
 
     this.port.set('A', new AVRIOPort(this.cpu, portAConfig));
     this.port.set('B', new AVRIOPort(this.cpu, portBConfig));
@@ -60,7 +67,9 @@ export class AVRRunner {
     this.stopped = false;
     for (;;) {
       avrInstruction(this.cpu);
-      this.timer.tick();
+      this.timer0.tick();
+      this.timer1.tick();
+      this.timer2.tick();
       this.usart.tick();
 
       if (this.cpu.cycles % 500000 === 0) {
