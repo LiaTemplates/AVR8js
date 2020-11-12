@@ -62,6 +62,19 @@ window.AVR8js = {
     }
   },
 
+  buildASM: async function asmToHex(source: string) {
+    const resp = await fetch('https://hexi.wokwi.com/asm', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ source })
+    });
+    return (await resp.json());
+  },
+
   execute: function (hex:string, log:any, id:string, MHZ: any) {
     const PORTS:Array<PORT> = ["B", "C", "D"]
 

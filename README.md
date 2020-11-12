@@ -3,7 +3,7 @@ author:   André Dietrich
 
 email:    LiaScript@web.de
 
-version:  0.0.7
+version:  0.0.8
 
 language: en
 
@@ -11,7 +11,7 @@ narrator: US English Female
 
 comment:  LiaScript template for the AVR8js simulator.
 
-script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.7/dist/index.js
+script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.8/dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
@@ -100,21 +100,211 @@ AVR8js.build(sketch, files)
 
 @end
 
+
+
+@AVR8js.asm
+<script>
+let id = "@0"
+
+AVR8js.buildASM(`@input`)
+   .then((e) => {
+     if (e.stderr) {
+       let msgs = []
+
+       let iter = e.stderr.matchAll(/main\.s:(\d+):(\d+): ([^:]+):(.+)/g)
+
+       for(let err=iter.next(); !err.done; err=iter.next()) {
+         msgs.push({
+           row :    parseInt(err.value[1]) - 1,
+           column : parseInt(err.value[2]),
+           text :   err.value[4],
+           type :   err.value[3].toLower()
+         })
+       }
+       send.lia(e.stderr, [msgs], false)
+       send.lia("LIA: stop")
+     }
+     else {
+       console.debug(e.stdout)
+
+       if (e.hex) {
+         let runner = AVR8js.execute(e.hex, console.log, id)
+
+         send.handle("input", (input) => {
+            runner.serial(input.slice(0, -1))
+         })
+
+         send.lia("LIA: terminal")
+
+         send.handle("stop", e => {
+           if(runner) {
+             runner.stop()
+             runner = null
+             console.debug("execution stopped")
+           }
+         })
+       } else {
+         send.lia("LIA: stop")
+       }
+     }
+   })
+"LIA: wait"
+</script>
+
+@end
+
 -->
 
 [![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://LiaScript.github.io/course/?https://raw.githubusercontent.com/LiaTemplates/AVR8js/main/README.md)
 
 # AVR8js - Template
 
-todo
+          --{{0}}--
+This document defines some basic macros for integrating the Arduino Simulator
+[AVR8js](https://github.com/wokwi/avr8js) into
+[LiaScript](https://LiaScript.github.io) and to make Markdown code-blocks
+executable.
+
+__Try it on LiaScript:__
+
+https://liascript.github.io/course/?https://raw.githubusercontent.com/liaTemplates/AVR8js/main/README.md
+
+__See the project on Github:__
+
+https://github.com/liaTemplates/AVR8js
+
+          --{{1}}--
+There are three ways to use this template. The easiest way is to use the
+`import` statement and the url of the raw text-file of the master branch or any
+other branch or version. But you can also copy the required functionionality
+directly into the header of your Markdown document, see therefor the [last
+slide](#implementation). And of course, you could also clone this project and
+change it, as you wish.
+
+           {{1}}
+1. Load the macros via
+
+   `import: https://raw.githubusercontent.com/liaTemplates/AVR8js/main/README.md`
+
+2. Copy the definitions into your Project
+
+3. Clone this repository on GitHub
+
 
 ## `@AVR8js.sketch`
 
-todo
+If you only have a simple sketch-file that you want to execute, then simply
+add `@AVR8js.sketch` to the end of your code-block, to make it executable and
+editable. All errors within your code will be displayed in the terminal as well
+as in the editor. Serial.IO is already connected.
+
+```` markdown
+``` cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+   while (Serial.available() > 0 ) {
+
+     String str = Serial.readString();
+
+     if (str.equals("send")) {
+        Serial.println("identified");
+     } else {
+        Serial.println("unknown");
+     }
+   }
+}
+```
+@AVR8js.sketch
+````
+
+The project tries to attach all pins of your wokwi-webcomponents automatically
+to the simulation, based on the defined pins. If you want to run multiple
+simulations on one side, you can hide the relevant wokwi-elements within a div
+or span and pass the id of that element to `@AVR8js.sketch`. If you do not pass
+an id, all visible elements within a section will be attached to the simulation.
+If an element with the id `simulation-time` is present, this element will be
+updated with the current simulation time.
+
+
+```` markdown
+<div id="example">
+<wokwi-led color="red"   pin="13" label="13"></wokwi-led>
+<wokwi-led color="green" pin="12" label="12"></wokwi-led>
+<wokwi-led color="blue"  pin="11" label="11"></wokwi-led>
+<wokwi-led color="blue"  pin="10" label="10"></wokwi-led>
+<span id="simulation-time"></span>
+</div>
+
+``` cpp
+byte leds[] = {13, 12, 11, 10};
+void setup() {
+  Serial.begin(115200);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+int i = 0;
+void loop() {
+  Serial.print("LED: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
+}
+```
+@AVR8js.sketch(example)
+````
 
 ## `@AVR8js.project`
 
+
+If you have a more complex example, you can also create a LiaScript project by
+defining multiple code blocks, the names in the head are optional, but the the
+naming in the `@AVR8js.project` has to match your code blocks and one
+`sketch.ino` file must exist. Checkout the last section for a more complex
+example.
+
+
+```` markdown
+<div id="example">
+<wokwi-led color="red"   pin="13" label="13"></wokwi-led>
+...
+</div>
+
+``` cpp      params.h
+byte leds[] = {13, 12, 11, 10};
+```
+``` cpp      sketch.ino
+#import params.h
+void setup() {
+  Serial.begin(115200);
+  for (byte i = 0; i < sizeof(leds); i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+int i = 0;
+void loop() {
+  Serial.print("LED: ");
+  Serial.println(i);
+  digitalWrite(leds[i], HIGH);
+  delay(250);
+  digitalWrite(leds[i], LOW);
+  i = (i + 1) % sizeof(leds);
+}
+```
+@AVR8js.project( ,params.h,sketch.ino)
+````
+
+## `@AVR8js.asm`
+
 todo
+
 
 ## Examples
 
@@ -208,6 +398,85 @@ void loop() {
 }
 ```
 @AVR8js.sketch
+
+### Assembly
+
+``` asm
+; Created: 25/11/2019 9:45:37 AM
+; Author : Annon
+
+; defining some labels to make the code easier to read
+LEDs = 20
+Switches = 21
+outer = 22
+inner = 23
+inner1 = 24
+
+; GPIO registers (according to datasheet)
+DDRA = 0x1
+PORTA = 0x2
+PINC = 0x6
+DDRC = 0x7
+PORTC = 0x8
+
+.text
+.section	.rodata
+.string "Look ma, I'm on a chip!!" ; :P
+
+.text
+.org 0000 ; start the code at 0x0000 - we arent using interrupts so don't waste space on them
+.global Start
+Start:
+  clr r19
+  OUT DDRC, r19
+  ser r19
+  OUT DDRA, r19
+  OUT PORTC, r19
+
+Loop:
+  in Switches,PINC ; read switches
+  com Switches ; invert
+  cbr Switches, 0x7F ; mask out the lower 7 bits
+  cpi r21, 0x80 ; compare r21 with 0x80
+  breq setLeds ; turn on leds
+  brne clrLeds ; make sure the leds turn off if not set
+
+setLeds:
+  ser LEDs ; set all bits high
+  out PORTA, LEDs ; send them to the leds
+  rcall wait ; wait ~1s
+  clr LEDs ; set all bits low
+  out PORTA, LEDs ; send them to the leds
+  rcall wait ; wait ~1s
+  rjmp Loop ; jump back to main loop
+
+clrLeds:
+  clr LEDs ; set all bits low
+  out PORTA, LEDs ; send them to the leds
+  rjmp Loop ; jump back to main loop
+
+wait: ; 255 * 252 * 83 * 3 = 16000740/16mhz = 1.0004625s
+  ldi outer,0
+waitouter:
+  rcall waitinner
+  dec outer
+  brne waitouter
+  ret
+waitinner:
+  ldi inner,253
+waitinner1:
+  rcall waitininner
+  dec inner
+  brne waitinner1
+  ret
+waitininner:
+  ldi inner1,84
+waitininner1:
+  dec inner1
+  brne waitininner1
+  ret
+```
+@AVR8js.asm
 
 ### 7-Segment
 
@@ -592,7 +861,18 @@ void loop() {
 
 ## Implementation
 
+The code below shows the implementation of the two macros. The `@AVR8js.project`
+defines the main functionality, while `@AVR8js.sketch` only sets the default
+file name and passes the id of the HTML-elmenent that contains all connected
+wokwi-webcomponents.
+
+This template utilizes a global AVR8js object that is currently defined in
+`src/index.ts`. Code is compiled on https://hexi.wokwi.com/build and send back
+for execution.
+
 ``` html
+@@script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.7/dist/index.js
+
 script:   dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
@@ -658,6 +938,61 @@ AVR8js.build(sketch, files)
 
        if (e.hex) {
          let runner = AVR8js.execute(e.hex, console.log, id)
+
+         send.handle("input", (input) => {
+            runner.serial(input.slice(0, -1))
+         })
+
+         send.lia("LIA: terminal")
+
+         send.handle("stop", e => {
+           if(runner) {
+             runner.stop()
+             runner = null
+             console.debug("execution stopped")
+           }
+         })
+       } else {
+         send.lia("LIA: stop")
+       }
+     }
+   })
+"LIA: wait"
+</script>
+
+@end
+
+@AVR8js.asm
+<script>
+let id = "@0"
+
+AVR8js.buildASM(`@input`)
+   .then((e) => {
+     if (e.stderr) {
+       let msgs = []
+
+       let iter = e.stderr.matchAll(/main\.s:(\d+):(\d+): ([^:]+):(.+)/g)
+
+       for(let err=iter.next(); !err.done; err=iter.next()) {
+         msgs.push({
+           row :    parseInt(err.value[1]) - 1,
+           column : parseInt(err.value[2]),
+           text :   err.value[4],
+           type :   err.value[3].toLower()
+         })
+       }
+       send.lia(e.stderr, [msgs], false)
+       send.lia("LIA: stop")
+     }
+     else {
+       console.debug(e.stdout)
+
+       if (e.hex) {
+         let runner = AVR8js.execute(e.hex, console.log, id)
+
+         send.handle("input", (input) => {
+            runner.serial(input.slice(0, -1))
+         })
 
          send.lia("LIA: terminal")
 
