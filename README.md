@@ -3,7 +3,7 @@ author:   André Dietrich
 
 email:    LiaScript@web.de
 
-version:  0.0.6
+version:  0.0.7
 
 language: en
 
@@ -11,7 +11,7 @@ narrator: US English Female
 
 comment:  LiaScript template for the AVR8js simulator.
 
-script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.6/dist/index.js
+script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.7/dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
@@ -143,10 +143,10 @@ void loop() {
 ### LED
 
 <div id="example1">
-<wokwi-led color="red"   pin="13" port="B" label="13"></wokwi-led>
-<wokwi-led color="green" pin="12" port="B" label="12"></wokwi-led>
-<wokwi-led color="blue"  pin="11" port="B" label="11"></wokwi-led>
-<wokwi-led color="blue"  pin="10" port="B" label="10"></wokwi-led>
+<wokwi-led color="red"   pin="13" label="13"></wokwi-led>
+<wokwi-led color="green" pin="12" label="12"></wokwi-led>
+<wokwi-led color="blue"  pin="11" label="11"></wokwi-led>
+<wokwi-led color="blue"  pin="10" label="10"></wokwi-led>
 <span id="simulation-time"></span>
 </div>
 
@@ -174,11 +174,11 @@ void loop() {
 ### Buttons
 
 <div>
-  <wokwi-pushbutton color="green" pin="2"  port="D"></wokwi-pushbutton>
-  <wokwi-led        color="green" pin="11" port="B"></wokwi-led>
-  <wokwi-led        color="blue"  pin="12" port="B"></wokwi-led>
-  <wokwi-led        color="red"   pin="13" port="B"></wokwi-led>
-  <wokwi-pushbutton color="red"   pin="3"  port="D"></wokwi-pushbutton>
+  <wokwi-pushbutton color="green" pin="2" ></wokwi-pushbutton>
+  <wokwi-led        color="green" pin="11"></wokwi-led>
+  <wokwi-led        color="blue"  pin="12"></wokwi-led>
+  <wokwi-led        color="red"   pin="13"></wokwi-led>
+  <wokwi-pushbutton color="red"   pin="3" ></wokwi-pushbutton>
 </div>
 
 ``` cpp
@@ -211,7 +211,7 @@ void loop() {
 
 ### 7-Segment
 
-<wokwi-7segment port="B" digits="1" pin="13"></wokwi-7segment>
+<wokwi-7segment digits="1" pin="13"></wokwi-7segment>
 
 
 ``` cpp
@@ -239,10 +239,10 @@ void loop() {
 ### Buzzer
 
 <div id="example1">
-  <wokwi-buzzer color="red"   pin="13" port="B" label="13"></wokwi-buzzer>
-  <wokwi-buzzer color="green" pin="12" port="B" label="12"></wokwi-buzzer>
-  <wokwi-buzzer color="blue"  pin="11" port="B" label="11"></wokwi-buzzer>
-  <wokwi-buzzer color="blue"  pin="10" port="B" label="10"></wokwi-buzzer>
+  <wokwi-buzzer color="red"   pin="13" label="13"></wokwi-buzzer>
+  <wokwi-buzzer color="green" pin="12" label="12"></wokwi-buzzer>
+  <wokwi-buzzer color="blue"  pin="11" label="11"></wokwi-buzzer>
+  <wokwi-buzzer color="blue"  pin="10" label="10"></wokwi-buzzer>
 </div>
 
 ``` cpp
@@ -325,14 +325,14 @@ void loop() {
 > Example not working yet ...
 
 <div id="game-container">
-  <wokwi-pushbutton color="red" pin="2" port="D"></wokwi-pushbutton>
-  <wokwi-led color="red" label="9" pin="9" port="B"></wokwi-led>
-  <wokwi-led color="green" label="10" pin="10" port="B"></wokwi-led>
-  <wokwi-pushbutton color="green" pin="3" port="D"></wokwi-pushbutton>
-  <wokwi-pushbutton color="blue" pin="4" port="D"></wokwi-pushbutton>
-  <wokwi-led color="blue" label="11" pin="11" port="B"></wokwi-led>
-  <wokwi-led color="yellow" label="12" pin="12" port="B"></wokwi-led>
-  <wokwi-pushbutton color="yellow" pin="5" port="D"></wokwi-pushbutton>
+  <wokwi-pushbutton color="red" pin="2"></wokwi-pushbutton>
+  <wokwi-led color="red" label="9" pin="9"></wokwi-led>
+  <wokwi-led color="green" label="10" pin="10"></wokwi-led>
+  <wokwi-pushbutton color="green" pin="3"></wokwi-pushbutton>
+  <wokwi-pushbutton color="blue" pin="4"></wokwi-pushbutton>
+  <wokwi-led color="blue" label="11" pin="11"></wokwi-led>
+  <wokwi-led color="yellow" label="12" pin="12"></wokwi-led>
+  <wokwi-pushbutton color="yellow" pin="5"></wokwi-pushbutton>
 </div>
 
 ``` cpp           sketch.ino
