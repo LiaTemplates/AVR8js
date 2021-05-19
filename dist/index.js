@@ -1,5 +1,5 @@
 parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"VQ8w":[function(require,module,exports) {
-
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});
 },{}],"ytxR":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.removeNodes=exports.reparentNodes=exports.isCEPolyfill=void 0;const e="undefined"!=typeof window&&null!=window.customElements&&void 0!==window.customElements.polyfillWrapFlushCallback;exports.isCEPolyfill=e;const o=(e,o,l=null,s=null)=>{for(;o!==l;){const l=o.nextSibling;e.insertBefore(o,s),o=l}};exports.reparentNodes=o;const l=(e,o,l=null)=>{for(;o!==l;){const l=o.nextSibling;e.removeChild(o),o=l}};exports.removeNodes=l;
 },{}],"Av0K":[function(require,module,exports) {
@@ -34,8 +34,10 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.css=exports.unsafeCSS=exports.CSSResult=exports.supportsAdoptingStyleSheets=void 0;const e=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype;exports.supportsAdoptingStyleSheets=e;const t=Symbol();class s{constructor(e,s){if(s!==t)throw new Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e}get styleSheet(){return void 0===this._styleSheet&&(e?(this._styleSheet=new CSSStyleSheet,this._styleSheet.replaceSync(this.cssText)):this._styleSheet=null),this._styleSheet}toString(){return this.cssText}}exports.CSSResult=s;const o=e=>new s(String(e),t);exports.unsafeCSS=o;const r=e=>{if(e instanceof s)return e.cssText;if("number"==typeof e)return e;throw new Error(`Value passed to 'css' function must be a 'css' function result: ${e}. Use 'unsafeCSS' to pass non-literal values, but\n            take care to ensure page security.`)},n=(e,...o)=>{const n=o.reduce((t,s,o)=>t+r(s)+e[o+1],e[0]);return new s(n,t)};exports.css=n;
 },{}],"bhxD":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e={LitElement:!0,html:!0,svg:!0,TemplateResult:!0,SVGTemplateResult:!0};Object.defineProperty(exports,"html",{enumerable:!0,get:function(){return n.html}}),Object.defineProperty(exports,"svg",{enumerable:!0,get:function(){return n.svg}}),Object.defineProperty(exports,"TemplateResult",{enumerable:!0,get:function(){return n.TemplateResult}}),Object.defineProperty(exports,"SVGTemplateResult",{enumerable:!0,get:function(){return n.SVGTemplateResult}}),exports.LitElement=void 0;var t=require("lit-html/lib/shady-render.js"),s=require("./lib/updating-element.js");Object.keys(s).forEach(function(t){"default"!==t&&"__esModule"!==t&&(Object.prototype.hasOwnProperty.call(e,t)||t in exports&&exports[t]===s[t]||Object.defineProperty(exports,t,{enumerable:!0,get:function(){return s[t]}}))});var r=require("./lib/decorators.js");Object.keys(r).forEach(function(t){"default"!==t&&"__esModule"!==t&&(Object.prototype.hasOwnProperty.call(e,t)||t in exports&&exports[t]===r[t]||Object.defineProperty(exports,t,{enumerable:!0,get:function(){return r[t]}}))});var n=require("lit-html/lit-html.js"),o=require("./lib/css-tag.js");Object.keys(o).forEach(function(t){"default"!==t&&"__esModule"!==t&&(Object.prototype.hasOwnProperty.call(e,t)||t in exports&&exports[t]===o[t]||Object.defineProperty(exports,t,{enumerable:!0,get:function(){return o[t]}}))}),(window.litElementVersions||(window.litElementVersions=[])).push("2.4.0");const i={};class l extends s.UpdatingElement{static getStyles(){return this.styles}static _getUniqueStyles(){if(this.hasOwnProperty(JSCompiler_renameProperty("_styles",this)))return;const e=this.getStyles();if(Array.isArray(e)){const t=(e,s)=>e.reduceRight((e,s)=>Array.isArray(s)?t(s,e):(e.add(s),e),s),s=t(e,new Set),r=[];s.forEach(e=>r.unshift(e)),this._styles=r}else this._styles=void 0===e?[]:[e];this._styles=this._styles.map(e=>{if(e instanceof CSSStyleSheet&&!o.supportsAdoptingStyleSheets){const t=Array.prototype.slice.call(e.cssRules).reduce((e,t)=>e+t.cssText,"");return(0,o.unsafeCSS)(t)}return e})}initialize(){super.initialize(),this.constructor._getUniqueStyles(),this.renderRoot=this.createRenderRoot(),window.ShadowRoot&&this.renderRoot instanceof window.ShadowRoot&&this.adoptStyles()}createRenderRoot(){return this.attachShadow({mode:"open"})}adoptStyles(){const e=this.constructor._styles;0!==e.length&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow?o.supportsAdoptingStyleSheets?this.renderRoot.adoptedStyleSheets=e.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet):this._needsShimAdoptedStyleSheets=!0:window.ShadyCSS.ScopingShim.prepareAdoptedCssText(e.map(e=>e.cssText),this.localName))}connectedCallback(){super.connectedCallback(),this.hasUpdated&&void 0!==window.ShadyCSS&&window.ShadyCSS.styleElement(this)}update(e){const t=this.render();super.update(e),t!==i&&this.constructor.render(t,this.renderRoot,{scopeName:this.localName,eventContext:this}),this._needsShimAdoptedStyleSheets&&(this._needsShimAdoptedStyleSheets=!1,this.constructor._styles.forEach(e=>{const t=document.createElement("style");t.textContent=e.cssText,this.renderRoot.appendChild(t)}))}render(){return i}}exports.LitElement=l,l.finalized=!0,l.render=t.render;
-},{"lit-html/lib/shady-render.js":"eBH8","./lib/updating-element.js":"fKvB","./lib/decorators.js":"FzpZ","lit-html/lit-html.js":"SPDu","./lib/css-tag.js":"ZFCR"}],"mwEU":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SevenSegmentElement=void 0;var s=require("lit-element"),e=function(s,e,t,n){var i,o=arguments.length,a=o<3?e:null===n?n=Object.getOwnPropertyDescriptor(e,t):n;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(s,e,t,n);else for(var g=s.length-1;g>=0;g--)(i=s[g])&&(a=(o<3?i(a):o>3?i(e,t,a):i(e,t))||a);return o>3&&a&&Object.defineProperty(e,t,a),a};let t=class extends s.LitElement{constructor(){super(...arguments),this.color="red",this.offColor="#444",this.background="black",this.digits=1,this.colon=!1,this.colonValue=!1,this.pins="top",this.values=[0,0,0,0,0,0,0,0]}get pinInfo(){const s=s=>{const{startX:e,cols:t,bottomY:n}=this.pinPositions,i=(s-1)%t,o=1-Math.floor((s-1)/t);return{number:s,x:3.78*(e+1.27+2.54*(o?i:t-i-1)),y:3.78*("top"===this.pins?o?n+1:1:o?n+2:0)}};switch(this.digits){case 4:return[Object.assign(Object.assign({name:"A"},s(13)),{signals:[],description:"Segment A"}),Object.assign(Object.assign({name:"B"},s(9)),{signals:[],description:"Segment B"}),Object.assign(Object.assign({name:"C"},s(4)),{signals:[],description:"Segment C"}),Object.assign(Object.assign({name:"D"},s(2)),{signals:[],description:"Segment D"}),Object.assign(Object.assign({name:"E"},s(1)),{signals:[],description:"Segment E"}),Object.assign(Object.assign({name:"F"},s(12)),{signals:[],description:"Segment F"}),Object.assign(Object.assign({name:"G"},s(5)),{signals:[],description:"Segment G"}),Object.assign(Object.assign({name:"DP"},s(3)),{signals:[],description:"Decimal Point"}),Object.assign(Object.assign({name:"DIG1"},s(14)),{signals:[],description:"Digit 1 Common"}),Object.assign(Object.assign({name:"DIG2"},s(11)),{signals:[],description:"Digit 2 Common"}),Object.assign(Object.assign({name:"DIG3"},s(10)),{signals:[],description:"Digit 3 Common"}),Object.assign(Object.assign({name:"DIG4"},s(6)),{signals:[],description:"Digit 4 Common"}),Object.assign(Object.assign({name:"COM"},s(7)),{signals:[],description:"Common pin"}),Object.assign(Object.assign({name:"CLN"},s(8)),{signals:[],description:"Colon"})];case 2:return[Object.assign(Object.assign({name:"DIG1"},s(8)),{signals:[],description:"Digit 1 Common"}),Object.assign(Object.assign({name:"DIG2"},s(7)),{signals:[],description:"Digit 2 Common"}),Object.assign(Object.assign({name:"A"},s(10)),{signals:[],description:"Segment A"}),Object.assign(Object.assign({name:"B"},s(9)),{signals:[],description:"Segment B"}),Object.assign(Object.assign({name:"C"},s(1)),{signals:[],description:"Segment C"}),Object.assign(Object.assign({name:"D"},s(4)),{signals:[],description:"Segment D"}),Object.assign(Object.assign({name:"E"},s(3)),{signals:[],description:"Segment E"}),Object.assign(Object.assign({name:"F"},s(6)),{signals:[],description:"Segment F"}),Object.assign(Object.assign({name:"G"},s(5)),{signals:[],description:"Segment G"}),Object.assign(Object.assign({name:"DP"},s(2)),{signals:[],description:"Decimal Point"})];case 1:default:return[Object.assign(Object.assign({name:"COM.1"},s(3)),{signals:[],description:"Common"}),Object.assign(Object.assign({name:"COM.2"},s(8)),{signals:[],description:"Common"}),Object.assign(Object.assign({name:"A"},s(7)),{signals:[],description:"Segment A"}),Object.assign(Object.assign({name:"B"},s(6)),{signals:[],description:"Segment B"}),Object.assign(Object.assign({name:"C"},s(4)),{signals:[],description:"Segment C"}),Object.assign(Object.assign({name:"D"},s(2)),{signals:[],description:"Segment D"}),Object.assign(Object.assign({name:"E"},s(1)),{signals:[],description:"Segment E"}),Object.assign(Object.assign({name:"F"},s(9)),{signals:[],description:"Segment F"}),Object.assign(Object.assign({name:"G"},s(10)),{signals:[],description:"Segment G"}),Object.assign(Object.assign({name:"DP"},s(5)),{signals:[],description:"Decimal Point"})]}}static get styles(){return s.css`
+},{"lit-html/lib/shady-render.js":"eBH8","./lib/updating-element.js":"fKvB","./lib/decorators.js":"FzpZ","lit-html/lit-html.js":"SPDu","./lib/css-tag.js":"ZFCR"}],"nDIM":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.mmToPix=void 0;const e=3.78;exports.mmToPix=3.78;
+},{}],"mwEU":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SevenSegmentElement=void 0;var s=require("lit-element"),e=require("./utils/units"),t=function(s,e,t,n){var i,o=arguments.length,a=o<3?e:null===n?n=Object.getOwnPropertyDescriptor(e,t):n;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(s,e,t,n);else for(var r=s.length-1;r>=0;r--)(i=s[r])&&(a=(o<3?i(a):o>3?i(e,t,a):i(e,t))||a);return o>3&&a&&Object.defineProperty(e,t,a),a};let n=class extends s.LitElement{constructor(){super(...arguments),this.color="red",this.offColor="#444",this.background="black",this.digits=1,this.colon=!1,this.colonValue=!1,this.pins="top",this.values=[0,0,0,0,0,0,0,0]}get pinInfo(){const s=s=>{const{startX:t,cols:n,bottomY:i}=this.pinPositions,o=(s-1)%n,a=1-Math.floor((s-1)/n),r=t+1.27+2.54*(a?o:n-o-1),g="top"===this.pins?a?i+1:1:a?i+2:0;return{number:s,x:r*e.mmToPix,y:g*e.mmToPix}};switch(this.digits){case 4:return[Object.assign(Object.assign({name:"A"},s(13)),{signals:[],description:"Segment A"}),Object.assign(Object.assign({name:"B"},s(9)),{signals:[],description:"Segment B"}),Object.assign(Object.assign({name:"C"},s(4)),{signals:[],description:"Segment C"}),Object.assign(Object.assign({name:"D"},s(2)),{signals:[],description:"Segment D"}),Object.assign(Object.assign({name:"E"},s(1)),{signals:[],description:"Segment E"}),Object.assign(Object.assign({name:"F"},s(12)),{signals:[],description:"Segment F"}),Object.assign(Object.assign({name:"G"},s(5)),{signals:[],description:"Segment G"}),Object.assign(Object.assign({name:"DP"},s(3)),{signals:[],description:"Decimal Point"}),Object.assign(Object.assign({name:"DIG1"},s(14)),{signals:[],description:"Digit 1 Common"}),Object.assign(Object.assign({name:"DIG2"},s(11)),{signals:[],description:"Digit 2 Common"}),Object.assign(Object.assign({name:"DIG3"},s(10)),{signals:[],description:"Digit 3 Common"}),Object.assign(Object.assign({name:"DIG4"},s(6)),{signals:[],description:"Digit 4 Common"}),Object.assign(Object.assign({name:"COM"},s(7)),{signals:[],description:"Common pin"}),Object.assign(Object.assign({name:"CLN"},s(8)),{signals:[],description:"Colon"})];case 2:return[Object.assign(Object.assign({name:"DIG1"},s(8)),{signals:[],description:"Digit 1 Common"}),Object.assign(Object.assign({name:"DIG2"},s(7)),{signals:[],description:"Digit 2 Common"}),Object.assign(Object.assign({name:"A"},s(10)),{signals:[],description:"Segment A"}),Object.assign(Object.assign({name:"B"},s(9)),{signals:[],description:"Segment B"}),Object.assign(Object.assign({name:"C"},s(1)),{signals:[],description:"Segment C"}),Object.assign(Object.assign({name:"D"},s(4)),{signals:[],description:"Segment D"}),Object.assign(Object.assign({name:"E"},s(3)),{signals:[],description:"Segment E"}),Object.assign(Object.assign({name:"F"},s(6)),{signals:[],description:"Segment F"}),Object.assign(Object.assign({name:"G"},s(5)),{signals:[],description:"Segment G"}),Object.assign(Object.assign({name:"DP"},s(2)),{signals:[],description:"Decimal Point"})];case 1:default:return[Object.assign(Object.assign({name:"COM.1"},s(3)),{signals:[],description:"Common"}),Object.assign(Object.assign({name:"COM.2"},s(8)),{signals:[],description:"Common"}),Object.assign(Object.assign({name:"A"},s(7)),{signals:[],description:"Segment A"}),Object.assign(Object.assign({name:"B"},s(6)),{signals:[],description:"Segment B"}),Object.assign(Object.assign({name:"C"},s(4)),{signals:[],description:"Segment C"}),Object.assign(Object.assign({name:"D"},s(2)),{signals:[],description:"Segment D"}),Object.assign(Object.assign({name:"E"},s(1)),{signals:[],description:"Segment E"}),Object.assign(Object.assign({name:"F"},s(9)),{signals:[],description:"Segment F"}),Object.assign(Object.assign({name:"G"},s(10)),{signals:[],description:"Segment G"}),Object.assign(Object.assign({name:"DP"},s(5)),{signals:[],description:"Decimal Point"})]}}static get styles(){return s.css`
       polygon {
         transform: scale(0.9);
         transform-origin: 50% 50%;
@@ -62,7 +64,7 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
         <rect height="2" width=${2.54*e} />
         <rect height="2" width=${2.54*e} transform="translate(0, ${t})" />
       </g>
-    `}render(){const{digits:e,colon:t,pins:n,yOffset:i}=this,o=12.55*e,a="extend"===n?23:19,g=[];for(let s=0;s<e;s++)g.push(this.renderDigit(3.5+12.7*s,8*s));return s.html`
+    `}render(){const{digits:e,colon:t,pins:n,yOffset:i}=this,o=12.55*e,a="extend"===n?23:19,r=[];for(let s=0;s<e;s++)r.push(this.renderDigit(3.5+12.7*s,8*s));return s.html`
       <svg
         width="${o}mm"
         height="${a}mm"
@@ -76,12 +78,12 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
           </pattern>
         </defs>
         <rect x="0" y="${i}" width="${o}" height="19" />
-        ${g}<!-- -->
+        ${r}<!-- -->
         ${t?this.renderColon():null}<!-- -->
         ${"none"!==n?this.renderPins():null}
       </svg>
-    `}};exports.SevenSegmentElement=t,e([(0,s.property)()],t.prototype,"color",void 0),e([(0,s.property)()],t.prototype,"offColor",void 0),e([(0,s.property)()],t.prototype,"background",void 0),e([(0,s.property)({type:Number})],t.prototype,"digits",void 0),e([(0,s.property)({type:Boolean})],t.prototype,"colon",void 0),e([(0,s.property)({type:Boolean})],t.prototype,"colonValue",void 0),e([(0,s.property)()],t.prototype,"pins",void 0),e([(0,s.property)({type:Array})],t.prototype,"values",void 0),exports.SevenSegmentElement=t=e([(0,s.customElement)("wokwi-7segment")],t);
-},{"lit-element":"bhxD"}],"ksYL":[function(require,module,exports) {
+    `}};exports.SevenSegmentElement=n,t([(0,s.property)()],n.prototype,"color",void 0),t([(0,s.property)()],n.prototype,"offColor",void 0),t([(0,s.property)()],n.prototype,"background",void 0),t([(0,s.property)({type:Number})],n.prototype,"digits",void 0),t([(0,s.property)({type:Boolean})],n.prototype,"colon",void 0),t([(0,s.property)({type:Boolean})],n.prototype,"colonValue",void 0),t([(0,s.property)()],n.prototype,"pins",void 0),t([(0,s.property)({type:Array})],n.prototype,"values",void 0),exports.SevenSegmentElement=n=t([(0,s.customElement)("wokwi-7segment")],n);
+},{"lit-element":"bhxD","./utils/units":"nDIM"}],"ksYL":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.pinsFemalePattern=void 0;var t=require("lit-element");const e=t.svg`
   <pattern id="pins-female" width="2.54" height="2.54" patternUnits="userSpaceOnUse">
     <rect x="0" y="0" width="2.54" height="2.54" fill="#333"></rect>
@@ -111,7 +113,7 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"lit-element":"bhxD"}],"xoL4":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.VCC=exports.GND=exports.usart=exports.spi=exports.i2c=exports.analog=void 0;const s=s=>({type:"analog",channel:s});exports.analog=s;const t=(s,t=0)=>({type:"i2c",signal:s,bus:t});exports.i2c=t;const e=(s,t=0)=>({type:"spi",signal:s,bus:t});exports.spi=e;const o=(s,t=0)=>({type:"usart",signal:s,bus:t});exports.usart=o;const p=()=>({type:"power",signal:"GND"});exports.GND=p;const r=s=>({type:"power",signal:"VCC",voltage:s});exports.VCC=r;
 },{}],"AJVk":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.ArduinoUnoElement=void 0;var t=require("lit-element"),e=require("./patterns/pins-female"),l=require("./pin"),a=function(t,e,l,a){var s,n=arguments.length,i=n<3?e:null===a?a=Object.getOwnPropertyDescriptor(e,l):a;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(t,e,l,a);else for(var r=t.length-1;r>=0;r--)(s=t[r])&&(i=(n<3?s(i):n>3?s(e,l,i):s(e,l))||i);return n>3&&i&&Object.defineProperty(e,l,i),i};let s=class extends t.LitElement{constructor(){super(...arguments),this.led13=!1,this.ledRX=!1,this.ledTX=!1,this.ledPower=!1,this.pinInfo=[{name:"A5.2",x:87,y:9,signals:[(0,l.analog)(5),(0,l.i2c)("SCL")]},{name:"A4.2",x:97,y:9,signals:[(0,l.analog)(4),(0,l.i2c)("SDA")]},{name:"AREF",x:106,y:9,signals:[]},{name:"GND.1",x:115.5,y:9,signals:[{type:"power",signal:"GND"}]},{name:"13",x:125,y:9,signals:[(0,l.spi)("SCK")]},{name:"12",x:134.5,y:9,signals:[(0,l.spi)("MISO")]},{name:"11",x:144,y:9,signals:[(0,l.spi)("MOSI"),{type:"pwm"}]},{name:"10",x:153.5,y:9,signals:[(0,l.spi)("SS"),{type:"pwm"}]},{name:"9",x:163,y:9,signals:[{type:"pwm"}]},{name:"8",x:173,y:9,signals:[]},{name:"7",x:189,y:9,signals:[]},{name:"6",x:198.5,y:9,signals:[{type:"pwm"}]},{name:"5",x:208,y:9,signals:[{type:"pwm"}]},{name:"4",x:217.5,y:9,signals:[]},{name:"3",x:227,y:9,signals:[{type:"pwm"}]},{name:"2",x:236.5,y:9,signals:[]},{name:"1",x:246,y:9,signals:[(0,l.usart)("TX")]},{name:"0",x:255.5,y:9,signals:[(0,l.usart)("RX")]},{name:"IOREF",x:131,y:191.5,signals:[]},{name:"RESET",x:140.5,y:191.5,signals:[]},{name:"3.3V",x:150,y:191.5,signals:[{type:"power",signal:"VCC",voltage:3.3}]},{name:"5V",x:160,y:191.5,signals:[{type:"power",signal:"VCC",voltage:5}]},{name:"GND.2",x:169.5,y:191.5,signals:[{type:"power",signal:"GND"}]},{name:"GND.3",x:179,y:191.5,signals:[{type:"power",signal:"GND"}]},{name:"VIN",x:188.5,y:191.5,signals:[{type:"power",signal:"VCC"}]},{name:"A0",x:208,y:191.5,signals:[(0,l.analog)(0)]},{name:"A1",x:217.5,y:191.5,signals:[(0,l.analog)(1)]},{name:"A2",x:227,y:191.5,signals:[(0,l.analog)(2)]},{name:"A3",x:236.5,y:191.5,signals:[(0,l.analog)(3)]},{name:"A4",x:246,y:191.5,signals:[(0,l.analog)(4),(0,l.i2c)("SCL")]},{name:"A5",x:255.5,y:191.5,signals:[(0,l.analog)(5),(0,l.i2c)("SDA")]}]}render(){const{ledPower:l,led13:a,ledRX:s,ledTX:n}=this;return t.html`
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.ArduinoUnoElement=void 0;var t=require("lit-element"),e=require("./patterns/pins-female"),l=require("./pin"),a=function(t,e,l,a){var s,n=arguments.length,i=n<3?e:null===a?a=Object.getOwnPropertyDescriptor(e,l):a;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(t,e,l,a);else for(var r=t.length-1;r>=0;r--)(s=t[r])&&(i=(n<3?s(i):n>3?s(e,l,i):s(e,l))||i);return n>3&&i&&Object.defineProperty(e,l,i),i};let s=class extends t.LitElement{constructor(){super(...arguments),this.led13=!1,this.ledRX=!1,this.ledTX=!1,this.ledPower=!1,this.pinInfo=[{name:"A5.2",x:87,y:9,signals:[(0,l.analog)(5),(0,l.i2c)("SCL")]},{name:"A4.2",x:97,y:9,signals:[(0,l.analog)(4),(0,l.i2c)("SDA")]},{name:"AREF",x:106,y:9,signals:[]},{name:"GND.1",x:115.5,y:9,signals:[{type:"power",signal:"GND"}]},{name:"13",x:125,y:9,signals:[(0,l.spi)("SCK")]},{name:"12",x:134.5,y:9,signals:[(0,l.spi)("MISO")]},{name:"11",x:144,y:9,signals:[(0,l.spi)("MOSI"),{type:"pwm"}]},{name:"10",x:153.5,y:9,signals:[(0,l.spi)("SS"),{type:"pwm"}]},{name:"9",x:163,y:9,signals:[{type:"pwm"}]},{name:"8",x:173,y:9,signals:[]},{name:"7",x:189,y:9,signals:[]},{name:"6",x:198.5,y:9,signals:[{type:"pwm"}]},{name:"5",x:208,y:9,signals:[{type:"pwm"}]},{name:"4",x:217.5,y:9,signals:[]},{name:"3",x:227,y:9,signals:[{type:"pwm"}]},{name:"2",x:236.5,y:9,signals:[]},{name:"1",x:246,y:9,signals:[(0,l.usart)("TX")]},{name:"0",x:255.5,y:9,signals:[(0,l.usart)("RX")]},{name:"IOREF",x:131,y:191.5,signals:[]},{name:"RESET",x:140.5,y:191.5,signals:[]},{name:"3.3V",x:150,y:191.5,signals:[{type:"power",signal:"VCC",voltage:3.3}]},{name:"5V",x:160,y:191.5,signals:[{type:"power",signal:"VCC",voltage:5}]},{name:"GND.2",x:169.5,y:191.5,signals:[{type:"power",signal:"GND"}]},{name:"GND.3",x:179,y:191.5,signals:[{type:"power",signal:"GND"}]},{name:"VIN",x:188.5,y:191.5,signals:[{type:"power",signal:"VCC"}]},{name:"A0",x:208,y:191.5,signals:[(0,l.analog)(0)]},{name:"A1",x:217.5,y:191.5,signals:[(0,l.analog)(1)]},{name:"A2",x:227,y:191.5,signals:[(0,l.analog)(2)]},{name:"A3",x:236.5,y:191.5,signals:[(0,l.analog)(3)]},{name:"A4",x:246,y:191.5,signals:[(0,l.analog)(4),(0,l.i2c)("SDA")]},{name:"A5",x:255.5,y:191.5,signals:[(0,l.analog)(5),(0,l.i2c)("SCL")]}]}render(){const{ledPower:l,led13:a,ledRX:s,ledTX:n}=this;return t.html`
       <svg
         width="72.58mm"
         height="53.34mm"
@@ -302,7 +304,7 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
           <tspan x="0" dy="2.54">~10</tspan>
           <tspan x="0" dy="2.54">~9</tspan>
           <tspan x="0" dy="2.54">8</tspan>
-          <tspan x="0" dy="4.08">~7</tspan>
+          <tspan x="0" dy="4.08">7</tspan>
           <tspan x="0" dy="2.54">~6</tspan>
           <tspan x="0" dy="2.54">~5</tspan>
           <tspan x="0" dy="2.54">4</tspan>
@@ -367,7 +369,7 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"lit-element":"bhxD","./patterns/pins-female":"ksYL","./pin":"xoL4"}],"n2M3":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.fontA00=void 0;const e=new Uint8Array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4,0,0,4,0,10,10,10,0,0,0,0,0,10,10,31,10,31,10,10,0,4,30,5,14,20,15,4,0,3,19,8,4,2,25,24,0,6,9,5,2,21,9,22,0,6,4,2,0,0,0,0,0,8,4,2,2,2,4,8,0,2,4,8,8,8,4,2,0,0,4,21,14,21,4,0,0,0,4,4,31,4,4,0,0,0,0,0,0,6,4,2,0,0,0,0,31,0,0,0,0,0,0,0,0,0,6,6,0,0,16,8,4,2,1,0,0,14,17,25,21,19,17,14,0,4,6,4,4,4,4,14,0,14,17,16,8,4,2,31,0,31,8,4,8,16,17,14,0,8,12,10,9,31,8,8,0,31,1,15,16,16,17,14,0,12,2,1,15,17,17,14,0,31,17,16,8,4,4,4,0,14,17,17,14,17,17,14,0,14,17,17,30,16,8,6,0,0,6,6,0,6,6,0,0,0,6,6,0,6,4,2,0,8,4,2,1,2,4,8,0,0,0,31,0,31,0,0,0,2,4,8,16,8,4,2,0,14,17,16,8,4,0,4,0,14,17,16,22,21,21,14,0,14,17,17,17,31,17,17,0,15,17,17,15,17,17,15,0,14,17,1,1,1,17,14,0,7,9,17,17,17,9,7,0,31,1,1,15,1,1,31,0,31,1,1,15,1,1,1,0,14,17,1,29,17,17,30,0,17,17,17,31,17,17,17,0,14,4,4,4,4,4,14,0,28,8,8,8,8,9,6,0,17,9,5,3,5,9,17,0,1,1,1,1,1,1,31,0,17,27,21,21,17,17,17,0,17,17,19,21,25,17,17,0,14,17,17,17,17,17,14,0,15,17,17,15,1,1,1,0,14,17,17,17,21,9,22,0,15,17,17,15,5,9,17,0,30,1,1,14,16,16,15,0,31,4,4,4,4,4,4,0,17,17,17,17,17,17,14,0,17,17,17,17,17,10,4,0,17,17,17,21,21,21,10,0,17,17,10,4,10,17,17,0,17,17,17,10,4,4,4,0,31,16,8,4,2,1,31,0,7,1,1,1,1,1,7,0,17,10,31,4,31,4,4,0,14,8,8,8,8,8,14,0,4,10,17,0,0,0,0,0,0,0,0,0,0,0,31,0,2,4,8,0,0,0,0,0,0,0,14,16,30,17,30,0,1,1,13,19,17,17,15,0,0,0,14,1,1,17,14,0,16,16,22,25,17,17,30,0,0,0,14,17,31,1,14,0,12,18,2,7,2,2,2,0,0,30,17,17,30,16,14,0,1,1,13,19,17,17,17,0,4,0,6,4,4,4,14,0,8,0,12,8,8,9,6,0,1,1,9,5,3,5,9,0,6,4,4,4,4,4,14,0,0,0,11,21,21,17,17,0,0,0,13,19,17,17,17,0,0,0,14,17,17,17,14,0,0,0,15,17,15,1,1,0,0,0,22,25,30,16,16,0,0,0,13,19,1,1,1,0,0,0,14,1,14,16,15,0,2,2,7,2,2,18,12,0,0,0,17,17,17,25,22,0,0,0,17,17,17,10,4,0,0,0,17,21,21,21,10,0,0,0,17,10,4,10,17,0,0,0,17,17,30,16,14,0,0,0,31,8,4,2,31,0,8,4,4,2,4,4,8,0,4,4,4,4,4,4,4,0,2,4,4,8,4,4,2,0,0,4,8,31,8,4,0,0,0,4,2,31,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,5,7,0,28,4,4,4,0,0,0,0,0,0,0,4,4,4,7,0,0,0,0,0,1,2,4,0,0,0,0,6,6,0,0,0,0,31,16,31,16,8,4,0,0,0,31,16,12,4,2,0,0,0,8,4,6,5,4,0,0,0,4,31,17,16,12,0,0,0,31,4,4,4,31,0,0,0,8,31,12,10,9,0,0,0,2,31,18,10,2,0,0,0,0,14,8,8,31,0,0,0,15,8,15,8,15,0,0,0,0,21,21,16,12,0,0,0,0,31,0,0,0,0,31,16,20,12,4,4,2,0,16,8,4,6,5,4,4,0,4,31,17,17,16,8,4,0,0,31,4,4,4,4,31,0,8,31,8,12,10,9,8,0,2,31,18,18,18,18,9,0,4,31,4,31,4,4,4,0,0,30,18,17,16,8,6,0,2,30,9,8,8,8,4,0,0,31,16,16,16,16,31,0,10,31,10,10,8,4,2,0,0,3,16,19,16,8,7,0,0,31,16,8,4,10,17,0,2,31,18,10,2,2,28,0,0,17,17,18,16,8,6,0,0,30,18,21,24,8,6,0,8,7,4,31,4,4,2,0,0,21,21,21,16,8,4,0,14,0,31,4,4,4,2,0,2,2,2,6,10,2,2,0,4,4,31,4,4,2,1,0,0,14,0,0,0,0,31,0,0,31,16,10,4,10,1,0,4,31,8,4,14,21,4,0,8,8,8,8,8,4,2,0,0,4,8,17,17,17,17,0,1,1,31,1,1,1,30,0,0,31,16,16,16,8,6,0,0,2,5,8,16,16,0,0,4,31,4,4,21,21,4,0,0,31,16,16,10,4,8,0,0,14,0,14,0,14,16,0,0,4,2,1,17,31,16,0,0,16,16,10,4,10,1,0,0,31,2,31,2,2,28,0,2,2,31,18,10,2,2,0,0,14,8,8,8,8,31,0,0,31,16,31,16,16,31,0,14,0,31,16,16,8,4,0,9,9,9,9,8,4,2,0,0,4,5,5,21,21,13,0,0,1,1,17,9,5,3,0,0,31,17,17,17,17,31,0,0,31,17,17,16,8,4,0,0,3,0,16,16,8,7,0,4,9,2,0,0,0,0,0,7,5,7,0,0,0,0,0,0,0,18,21,9,9,22,0,10,0,14,16,30,17,30,0,0,0,14,17,15,17,15,1,0,0,14,1,6,17,14,0,0,0,17,17,17,25,23,1,0,0,30,5,9,17,14,0,0,0,12,18,17,17,15,1,0,0,30,17,17,17,30,16,0,0,28,4,4,5,2,0,0,8,11,8,0,0,0,0,8,0,12,8,8,8,8,8,0,5,2,5,0,0,0,0,0,4,14,5,21,14,4,0,2,2,7,2,7,2,30,0,14,0,13,19,17,17,17,0,10,0,14,17,17,17,14,0,0,0,13,19,17,17,15,1,0,0,22,25,17,17,30,16,0,14,17,31,17,17,14,0,0,0,0,26,21,11,0,0,0,0,14,17,17,10,27,0,10,0,17,17,17,17,25,22,31,1,2,4,2,1,31,0,0,0,31,10,10,10,25,0,31,0,17,10,4,10,17,0,0,0,17,17,17,17,30,16,0,16,15,4,31,4,4,0,0,0,31,2,30,18,17,0,0,0,31,21,31,17,17,0,0,4,0,31,0,4,0,0,0,0,0,0,0,0,0,0,31,31,31,31,31,31,31,31]);exports.fontA00=e;
 },{}],"VbbO":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LCD1602Element=void 0;var t=require("lit-element"),e=require("./lcd1602-font-a00"),r=require("./pin"),i=function(t,e,r,i){var n,s=arguments.length,l=s<3?e:null===i?i=Object.getOwnPropertyDescriptor(e,r):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(t,e,r,i);else for(var o=t.length-1;o>=0;o--)(n=t[o])&&(l=(s<3?n(l):s>3?n(e,r,l):n(e,r))||l);return s>3&&l&&Object.defineProperty(e,r,l),l};const n=2,s=16,l=3.55,o=5.95,h={green:"#6cb201",blue:"#000eff"};let a=class extends t.LitElement{constructor(){super(...arguments),this.color="black",this.background="green",this.characters=new Uint8Array(32),this.font=e.fontA00,this.cursor=!1,this.blink=!1,this.cursorX=0,this.cursorY=0,this.backlight=!0,this.pins="full"}get text(){return Array.from(this.characters).map(t=>String.fromCharCode(t)).join("")}set text(t){this.characters=new Uint8Array(t.split("").map(t=>t.charCodeAt(0)))}static get styles(){return t.css`
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LCD1602Element=void 0;var t=require("lit-element"),e=require("./lcd1602-font-a00"),r=require("./pin"),i=require("./utils/units"),n=function(t,e,r,i){var n,s=arguments.length,l=s<3?e:null===i?i=Object.getOwnPropertyDescriptor(e,r):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(t,e,r,i);else for(var o=t.length-1;o>=0;o--)(n=t[o])&&(l=(s<3?n(l):s>3?n(e,r,l):n(e,r))||l);return s>3&&l&&Object.defineProperty(e,r,l),l};const s=3.55,l=5.95,o={green:"#6cb201",blue:"#000eff"};let a=class extends t.LitElement{constructor(){super(...arguments),this.color="black",this.background="green",this.characters=new Uint8Array(32),this.font=e.fontA00,this.cursor=!1,this.blink=!1,this.cursorX=0,this.cursorY=0,this.backlight=!0,this.pins="full",this.numCols=16,this.numRows=2}get text(){return Array.from(this.characters).map(t=>String.fromCharCode(t)).join("")}set text(t){this.characters=new Uint8Array(t.split("").map(t=>t.charCodeAt(0)))}static get styles(){return t.css`
       .cursor-blink {
         animation: cursor-blink;
       }
@@ -386,8 +388,8 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
           opacity: 0;
         }
       }
-    `}get pinInfo(){switch(this.pins){case"i2c":return[{name:"GND",x:4,y:32,number:1,signals:[{type:"power",signal:"GND"}]},{name:"VCC",x:4,y:41.5,number:2,signals:[{type:"power",signal:"VCC"}]},{name:"SDA",x:4,y:51,number:3,signals:[(0,r.i2c)("SDA")]},{name:"SCL",x:4,y:60.5,number:4,signals:[(0,r.i2c)("SCL")]}];case"full":default:return[{name:"VSS",x:32,y:131,number:1,signals:[{type:"power",signal:"GND"}]},{name:"VDD",x:41.5,y:131,number:2,signals:[{type:"power",signal:"VCC"}]},{name:"V0",x:51.5,y:131,number:3,signals:[]},{name:"RS",x:60.5,y:131,number:4,signals:[]},{name:"RW",x:70.5,y:131,number:5,signals:[]},{name:"E",x:80,y:131,number:6,signals:[]},{name:"D0",x:89.5,y:131,number:7,signals:[]},{name:"D1",x:99.5,y:131,number:8,signals:[]},{name:"D2",x:109,y:131,number:9,signals:[]},{name:"D3",x:118.5,y:131,number:10,signals:[]},{name:"D4",x:128,y:131,number:11,signals:[]},{name:"D5",x:137.5,y:131,number:12,signals:[]},{name:"D6",x:147,y:131,number:13,signals:[]},{name:"D7",x:156.5,y:131,number:14,signals:[]},{name:"A",x:166.5,y:131,number:15,signals:[]},{name:"K",x:176,y:131,number:16,signals:[]}]}}path(t){const e=[];for(let r=0;r<t.length;r++){const i=r%16*3.55,n=5.95*Math.floor(r/16);for(let s=0;s<8;s++){const l=this.font[8*t[r]+s];for(let t=0;t<5;t++)if(l&1<<t){const r=(i+.6*t).toFixed(2),l=(n+.7*s).toFixed(2);e.push(`M ${r} ${l}h0.55v0.65h-0.55Z`)}}}return e.join(" ")}renderCursor(){const e=12.45+3.55*this.cursorX,r=12.55+5.95*this.cursorY;if(this.cursorX<0||this.cursorX>=16||this.cursorY<0||this.cursorY>=2)return null;const i=[];if(this.blink&&i.push(t.svg`
-        <rect x="${e}" y="${r}" width="2.95" height="5.55" fill="${this.color}">
+    `}get panelHeight(){return 5.75*this.rows}get pinInfo(){const{panelHeight:t}=this,e=87.5+t*i.mmToPix;switch(this.pins){case"i2c":return[{name:"GND",x:4,y:32,number:1,signals:[{type:"power",signal:"GND"}]},{name:"VCC",x:4,y:41.5,number:2,signals:[{type:"power",signal:"VCC"}]},{name:"SDA",x:4,y:51,number:3,signals:[(0,r.i2c)("SDA")]},{name:"SCL",x:4,y:60.5,number:4,signals:[(0,r.i2c)("SCL")]}];case"full":default:return[{name:"VSS",x:32,y:e,number:1,signals:[{type:"power",signal:"GND"}]},{name:"VDD",x:41.5,y:e,number:2,signals:[{type:"power",signal:"VCC"}]},{name:"V0",x:51.5,y:e,number:3,signals:[]},{name:"RS",x:60.5,y:e,number:4,signals:[]},{name:"RW",x:70.5,y:e,number:5,signals:[]},{name:"E",x:80,y:e,number:6,signals:[]},{name:"D0",x:89.5,y:e,number:7,signals:[]},{name:"D1",x:99.5,y:e,number:8,signals:[]},{name:"D2",x:109,y:e,number:9,signals:[]},{name:"D3",x:118.5,y:e,number:10,signals:[]},{name:"D4",x:128,y:e,number:11,signals:[]},{name:"D5",x:137.5,y:e,number:12,signals:[]},{name:"D6",x:147,y:e,number:13,signals:[]},{name:"D7",x:156.5,y:e,number:14,signals:[]},{name:"A",x:166.5,y:e,number:15,signals:[]},{name:"K",x:176,y:e,number:16,signals:[]}]}}get cols(){return this.numCols}get rows(){return this.numRows}path(t){const e=[],{cols:r}=this;for(let i=0;i<t.length;i++){const n=i%r*3.55,s=5.95*Math.floor(i/r);for(let r=0;r<8;r++){const l=this.font[8*t[i]+r];for(let t=0;t<5;t++)if(l&1<<t){const i=(n+.6*t).toFixed(2),l=(s+.7*r).toFixed(2);e.push(`M ${i} ${l}h0.55v0.65h-0.55Z`)}}}return e.join(" ")}renderCursor(){const{cols:e,rows:r,cursor:i,cursorX:n,cursorY:s,blink:l,color:o}=this,a=12.45+3.55*n,h=12.55+5.95*s;if(n<0||n>=e||s<0||s>=r)return null;const x=[];if(l&&x.push(t.svg`
+        <rect x="${a}" y="${h}" width="2.95" height="5.55" fill="${o}">
           <animate
             attributeName="opacity"
             values="0;0;0;0;1;1;0;0;0;0"
@@ -396,39 +398,41 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
             repeatCount="indefinite"
           />
         </rect>
-      `),this.cursor){const n=r+.7*7;i.push(t.svg`<rect x="${e}" y="${n}" width="2.95" height="0.65" fill="${this.color}" />`)}return i}renderI2CPins(){return t.svg`
+      `),i){const e=h+.7*7;x.push(t.svg`<rect x="${a}" y="${e}" width="2.95" height="0.65" fill="${o}" />`)}return x}renderI2CPins(){return t.svg`
       <rect x="7.55" y="-2.5" height="2.5" width="10.16" fill="url(#pins)" transform="rotate(90)" />
       <text y="6.8" x="0.7" fill="white">1</text>
       <text y="8.9" x="2.3" fill="white">GND</text>
       <text y="11.4" x="2.3" fill="white">VCC</text>
       <text y="14" x="2.3" fill="white">SDA</text>
       <text y="16.6" x="2.3" fill="white">SCL</text>
-    `}renderPins(){return t.svg`
-      <rect x="7.55" y="33.5" height="2.5" width="40.64" fill="url(#pins)" />
-      <text x="6" y="35.3" fill="white">1</text>
-      <text x="7.2" y="33.3" fill="white">VSS</text>
-      <text x="9.9" y="33.3" fill="white">VDD</text>
-      <text x="12.7" y="33.3" fill="white">V0</text>
-      <text x="15.2" y="33.3" fill="white">RS</text>
-      <text x="17.8" y="33.3" fill="white">RW</text>
-      <text x="20.8" y="33.3" fill="white">E</text>
-      <text x="22.7" y="33.3" fill="white">D0</text>
-      <text x="25.3" y="33.3" fill="white">D1</text>
-      <text x="27.9" y="33.3" fill="white">D2</text>
-      <text x="30.4" y="33.3" fill="white">D3</text>
-      <text x="33" y="33.3" fill="white">D4</text>
-      <text x="35.6" y="33.3" fill="white">D5</text>
-      <text x="38.2" y="33.3" fill="white">D6</text>
-      <text x="40.8" y="33.3" fill="white">D7</text>
-      <text x="43.6" y="33.3" fill="white">A</text>
-      <text x="46.2" y="33.3" fill="white">K</text>
-      <text x="48" y="35.3" fill="white">16</text>
-    `}render(){const{color:e,characters:r,background:i}=this,n=this.backlight?0:.5,s=i in h?h[i]:h;return t.html`
+    `}renderPins(e){const r=e+21.1;return t.svg`
+      <g transform="translate(0, ${r})">
+        <rect x="7.55" y="1" height="2.5" width="40.64" fill="url(#pins)" />
+        <text x="6" y="2.7" fill="white">1</text>
+        <text x="7.2" y="0.7" fill="white">VSS</text>
+        <text x="9.9" y="0.7" fill="white">VDD</text>
+        <text x="12.7" y="0.7" fill="white">V0</text>
+        <text x="15.2" y="0.7" fill="white">RS</text>
+        <text x="17.8" y="0.7" fill="white">RW</text>
+        <text x="20.8" y="0.7" fill="white">E</text>
+        <text x="22.7" y="0.7" fill="white">D0</text>
+        <text x="25.3" y="0.7" fill="white">D1</text>
+        <text x="27.9" y="0.7" fill="white">D2</text>
+        <text x="30.4" y="0.7" fill="white">D3</text>
+        <text x="33" y="0.7" fill="white">D4</text>
+        <text x="35.6" y="0.7" fill="white">D5</text>
+        <text x="38.2" y="0.7" fill="white">D6</text>
+        <text x="40.8" y="0.7" fill="white">D7</text>
+        <text x="43.6" y="0.7" fill="white">A</text>
+        <text x="46.2" y="0.7" fill="white">K</text>
+        <text x="48" y="2.7" fill="white">16</text>
+      </g>
+    `}render(){const{color:e,characters:r,background:i,pins:n,panelHeight:s,cols:l}=this,a=this.backlight?0:.5,h=i in o?o[i]:o,x=3.5125*l,c=x+23.8,p=s+24.5;return t.html`
       <svg
-        width="80mm"
-        height="36mm"
+        width="${c}mm"
+        height="${p}mm"
         version="1.1"
-        viewBox="0 0 80 36"
+        viewBox="0 0 ${c} ${p}"
         style="font-size: 1.5px; font-family: monospace"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -451,18 +455,40 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
             <circle r="0.45" cx="0.827" cy="0.9" color="black" />
           </pattern>
         </defs>
-        <rect width="80" height="36" fill="#087f45" />
-        <rect x="4.95" y="5.7" width="71.2" height="25.2" />
-        <rect x="7.55" y="10.3" width="66" height="16" rx="1.5" ry="1.5" fill="${s}" />
-        <rect x="7.55" y="10.3" width="66" height="16" rx="1.5" ry="1.5" opacity="${n}" />
-        ${"i2c"===this.pins?this.renderI2CPins():null}
-        ${"full"===this.pins?this.renderPins():null}
-        <rect x="12.45" y="12.55" width="56.2" height="11.5" fill="url(#characters)" />
+        <rect width="${c}" height="${p}" fill="#087f45" />
+        <rect x="4.95" y="5.7" width="${x+15}" height="${s+13.7}" />
+        <rect
+          x="7.55"
+          y="10.3"
+          width="${x+9.8}"
+          height="${s+4.5}"
+          rx="1.5"
+          ry="1.5"
+          fill="${h}"
+        />
+        <rect
+          x="7.55"
+          y="10.3"
+          width="${x+9.8}"
+          height="${s+4.5}"
+          rx="1.5"
+          ry="1.5"
+          opacity="${a}"
+        />
+        ${"i2c"===n?this.renderI2CPins():null}
+        ${"full"===n?this.renderPins(s):null}
+        <rect
+          x="12.45"
+          y="12.55"
+          width="${x}"
+          height="${s}"
+          fill="url(#characters)"
+        />
         <path d="${this.path(r)}" transform="translate(12.45, 12.55)" fill="${e}" />
         ${this.renderCursor()}
       </svg>
-    `}};exports.LCD1602Element=a,i([(0,t.property)()],a.prototype,"color",void 0),i([(0,t.property)()],a.prototype,"background",void 0),i([(0,t.property)({type:Array})],a.prototype,"characters",void 0),i([(0,t.property)()],a.prototype,"font",void 0),i([(0,t.property)()],a.prototype,"cursor",void 0),i([(0,t.property)()],a.prototype,"blink",void 0),i([(0,t.property)()],a.prototype,"cursorX",void 0),i([(0,t.property)()],a.prototype,"cursorY",void 0),i([(0,t.property)()],a.prototype,"backlight",void 0),i([(0,t.property)()],a.prototype,"pins",void 0),i([(0,t.property)()],a.prototype,"text",null),exports.LCD1602Element=a=i([(0,t.customElement)("wokwi-lcd1602")],a);
-},{"lit-element":"bhxD","./lcd1602-font-a00":"n2M3","./pin":"xoL4"}],"TcZY":[function(require,module,exports) {
+    `}};exports.LCD1602Element=a,n([(0,t.property)()],a.prototype,"color",void 0),n([(0,t.property)()],a.prototype,"background",void 0),n([(0,t.property)({type:Array})],a.prototype,"characters",void 0),n([(0,t.property)()],a.prototype,"font",void 0),n([(0,t.property)()],a.prototype,"cursor",void 0),n([(0,t.property)()],a.prototype,"blink",void 0),n([(0,t.property)()],a.prototype,"cursorX",void 0),n([(0,t.property)()],a.prototype,"cursorY",void 0),n([(0,t.property)()],a.prototype,"backlight",void 0),n([(0,t.property)()],a.prototype,"pins",void 0),n([(0,t.property)()],a.prototype,"text",null),exports.LCD1602Element=a=n([(0,t.customElement)("wokwi-lcd1602")],a);
+},{"lit-element":"bhxD","./lcd1602-font-a00":"n2M3","./pin":"xoL4","./utils/units":"nDIM"}],"TcZY":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.fontA02=void 0;const e=new Uint8Array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,6,14,30,14,6,2,0,8,12,14,15,14,12,8,0,18,9,27,0,0,0,0,0,27,18,9,0,0,0,0,0,4,14,31,0,4,14,31,0,31,14,4,0,31,14,4,0,0,14,31,31,31,14,0,0,16,16,20,18,31,2,4,0,4,14,21,4,4,4,4,0,4,4,4,4,21,14,4,0,0,4,8,31,8,4,0,0,0,4,2,31,2,4,0,0,8,4,2,4,8,0,31,0,2,4,8,4,2,0,31,0,0,4,4,14,14,31,0,0,0,31,14,14,4,4,0,0,0,0,0,0,0,0,0,0,4,4,4,4,0,0,4,0,10,10,10,0,0,0,0,0,10,10,31,10,31,10,10,0,4,30,5,14,20,15,4,0,3,19,8,4,2,25,24,0,6,9,5,2,21,9,22,0,6,4,2,0,0,0,0,0,8,4,2,2,2,4,8,0,2,4,8,8,8,4,2,0,0,4,21,14,21,4,0,0,0,4,4,31,4,4,0,0,0,0,0,0,6,4,2,0,0,0,0,31,0,0,0,0,0,0,0,0,0,6,6,0,0,16,8,4,2,1,0,0,14,17,25,21,19,17,14,0,4,6,4,4,4,4,14,0,14,17,16,8,4,2,31,0,31,8,4,8,16,17,14,0,8,12,10,9,31,8,8,0,31,1,15,16,16,17,14,0,12,2,1,15,17,17,14,0,31,17,16,8,4,4,4,0,14,17,17,14,17,17,14,0,14,17,17,30,16,8,6,0,0,6,6,0,6,6,0,0,0,6,6,0,6,4,2,0,8,4,2,1,2,4,8,0,0,0,31,0,31,0,0,0,2,4,8,16,8,4,2,0,14,17,16,8,4,0,4,0,14,17,16,22,21,21,14,0,4,10,17,17,31,17,17,0,15,17,17,15,17,17,15,0,14,17,1,1,1,17,14,0,7,9,17,17,17,9,7,0,31,1,1,15,1,1,31,0,31,1,1,15,1,1,1,0,14,17,1,29,17,17,30,0,17,17,17,31,17,17,17,0,14,4,4,4,4,4,14,0,28,8,8,8,8,9,6,0,17,9,5,3,5,9,17,0,1,1,1,1,1,1,31,0,17,27,21,21,17,17,17,0,17,17,19,21,25,17,17,0,14,17,17,17,17,17,14,0,15,17,17,15,1,1,1,0,14,17,17,17,21,9,22,0,15,17,17,15,5,9,17,0,14,17,1,14,16,17,14,0,31,4,4,4,4,4,4,0,17,17,17,17,17,17,14,0,17,17,17,17,17,10,4,0,17,17,17,21,21,21,10,0,17,17,10,4,10,17,17,0,17,17,17,10,4,4,4,0,31,16,8,4,2,1,31,0,14,2,2,2,2,2,14,0,0,1,2,4,8,16,0,0,14,8,8,8,8,8,14,0,4,10,17,0,0,0,0,0,0,0,0,0,0,0,31,0,2,4,8,0,0,0,0,0,0,0,14,16,30,17,30,0,1,1,13,19,17,17,15,0,0,0,14,1,1,17,14,0,16,16,22,25,17,17,30,0,0,0,14,17,31,1,14,0,12,18,2,7,2,2,2,0,0,0,30,17,30,16,14,0,1,1,13,19,17,17,17,0,4,0,4,6,4,4,14,0,8,0,12,8,8,9,6,0,1,1,9,5,3,5,9,0,6,4,4,4,4,4,14,0,0,0,11,21,21,21,21,0,0,0,13,19,17,17,17,0,0,0,14,17,17,17,14,0,0,0,15,17,15,1,1,0,0,0,22,25,30,16,16,0,0,0,13,19,1,1,1,0,0,0,14,1,14,16,15,0,2,2,7,2,2,18,12,0,0,0,17,17,17,25,22,0,0,0,17,17,17,10,4,0,0,0,17,17,21,21,10,0,0,0,17,10,4,10,17,0,0,0,17,17,30,16,14,0,0,0,31,8,4,2,31,0,8,4,4,2,4,4,8,0,4,4,4,4,4,4,4,0,2,4,4,8,4,4,2,0,0,0,0,22,9,0,0,0,4,10,17,17,17,31,0,0,31,17,1,15,17,17,15,30,20,20,18,17,31,17,17,0,21,21,21,14,21,21,21,0,15,16,16,12,16,16,15,0,17,17,25,21,19,17,17,10,4,17,17,25,21,19,17,0,30,20,20,20,20,21,18,0,31,17,17,17,17,17,17,0,17,17,17,10,4,2,1,0,17,17,17,17,17,31,16,0,17,17,17,30,16,16,16,0,0,21,21,21,21,21,31,0,21,21,21,21,21,31,16,0,3,2,2,14,18,18,14,0,17,17,17,19,21,21,19,0,14,17,20,26,16,17,14,0,0,0,18,21,9,9,22,0,4,12,20,20,4,7,7,0,31,17,1,1,1,1,1,0,0,0,31,10,10,10,25,0,31,1,2,4,2,1,31,0,0,0,30,9,9,9,6,12,20,28,20,20,23,27,24,0,0,16,14,5,4,4,8,0,4,14,14,14,31,4,0,0,14,17,17,31,17,17,14,0,0,14,17,17,17,10,27,0,12,18,4,10,17,17,14,0,0,0,26,21,11,0,0,0,0,10,31,31,31,14,4,0,0,0,14,1,6,17,14,0,14,17,17,17,17,17,17,0,27,27,27,27,27,27,27,0,4,0,0,4,4,4,4,0,4,14,5,5,21,14,4,0,12,2,2,7,2,18,13,0,0,17,14,10,14,17,0,0,17,10,31,4,31,4,4,0,4,4,4,0,4,4,4,0,12,18,4,10,4,9,6,0,8,20,4,31,4,5,2,0,31,17,21,29,21,17,31,0,14,16,30,17,30,0,31,0,0,20,10,5,10,20,0,0,9,21,21,23,21,21,9,0,30,17,17,30,20,18,17,0,31,17,21,17,25,21,31,0,4,2,6,0,0,0,0,6,9,9,9,6,0,0,0,0,4,4,31,4,4,0,31,6,9,4,2,15,0,0,0,7,8,6,8,7,0,0,0,7,9,7,1,9,29,9,24,0,17,17,17,25,23,1,1,0,30,25,25,30,24,24,24,0,0,0,0,6,6,0,0,0,0,0,10,17,21,21,10,2,3,2,2,7,0,0,0,0,14,17,17,17,14,0,31,0,0,5,10,20,10,5,0,17,9,5,10,13,10,30,8,17,9,5,10,21,16,8,28,3,2,3,18,27,20,28,16,0,4,0,4,2,1,17,14,2,4,4,10,17,31,17,17,8,4,4,10,17,31,17,17,4,10,0,14,17,31,17,17,22,9,0,14,17,31,17,17,10,0,4,10,17,31,17,17,4,10,4,14,17,31,17,17,0,28,6,5,29,7,5,29,14,17,1,1,17,14,8,12,2,4,0,31,1,15,1,31,8,4,0,31,1,15,1,31,4,10,0,31,1,15,1,31,0,10,0,31,1,15,1,31,2,4,0,14,4,4,4,14,8,4,0,14,4,4,4,14,4,10,0,14,4,4,4,14,0,10,0,14,4,4,4,14,0,14,18,18,23,18,18,14,22,9,0,17,19,21,25,17,2,4,14,17,17,17,17,14,8,4,14,17,17,17,17,14,4,10,0,14,17,17,17,14,22,9,0,14,17,17,17,14,10,0,14,17,17,17,17,14,0,0,17,10,4,10,17,0,0,14,4,14,21,14,4,14,2,4,17,17,17,17,17,14,8,4,17,17,17,17,17,14,4,10,0,17,17,17,17,14,10,0,17,17,17,17,17,14,8,4,17,10,4,4,4,4,3,2,14,18,18,14,2,7,0,12,18,18,14,18,18,13,2,4,0,14,16,30,17,30,8,4,0,14,16,30,17,30,4,10,0,14,16,30,17,30,22,9,0,14,16,30,17,30,0,10,0,14,16,30,17,30,4,10,4,14,16,30,17,30,0,0,11,20,30,5,21,10,0,0,14,1,17,14,4,6,2,4,0,14,17,31,1,14,8,4,0,14,17,31,1,14,4,10,0,14,17,31,1,14,0,10,0,14,17,31,1,14,2,4,0,4,6,4,4,14,8,4,0,4,6,4,4,14,4,10,0,4,6,4,4,14,0,10,0,4,6,4,4,14,0,5,2,5,8,30,17,14,22,9,0,13,19,17,17,17,2,4,0,14,17,17,17,14,8,4,0,14,17,17,17,14,0,4,10,0,14,17,17,14,0,22,9,0,14,17,17,14,0,10,0,14,17,17,17,14,0,0,4,0,31,0,4,0,0,8,4,14,21,14,4,2,2,4,0,17,17,17,25,22,8,4,0,17,17,17,25,22,4,10,0,17,17,17,25,22,0,10,0,17,17,17,25,22,0,8,4,17,17,30,16,14,0,6,4,12,20,12,4,14,0,10,0,17,17,30,16,14]);exports.fontA02=e;
 },{}],"xWrt":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LEDElement=void 0;var e=require("lit-element"),t=function(e,t,l,i){var o,r=arguments.length,c=r<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,l):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)c=Reflect.decorate(e,t,l,i);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(c=(r<3?o(c):r>3?o(t,l,c):o(t,l))||c);return r>3&&c&&Object.defineProperty(t,l,c),c};const l={red:"#ff8080",green:"#80ff80",blue:"#8080ff",yellow:"#ffff80",orange:"#ffcf80",white:"#ffffff"};let i=class extends e.LitElement{constructor(){super(...arguments),this.value=!1,this.brightness=1,this.color="red",this.lightColor=null,this.label="",this.pinInfo=[{name:"A",x:24,y:42,signals:[],description:"Anode"},{name:"C",x:16,y:42,signals:[],description:"Cathode"}]}static get styles(){return e.css`
@@ -662,7 +688,12 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"lit-element":"bhxD","./pin":"xoL4"}],"VHTx":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SPACE_KEYS=void 0;const e=[" ","Spacebar"];exports.SPACE_KEYS=e;
 },{}],"C6Pt":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.PushbuttonElement=void 0;var e=require("lit-element"),t=require("./utils/keys"),r=function(e,t,r,s){var o,n=arguments.length,c=n<3?t:null===s?s=Object.getOwnPropertyDescriptor(t,r):s;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)c=Reflect.decorate(e,t,r,s);else for(var i=e.length-1;i>=0;i--)(o=e[i])&&(c=(n<3?o(c):n>3?o(t,r,c):o(t,r))||c);return n>3&&c&&Object.defineProperty(t,r,c),c};let s=class extends e.LitElement{constructor(){super(...arguments),this.color="red",this.pressed=!1,this.pinInfo=[{name:"1.l",x:2,y:9,signals:[]},{name:"2.l",x:2,y:36,signals:[]},{name:"1.r",x:65,y:9,signals:[]},{name:"2.r",x:65,y:36,signals:[]}]}static get styles(){return e.css`
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.PushbuttonElement=void 0;var e=require("lit-element"),t=require("./utils/keys"),r=function(e,t,r,o){var s,n=arguments.length,i=n<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,r):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(e,t,r,o);else for(var l=e.length-1;l>=0;l--)(s=e[l])&&(i=(n<3?s(i):n>3?s(t,r,i):s(t,r))||i);return n>3&&i&&Object.defineProperty(t,r,i),i};let o=class extends e.LitElement{constructor(){super(...arguments),this.color="red",this.pressed=!1,this.label="",this.pinInfo=[{name:"1.l",x:2,y:9,signals:[]},{name:"2.l",x:2,y:36,signals:[]},{name:"1.r",x:65,y:9,signals:[]},{name:"2.r",x:65,y:36,signals:[]}]}static get styles(){return e.css`
+      :host {
+        display: inline-flex;
+        flex-direction: column;
+      }
+
       button {
         border: none;
         background: none;
@@ -680,9 +711,20 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
       .clickable-element {
         cursor: pointer;
       }
-    `}render(){const{color:r}=this,s=this.pressed?"url(#grad-down)":"url(#grad-up)";return e.html`
+
+      .label {
+        width: 0;
+        min-width: 100%;
+        font-size: 12px;
+        text-align: center;
+        color: gray;
+        position: relative;
+        line-height: 1;
+        top: -2px;
+      }
+    `}render(){const{color:r,label:o}=this,s=this.pressed?"url(#grad-down)":"url(#grad-up)";return e.html`
       <button
-        aria-label="${r} pushbutton"
+        aria-label="${o} ${r} pushbutton"
         @mousedown=${this.down}
         @mouseup=${e=>!e.ctrlKey&&this.up()}
         @touchstart=${this.down}
@@ -747,9 +789,10 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
           </g>
         </svg>
       </button>
-    `}down(){this.pressed||(this.pressed=!0,this.dispatchEvent(new Event("button-press")))}up(){this.pressed&&(this.pressed=!1,this.dispatchEvent(new Event("button-release")))}};exports.PushbuttonElement=s,r([(0,e.property)()],s.prototype,"color",void 0),r([(0,e.property)()],s.prototype,"pressed",void 0),exports.PushbuttonElement=s=r([(0,e.customElement)("wokwi-pushbutton")],s);
+      <span class="label">${this.label}</span>
+    `}down(){this.pressed||(this.pressed=!0,this.dispatchEvent(new Event("button-press")))}up(){this.pressed&&(this.pressed=!1,this.dispatchEvent(new Event("button-release")))}};exports.PushbuttonElement=o,r([(0,e.property)()],o.prototype,"color",void 0),r([(0,e.property)()],o.prototype,"pressed",void 0),r([(0,e.property)()],o.prototype,"label",void 0),exports.PushbuttonElement=o=r([(0,e.customElement)("wokwi-pushbutton")],o);
 },{"lit-element":"bhxD","./utils/keys":"VHTx"}],"XKDm":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.ResistorElement=void 0;var e=require("lit-element"),t=function(e,t,r,o){var l,s=arguments.length,i=s<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,r):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(e,t,r,o);else for(var a=e.length-1;a>=0;a--)(l=e[a])&&(i=(s<3?l(i):s>3?l(t,r,i):l(t,r))||i);return s>3&&i&&Object.defineProperty(t,r,i),i};const r={[-2]:"silver",[-1]:"#c4a000",0:"black",1:"brown",2:"red",3:"orange",4:"yellow",5:"green",6:"blue",7:"violet",8:"gray",9:"white"};let o=class extends e.LitElement{constructor(){super(...arguments),this.value="1000",this.pinInfo=[{name:"1",x:0,y:9,signals:[]},{name:"2",x:59,y:9,signals:[]}]}breakValue(e){const t=e>=1e10?9:e>=1e9?8:e>=1e8?7:e>=1e7?6:e>=1e6?5:e>=1e5?4:e>=1e4?3:e>=1e3?2:e>=100?1:e>=10?0:e>=1?-1:-2,r=Math.round(e/10**t);return 0===e?[0,0]:t<0&&r%10==0?[r/10,t+1]:[Math.round(r%100),t]}render(){const{value:t}=this,o=parseFloat(t),[l,s]=this.breakValue(o),i=r[Math.floor(l/10)],a=r[l%10],n=r[s];return e.html`
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.ResistorElement=void 0;var e=require("lit-element"),t=function(e,t,r,o){var l,s=arguments.length,i=s<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,r):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(e,t,r,o);else for(var a=e.length-1;a>=0;a--)(l=e[a])&&(i=(s<3?l(i):s>3?l(t,r,i):l(t,r))||i);return s>3&&i&&Object.defineProperty(t,r,i),i};const r={[-2]:"silver",[-1]:"#c4a000",0:"black",1:"#8b4513",2:"red",3:"orange",4:"yellow",5:"green",6:"blue",7:"violet",8:"gray",9:"white"};let o=class extends e.LitElement{constructor(){super(...arguments),this.value="1000",this.pinInfo=[{name:"1",x:0,y:9,signals:[]},{name:"2",x:59,y:9,signals:[]}]}breakValue(e){const t=e>=1e10?9:e>=1e9?8:e>=1e8?7:e>=1e7?6:e>=1e6?5:e>=1e5?4:e>=1e4?3:e>=1e3?2:e>=100?1:e>=10?0:e>=1?-1:-2,r=Math.round(e/10**t);return 0===e?[0,0]:t<0&&r%10==0?[r/10,t+1]:[Math.round(r%100),t]}render(){const{value:t}=this,o=parseFloat(t),[l,s]=this.breakValue(o),i=r[Math.floor(l/10)],a=r[l%10],n=r[s];return e.html`
       <svg
         width="15.645mm"
         height="3mm"
@@ -1055,7 +1098,7 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
       </svg>
     `}focusInput(){var t;const e=null===(t=this.shadowRoot)||void 0===t?void 0:t.querySelector(".hide-input");null==e||e.focus()}onValueChange(t){const e=t.target;this.updateValue(parseFloat(e.value))}down(t){(0===t.button||window.navigator.maxTouchPoints)&&(this.pressed=!0,this.updatePotentiometerPosition(t))}move(t){const{pressed:e}=this;e&&this.rotateHandler(t)}up(){this.pressed=!1}updatePotentiometerPosition(t){var e,i;t.stopPropagation(),t.preventDefault();const r=null===(i=null===(e=this.shadowRoot)||void 0===e?void 0:e.querySelector("#knob"))||void 0===i?void 0:i.getBoundingClientRect();r&&(this.center={x:window.scrollX+r.left+r.width/2,y:window.scrollY+r.top+r.height/2})}rotateHandler(t){t.stopPropagation(),t.preventDefault();const e="touchmove"===t.type,i=e?t.touches[0].pageX:t.pageX,r=e?t.touches[0].pageY:t.pageY,o=this.center.x-i,s=this.center.y-r;let n=Math.round(180*Math.atan2(s,o)/Math.PI);n<0&&(n+=360),n-=90,o>0&&s<=0&&(n-=360),n=this.clamp(this.startDegree,this.endDegree,n);const a=this.percentFromMinMax(n,this.startDegree,this.endDegree),l=this.mapToMinMax(a,this.min,this.max);this.updateValue(l)}updateValue(t){const e=this.clamp(this.min,this.max,t),i=Math.round(e/this.step)*this.step;this.value=Math.round(100*i)/100,this.dispatchEvent(new InputEvent("input",{detail:this.value}))}};exports.PotentiometerElement=o,r([(0,t.property)()],o.prototype,"min",void 0),r([(0,t.property)()],o.prototype,"max",void 0),r([(0,t.property)()],o.prototype,"value",void 0),r([(0,t.property)()],o.prototype,"step",void 0),r([(0,t.property)()],o.prototype,"startDegree",void 0),r([(0,t.property)()],o.prototype,"endDegree",void 0),exports.PotentiometerElement=o=r([(0,t.customElement)("wokwi-potentiometer")],o);
 },{"lit-element":"bhxD","lit-html/directives/style-map":"QXwr","./pin":"xoL4"}],"k8Z7":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.NeopixelMatrixElement=void 0;var e=require("lit-element"),t=require("./pin"),i=function(e,t,i,l){var r,s=arguments.length,o=s<3?t:null===l?l=Object.getOwnPropertyDescriptor(t,i):l;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)o=Reflect.decorate(e,t,i,l);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(o=(s<3?r(o):s>3?r(t,i,o):r(t,i))||o);return s>3&&o&&Object.defineProperty(t,i,o),o};const l=5.66,r=5;let s=class extends e.LitElement{constructor(){super(...arguments),this.rows=8,this.cols=8,this.rowSpacing=1,this.colSpacing=1,this.blurLight=!1,this.animation=!1,this.pixelElements=null,this.animationFrame=null,this.animateStep=(()=>{const e=(new Date).getTime(),{rows:t,cols:i}=this,l=e=>e%2e3>1e3?1-e%1e3/1e3:e%1e3/1e3;for(let r=0;r<t;r++)for(let s=0;s<i;s++){const o=Math.sqrt((r-t/2+.5)**2+(s-i/2+.5)**2);this.setPixel(r,s,{r:l(100*o+e),g:l(100*o+e+200),b:l(100*o+e+400)})}this.animationFrame=requestAnimationFrame(this.animateStep)})}get pinInfo(){const{cols:e,rows:i,rowSpacing:l,colSpacing:r}=this,s=9.6012,o=e*(r+5.66)/2*3.78,a=i*(l+5)*3.78;return[{name:"GND",x:o-1.5*s,y:a,signals:[(0,t.GND)()]},{name:"VCC",x:o-.5*s,y:a,signals:[(0,t.VCC)()]},{name:"DIN",x:o+.5*s,y:a,signals:[]},{name:"DOUT",x:o+1.5*s,y:a,signals:[]}]}static get styles(){return e.css`
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.NeopixelMatrixElement=void 0;var e=require("lit-element"),t=require("./pin"),i=require("./utils/units"),l=function(e,t,i,l){var r,s=arguments.length,o=s<3?t:null===l?l=Object.getOwnPropertyDescriptor(t,i):l;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)o=Reflect.decorate(e,t,i,l);else for(var a=e.length-1;a>=0;a--)(r=e[a])&&(o=(s<3?r(o):s>3?r(t,i,o):r(t,i))||o);return s>3&&o&&Object.defineProperty(t,i,o),o};const r=5.66,s=5;let o=class extends e.LitElement{constructor(){super(...arguments),this.rows=8,this.cols=8,this.rowSpacing=1,this.colSpacing=1,this.blurLight=!1,this.animation=!1,this.pixelElements=null,this.animationFrame=null,this.animateStep=(()=>{const e=(new Date).getTime(),{rows:t,cols:i}=this,l=e=>e%2e3>1e3?1-e%1e3/1e3:e%1e3/1e3;for(let r=0;r<t;r++)for(let s=0;s<i;s++){const o=Math.sqrt((r-t/2+.5)**2+(s-i/2+.5)**2);this.setPixel(r,s,{r:l(100*o+e),g:l(100*o+e+200),b:l(100*o+e+400)})}this.animationFrame=requestAnimationFrame(this.animateStep)})}get pinInfo(){const{cols:e,rows:l,rowSpacing:r,colSpacing:s}=this,o=2.54*i.mmToPix,a=e*(s+5.66)/2*i.mmToPix,n=l*(r+5)*i.mmToPix;return[{name:"GND",x:a-1.5*o,y:n,signals:[(0,t.GND)()]},{name:"VCC",x:a-.5*o,y:n,signals:[(0,t.VCC)()]},{name:"DIN",x:a+.5*o,y:n,signals:[]},{name:"DOUT",x:a+1.5*o,y:n,signals:[]}]}static get styles(){return e.css`
       :host {
         display: flex;
       }
@@ -1109,8 +1152,8 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
           ${this.renderPixels()}
         </g>
       </svg>
-    `}};exports.NeopixelMatrixElement=s,i([(0,e.property)()],s.prototype,"rows",void 0),i([(0,e.property)()],s.prototype,"cols",void 0),i([(0,e.property)({attribute:"rowspacing"})],s.prototype,"rowSpacing",void 0),i([(0,e.property)({attribute:"colspacing"})],s.prototype,"colSpacing",void 0),i([(0,e.property)()],s.prototype,"blurLight",void 0),i([(0,e.property)()],s.prototype,"animation",void 0),exports.NeopixelMatrixElement=s=i([(0,e.customElement)("wokwi-neopixel-matrix")],s);
-},{"lit-element":"bhxD","./pin":"xoL4"}],"Uq31":[function(require,module,exports) {
+    `}};exports.NeopixelMatrixElement=o,l([(0,e.property)()],o.prototype,"rows",void 0),l([(0,e.property)()],o.prototype,"cols",void 0),l([(0,e.property)({attribute:"rowspacing"})],o.prototype,"rowSpacing",void 0),l([(0,e.property)({attribute:"colspacing"})],o.prototype,"colSpacing",void 0),l([(0,e.property)()],o.prototype,"blurLight",void 0),l([(0,e.property)()],o.prototype,"animation",void 0),exports.NeopixelMatrixElement=o=l([(0,e.customElement)("wokwi-neopixel-matrix")],o);
+},{"lit-element":"bhxD","./pin":"xoL4","./utils/units":"nDIM"}],"Uq31":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SSD1306Element=void 0;var t=require("lit-element"),e=require("./pin"),i=function(t,e,i,r){var s,a=arguments.length,c=a<3?e:null===r?r=Object.getOwnPropertyDescriptor(e,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)c=Reflect.decorate(t,e,i,r);else for(var n=t.length-1;n>=0;n--)(s=t[n])&&(c=(a<3?s(c):a>3?s(e,i,c):s(e,i))||c);return a>3&&c&&Object.defineProperty(e,i,c),c};let r=class extends t.LitElement{constructor(){super(),this.width=150,this.height=116,this.screenWidth=128,this.screenHeight=64,this.canvas=void 0,this.ctx=null,this.pinInfo=[{name:"DATA",x:36.5,y:12.5,signals:[(0,e.i2c)("SDA")]},{name:"CLK",x:45.5,y:12.5,signals:[(0,e.i2c)("SCL")]},{name:"DC",x:54.5,y:12.5,signals:[]},{name:"RST",x:64.5,y:12.5,signals:[]},{name:"CS",x:74.5,y:12.5,signals:[]},{name:"3V3",x:83.5,y:12.5,signals:[{type:"power",signal:"VCC",voltage:3.3}]},{name:"VIN",x:93.5,y:12.5,signals:[{type:"power",signal:"VCC"}]},{name:"GND",x:103.5,y:12,signals:[{type:"power",signal:"GND"}]}],this.imageData=new ImageData(this.screenWidth,this.screenHeight)}static get styles(){return t.css`
       .pixelated {
         image-rendering: crisp-edges; /* firefox */
@@ -1971,7 +2014,7 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
       </svg>
     `}};exports.Ds1307Element=i,exports.Ds1307Element=i=r([(0,e.customElement)("wokwi-ds1307")],i);
 },{"lit-element":"bhxD","./pin":"xoL4"}],"WIdb":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LEDRingElement=void 0;var e=require("lit-element"),t=function(e,t,i,n){var s,r=arguments.length,l=r<3?t:null===n?n=Object.getOwnPropertyDescriptor(t,i):n;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,i,n);else for(var a=e.length-1;a>=0;a--)(s=e[a])&&(l=(r<3?s(l):r>3?s(t,i,l):s(t,i))||l);return r>3&&l&&Object.defineProperty(t,i,l),l};const i=3,n=6;let s=class extends e.LitElement{constructor(){super(...arguments),this.pixels=16,this.pixelSpacing=0,this.background="#363",this.animation=!1,this.pixelElements=null,this.animationFrame=null,this.animateStep=(()=>{const e=(new Date).getTime(),{pixels:t}=this,i=e=>e%2e3>1e3?1-e%1e3/1e3:e%1e3/1e3;for(let n=0;n<t;n++)this.setPixel(n,{r:i(100*n+e),g:i(100*n+e+200),b:i(100*n+e+400)});this.animationFrame=requestAnimationFrame(this.animateStep)})}get radius(){return(this.pixelSpacing+5)*this.pixels/2/Math.PI+6}get pinInfo(){const{radius:e}=this,t=3.78*(2*e+3),i=3.78*e,n=9.6012;return[{name:"GND",x:i-1.5*n,y:t,signals:[{type:"power",signal:"GND"}]},{name:"VCC",x:i-.5*n,y:t,signals:[{type:"power",signal:"VCC"}]},{name:"DIN",x:i+.5*n,y:t,signals:[]},{name:"DOUT",x:i+1.5*n,y:t,signals:[]}]}getPixelElements(){return this.shadowRoot?(this.pixelElements||(this.pixelElements=Array.from(this.shadowRoot.querySelectorAll("rect.pixel"))),this.pixelElements):null}setPixel(e,{r:t,g:i,b:n}){const s=this.getPixelElements();s&&(e<0||e>=s.length||(s[e].style.fill=`rgb(${255*t},${255*i},${255*n})`))}reset(){const e=this.getPixelElements();for(const t of null!=e?e:[])t.style.fill=""}updated(){this.animation&&!this.animationFrame?this.animationFrame=requestAnimationFrame(this.animateStep):!this.animation&&this.animationFrame&&(cancelAnimationFrame(this.animationFrame),this.animationFrame=null)}render(){const{pixels:t,radius:i,background:n}=this,s=[],r=2*i,l=2*i+3;for(let a=0;a<t;a++){const n=a/t*360;s.push(e.svg`<rect
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LEDRingElement=void 0;var e=require("lit-element"),t=require("./utils/units"),i=function(e,t,i,n){var s,r=arguments.length,l=r<3?t:null===n?n=Object.getOwnPropertyDescriptor(t,i):n;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,i,n);else for(var a=e.length-1;a>=0;a--)(s=e[a])&&(l=(r<3?s(l):r>3?s(t,i,l):s(t,i))||l);return r>3&&l&&Object.defineProperty(t,i,l),l};const n=3,s=6;let r=class extends e.LitElement{constructor(){super(...arguments),this.pixels=16,this.pixelSpacing=0,this.background="#363",this.animation=!1,this.pixelElements=null,this.animationFrame=null,this.animateStep=(()=>{const e=(new Date).getTime(),{pixels:t}=this,i=e=>e%2e3>1e3?1-e%1e3/1e3:e%1e3/1e3;for(let n=0;n<t;n++)this.setPixel(n,{r:i(100*n+e),g:i(100*n+e+200),b:i(100*n+e+400)});this.animationFrame=requestAnimationFrame(this.animateStep)})}get radius(){return(this.pixelSpacing+5)*this.pixels/2/Math.PI+6}get pinInfo(){const{radius:e}=this,i=(2*e+3)*t.mmToPix,n=e*t.mmToPix,s=2.54*t.mmToPix;return[{name:"GND",x:n-1.5*s,y:i,signals:[{type:"power",signal:"GND"}]},{name:"VCC",x:n-.5*s,y:i,signals:[{type:"power",signal:"VCC"}]},{name:"DIN",x:n+.5*s,y:i,signals:[]},{name:"DOUT",x:n+1.5*s,y:i,signals:[]}]}getPixelElements(){return this.shadowRoot?(this.pixelElements||(this.pixelElements=Array.from(this.shadowRoot.querySelectorAll("rect.pixel"))),this.pixelElements):null}setPixel(e,{r:t,g:i,b:n}){const s=this.getPixelElements();s&&(e<0||e>=s.length||(s[e].style.fill=`rgb(${255*t},${255*i},${255*n})`))}reset(){const e=this.getPixelElements();for(const t of null!=e?e:[])t.style.fill=""}updated(){this.animation&&!this.animationFrame?this.animationFrame=requestAnimationFrame(this.animateStep):!this.animation&&this.animationFrame&&(cancelAnimationFrame(this.animationFrame),this.animationFrame=null)}render(){const{pixels:t,radius:i,background:n}=this,s=[],r=2*i,l=2*i+3;for(let a=0;a<t;a++){const n=a/t*360;s.push(e.svg`<rect
           class="pixel"
           x="${i-2.5}"
           y="${.5}"
@@ -2009,9 +2052,9 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
         />
         ${s}
       </svg>
-    `}};exports.LEDRingElement=s,t([(0,e.property)()],s.prototype,"pixels",void 0),t([(0,e.property)({type:Number})],s.prototype,"pixelSpacing",void 0),t([(0,e.property)()],s.prototype,"background",void 0),t([(0,e.property)()],s.prototype,"animation",void 0),exports.LEDRingElement=s=t([(0,e.customElement)("wokwi-led-ring")],s);
-},{"lit-element":"bhxD"}],"mBtK":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SlideSwitchElement=void 0;var e=require("lit-element"),t=function(e,t,i,r){var s,h=arguments.length,n=h<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var o=e.length-1;o>=0;o--)(s=e[o])&&(n=(h<3?s(n):h>3?s(t,i,n):s(t,i))||n);return h>3&&n&&Object.defineProperty(t,i,n),n};let i=class extends e.LitElement{constructor(){super(...arguments),this.value=0}static get styles(){return e.css`
+    `}};exports.LEDRingElement=r,i([(0,e.property)()],r.prototype,"pixels",void 0),i([(0,e.property)({type:Number})],r.prototype,"pixelSpacing",void 0),i([(0,e.property)()],r.prototype,"background",void 0),i([(0,e.property)()],r.prototype,"animation",void 0),exports.LEDRingElement=r=i([(0,e.customElement)("wokwi-led-ring")],r);
+},{"lit-element":"bhxD","./utils/units":"nDIM"}],"mBtK":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SlideSwitchElement=void 0;var e=require("lit-element"),t=function(e,t,i,r){var n,s=arguments.length,h=s<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)h=Reflect.decorate(e,t,i,r);else for(var o=e.length-1;o>=0;o--)(n=e[o])&&(h=(s<3?n(h):s>3?n(t,i,h):n(t,i))||h);return s>3&&h&&Object.defineProperty(t,i,h),h};let i=class extends e.LitElement{constructor(){super(...arguments),this.value=0,this.pinInfo=[{name:"1",number:1,y:34,x:6.5,signals:[]},{name:"2",number:2,y:34,x:16,signals:[]},{name:"3",number:3,y:34,x:25.5,signals:[]}]}static get styles(){return e.css`
       .hide-input {
         position: absolute;
         clip: rect(0 0 0 0);
@@ -2075,9 +2118,575 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
         <rect x="2.55" y="4.74" width="3.47" height=".805" stroke-width=".0955" />
       </svg>
     `}};exports.SlideSwitchElement=i,t([(0,e.property)()],i.prototype,"value",void 0),exports.SlideSwitchElement=i=t([(0,e.customElement)("wokwi-slide-switch")],i);
-},{"lit-element":"bhxD"}],"whKC":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"SevenSegmentElement",{enumerable:!0,get:function(){return e.SevenSegmentElement}}),Object.defineProperty(exports,"ArduinoUnoElement",{enumerable:!0,get:function(){return t.ArduinoUnoElement}}),Object.defineProperty(exports,"LCD1602Element",{enumerable:!0,get:function(){return r.LCD1602Element}}),Object.defineProperty(exports,"fontA00",{enumerable:!0,get:function(){return n.fontA00}}),Object.defineProperty(exports,"fontA02",{enumerable:!0,get:function(){return o.fontA02}}),Object.defineProperty(exports,"LEDElement",{enumerable:!0,get:function(){return u.LEDElement}}),Object.defineProperty(exports,"NeoPixelElement",{enumerable:!0,get:function(){return i.NeoPixelElement}}),Object.defineProperty(exports,"PushbuttonElement",{enumerable:!0,get:function(){return l.PushbuttonElement}}),Object.defineProperty(exports,"ResistorElement",{enumerable:!0,get:function(){return m.ResistorElement}}),Object.defineProperty(exports,"MembraneKeypadElement",{enumerable:!0,get:function(){return p.MembraneKeypadElement}}),Object.defineProperty(exports,"PotentiometerElement",{enumerable:!0,get:function(){return c.PotentiometerElement}}),Object.defineProperty(exports,"NeopixelMatrixElement",{enumerable:!0,get:function(){return b.NeopixelMatrixElement}}),Object.defineProperty(exports,"SSD1306Element",{enumerable:!0,get:function(){return a.SSD1306Element}}),Object.defineProperty(exports,"BuzzerElement",{enumerable:!0,get:function(){return f.BuzzerElement}}),Object.defineProperty(exports,"RotaryDialerElement",{enumerable:!0,get:function(){return d.RotaryDialerElement}}),Object.defineProperty(exports,"ServoElement",{enumerable:!0,get:function(){return s.ServoElement}}),Object.defineProperty(exports,"Dht22Element",{enumerable:!0,get:function(){return E.DHT22Element}}),Object.defineProperty(exports,"ArduinoMegaElement",{enumerable:!0,get:function(){return x.ArduinoMegaElement}}),Object.defineProperty(exports,"ArduinoNanoElement",{enumerable:!0,get:function(){return g.ArduinoNanoElement}}),Object.defineProperty(exports,"Ds1307Element",{enumerable:!0,get:function(){return y.Ds1307Element}}),Object.defineProperty(exports,"LEDRingElement",{enumerable:!0,get:function(){return P.LEDRingElement}}),Object.defineProperty(exports,"SlideSwitchElement",{enumerable:!0,get:function(){return j.SlideSwitchElement}}),require("./react-types");var e=require("./7segment-element"),t=require("./arduino-uno-element"),r=require("./lcd1602-element"),n=require("./lcd1602-font-a00"),o=require("./lcd1602-font-a02"),u=require("./led-element"),i=require("./neopixel-element"),l=require("./pushbutton-element"),m=require("./resistor-element"),p=require("./membrane-keypad-element"),c=require("./potentiometer-element"),b=require("./neopixel-matrix-element"),a=require("./ssd1306-element"),f=require("./buzzer-element"),d=require("./rotary-dialer-element"),s=require("./servo-element"),E=require("./dht22-element"),x=require("./arduino-mega-element"),g=require("./arduino-nano-element"),y=require("./ds1307-element"),P=require("./led-ring-element"),j=require("./slide-switch-element");
-},{"./react-types":"VQ8w","./7segment-element":"mwEU","./arduino-uno-element":"AJVk","./lcd1602-element":"VbbO","./lcd1602-font-a00":"n2M3","./lcd1602-font-a02":"TcZY","./led-element":"xWrt","./neopixel-element":"x1K8","./pushbutton-element":"C6Pt","./resistor-element":"XKDm","./membrane-keypad-element":"V64C","./potentiometer-element":"jniu","./neopixel-matrix-element":"k8Z7","./ssd1306-element":"Uq31","./buzzer-element":"M94H","./rotary-dialer-element":"Dc62","./servo-element":"xPnD","./dht22-element":"HyOI","./arduino-mega-element":"teN6","./arduino-nano-element":"lLXh","./ds1307-element":"Z4zx","./led-ring-element":"WIdb","./slide-switch-element":"mBtK"}],"XKeh":[function(require,module,exports) {
+},{"lit-element":"bhxD"}],"l0iu":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.HCSR04Element=void 0;var e=require("lit-element"),t=function(e,t,r,i){var c,l=arguments.length,n=l<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,r):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,r,i);else for(var s=e.length-1;s>=0;s--)(c=e[s])&&(n=(l<3?c(n):l>3?c(t,r,n):c(t,r))||n);return l>3&&n&&Object.defineProperty(t,r,n),n};let r=class extends e.LitElement{constructor(){super(...arguments),this.pinInfo=[{name:"VCC",x:71.78,y:94.5,signals:[{type:"power",signal:"VCC",voltage:5}]},{name:"TRIG",x:79.67,y:94.5,signals:[]},{name:"ECHO",x:87.56,y:94.5,signals:[]},{name:"GND",x:95.45,y:94.5,signals:[{type:"power",signal:"GND"}]}]}render(){return e.html`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 45 25"
+        height="25mm"
+        width="45mm"
+        font-family="monospace"
+      >
+        <defs>
+          <pattern patternUnits="userSpaceOnUse" width="2" height="2" id="checkerboard">
+            <path d="M0 0h1v1H0zM1 1h1v1H1z" />
+          </pattern>
+          <radialGradient id="grad1" cx="8.96" cy="10.04" r="3.58" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#777" offset="0" />
+            <stop stop-color="#b9b9b9" offset="1" />
+          </radialGradient>
+          <g id="sensor-unit">
+            <circle cx="8.98" cy="10" r="8.61" fill="#dcdcdc" />
+            <circle cx="8.98" cy="10" r="7.17" fill="#222" />
+            <circle cx="8.98" cy="10" r="5.53" fill="#777" fill-opacity=".992" />
+            <circle cx="8.98" cy="10" r="3.59" fill="url(#grad1)" />
+            <circle cx="8.99" cy="10" r=".277" fill="#777" fill-opacity=".818" />
+            <circle cx="8.98" cy="10" r="5.53" fill="url(#checkerboard)" opacity=".397" />
+          </g>
+        </defs>
+        <path
+          d="M0 0v20.948h45V0zm1.422.464a1 1 0 01.004 0 1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 01.996-1zm41.956 0a1 1 0 01.004 0 1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 01.996-1zM1.422 18.484a1 1 0 01.004 0 1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 01.996-1zm41.956 0a1 1 0 01.004 0 1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 01.996-1z"
+          fill="#456f93"
+        />
+        <path
+          d="M15.293 5.888l2.934-2.934v3.124l2.944 2.943v10.143M23.269 19.037v-2.473l-.966-.965v-12.5l2.577 1.488 4.741 4.741"
+          fill="none"
+          stroke="#355a7c"
+          stroke-width=".858"
+        />
+        <use xlink:href="#sensor-unit" />
+        <use xlink:href="#sensor-unit" x="27.12" />
+        <g fill="none" stroke="#505132" stroke-width=".368">
+          <circle cx="43.4" cy="1.46" r="1" />
+          <circle cx="43.4" cy="19.5" r="1" />
+          <circle cx="1.43" cy="1.46" r="1" />
+          <circle cx="1.43" cy="19.5" r="1" />
+        </g>
+        <rect
+          ry="2.07"
+          y=".626"
+          x="17.111"
+          height="4.139"
+          width="10.272"
+          fill="#878787"
+          stroke="#424242"
+          stroke-width=".368"
+        />
+        <g fill="black">
+          <rect x="17.87" y="18" ry=".568" width="2.25" height="2.271" />
+          <rect x="19.95" y="18" ry=".568" width="2.25" height="2.271" />
+          <rect x="22.04" y="18" ry=".568" width="2.25" height="2.271" />
+          <rect x="24.12" y="18" ry=".568" width="2.25" height="2.271" />
+        </g>
+        <g fill="#ccc" stroke-linecap="round" stroke-width=".21">
+          <rect x="18.616" y="19" width=".75" height="7" rx=".2" />
+          <rect x="20.702" y="19" width=".75" height="7" rx=".2" />
+          <rect x="22.789" y="19" width=".75" height="7" rx=".2" />
+          <rect x="24.875" y="19" width=".75" height="7" rx=".2" />
+        </g>
+        <text font-weight="400" font-size="2.2" fill="#e6e6e6" stroke-width=".055">
+          <tspan y="8" x="18">
+            HC-SR04
+          </tspan>
+        </text>
+        <text
+          transform="rotate(-90)"
+          font-weight="400"
+          font-size="1.55"
+          fill="#e6e6e6"
+          stroke-width=".039"
+        >
+          <tspan x="-17.591" y="19.561">
+            Vcc
+          </tspan>
+          <tspan x="-17.591" y="21.654">
+            Trig
+          </tspan>
+          <tspan x="-17.591" y="23.747">
+            Echo
+          </tspan>
+          <tspan x="-17.591" y="25.84">
+            Gnd
+          </tspan>
+        </text>
+      </svg>
+    `}};exports.HCSR04Element=r,exports.HCSR04Element=r=t([(0,e.customElement)("wokwi-hc-sr04")],r);
+},{"lit-element":"bhxD"}],"oiOQ":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LCD2004Element=void 0;var e=require("lit-element"),t=require("./lcd1602-element"),r=function(e,t,r,o){var l,n=arguments.length,c=n<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,r):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)c=Reflect.decorate(e,t,r,o);else for(var s=e.length-1;s>=0;s--)(l=e[s])&&(c=(n<3?l(c):n>3?l(t,r,c):l(t,r))||c);return n>3&&c&&Object.defineProperty(t,r,c),c};let o=class extends t.LCD1602Element{constructor(){super(...arguments),this.numCols=20,this.numRows=4}};exports.LCD2004Element=o,exports.LCD2004Element=o=r([(0,e.customElement)("wokwi-lcd2004")],o);
+},{"lit-element":"bhxD","./lcd1602-element":"VbbO"}],"X9BM":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.AnalogJoystickElement=void 0;var e=require("lit-element"),t=require("./pin"),s=require("./utils/keys"),o=function(e,t,s,o){var n,i=arguments.length,r=i<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,s):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)r=Reflect.decorate(e,t,s,o);else for(var a=e.length-1;a>=0;a--)(n=e[a])&&(r=(i<3?n(r):i>3?n(t,s,r):n(t,s))||r);return i>3&&r&&Object.defineProperty(t,s,r),r};let n=class extends e.LitElement{constructor(){super(...arguments),this.xValue=0,this.yValue=0,this.pressed=!1,this.pinInfo=[{name:"VCC",x:33,y:115.8,signals:[(0,t.VCC)()]},{name:"VERT",x:42.6012,y:115.8,signals:[(0,t.analog)(0)]},{name:"HORZ",x:52.2024,y:115.8,signals:[(0,t.analog)(1)]},{name:"SEL",x:61.8036,y:115.8,signals:[]},{name:"GND",x:71.4048,y:115.8,signals:[(0,t.GND)()]}]}static get styles(){return e.css`
+      #knob {
+        transition: transform 0.3s;
+      }
+
+      #knob:hover {
+        fill: #222;
+      }
+
+      #knob:focus {
+        outline: none;
+        stroke: #4d90fe;
+        stroke-width: 0.5;
+      }
+
+      .controls {
+        opacity: 0;
+        transition: opacity 0.3s;
+        cursor: pointer;
+      }
+
+      #knob:focus ~ .controls,
+      #knob:hover ~ .controls {
+        opacity: 1;
+      }
+
+      .controls:hover {
+        opacity: 1;
+      }
+
+      .controls path {
+        pointer-events: none;
+      }
+
+      .controls .region {
+        pointer-events: bounding-box;
+        fill: none;
+      }
+
+      .controls .region:hover + path {
+        fill: #fff;
+      }
+
+      .controls circle:hover {
+        stroke: #fff;
+      }
+
+      .controls circle.pressed {
+        fill: #fff;
+      }
+    `}render(){const{xValue:t,yValue:s}=this;return e.html`
+      <svg
+        width="27.2mm"
+        height="31.8mm"
+        viewBox="0 0 27.2 31.8"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <defs>
+          <filter id="noise" primitiveUnits="objectBoundingBox">
+            <feTurbulence baseFrequency="2 2" type="fractalNoise" />
+            <feColorMatrix
+              values=".1 0 0 0 .1
+                      .1 0 0 0 .1
+                      .1 0 0 0 .1
+                      0 0 0 0 1"
+            />
+            <feComposite in2="SourceGraphic" operator="lighter" />
+            <feComposite result="body" in2="SourceAlpha" operator="in" />
+          </filter>
+          <radialGradient id="g-knob" cx="13.6" cy="13.6" r="10.6" gradientUnits="userSpaceOnUse">
+            <stop offset="0" />
+            <stop offset="0.9" />
+            <stop stop-color="#777" offset="1" />
+          </radialGradient>
+          <radialGradient
+            id="g-knob-base"
+            cx="13.6"
+            cy="13.6"
+            r="13.6"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" />
+            <stop stop-color="#444" offset=".8" />
+            <stop stop-color="#555" offset=".9" />
+            <stop offset="1" />
+          </radialGradient>
+          <path
+            id="pin"
+            fill="silver"
+            stroke="#a2a2a2"
+            stroke-width=".024"
+            d="M8.726 29.801a.828.828 0 00-.828.829.828.828 0 00.828.828.828.828 0 00.829-.828.828.828 0 00-.829-.829zm-.004.34a.49.49 0 01.004 0 .49.49 0 01.49.489.49.49 0 01-.49.49.49.49 0 01-.489-.49.49.49 0 01.485-.49z"
+          />
+        </defs>
+        <path
+          d="M1.3 0v31.7h25.5V0zm2.33.683a1.87 1.87 0 01.009 0 1.87 1.87 0 011.87 1.87 1.87 1.87 0 01-1.87 1.87 1.87 1.87 0 01-1.87-1.87 1.87 1.87 0 011.87-1.87zm20.5 0a1.87 1.87 0 01.009 0 1.87 1.87 0 011.87 1.87 1.87 1.87 0 01-1.87 1.87 1.87 1.87 0 01-1.87-1.87 1.87 1.87 0 011.87-1.87zm-20.5 26.8a1.87 1.87 0 01.009 0 1.87 1.87 0 011.87 1.87 1.87 1.87 0 01-1.87 1.87 1.87 1.87 0 01-1.87-1.87 1.87 1.87 0 011.87-1.87zm20.4 0a1.87 1.87 0 01.009 0 1.87 1.87 0 011.87 1.87 1.87 1.87 0 01-1.87 1.87 1.87 1.87 0 01-1.87-1.87 1.87 1.87 0 011.87-1.87zm-12.7 2.66a.489.489 0 01.004 0 .489.489 0 01.489.489.489.489 0 01-.489.489.489.489 0 01-.489-.489.489.489 0 01.485-.489zm2.57 0a.489.489 0 01.004 0 .489.489 0 01.489.489.489.489 0 01-.489.489.489.489 0 01-.489-.489.489.489 0 01.485-.489zm2.49.013a.489.489 0 01.004 0 .489.489 0 01.489.489.489.489 0 01-.489.489.489.489 0 01-.489-.489.489.489 0 01.485-.489zm-7.62.007a.489.489 0 01.004 0 .489.489 0 01.489.489.489.489 0 01-.489.489.489.489 0 01-.489-.49.489.489 0 01.485-.488zm10.2.013a.489.489 0 01.004 0 .489.489 0 01.489.489.489.489 0 01-.489.489.489.489 0 01-.489-.49.489.489 0 01.485-.488z"
+          fill="#bd1e34"
+        />
+        <g
+          fill="#fff"
+          font-family="sans-serif"
+          text-anchor="middle"
+          stroke-width=".03"
+          font-size="1.2"
+        >
+          <text letter-spacing=".053">
+            <tspan x="4.034" y="25.643">Analog</tspan>
+            <tspan x="4.061" y="27.159">Joystick</tspan>
+          </text>
+          <text transform="rotate(-90)" text-anchor="start" font-size="1.2">
+            <tspan x="-29.2" y="9.2">VCC</tspan>
+            <tspan x="-29.2" y="11.74">VERT</tspan>
+            <tspan x="-29.2" y="14.28">HORZ</tspan>
+            <tspan x="-29.2" y="16.82">SEL</tspan>
+            <tspan x="-29.2" y="19.36">GND</tspan>
+          </text>
+        </g>
+        <ellipse cx="13.6" cy="13.7" rx="13.6" ry="13.7" fill="url(#g-knob-base)" />
+        <path
+          d="M48.2 65.5s.042.179-.093.204c-.094.017-.246-.077-.322-.17-.094-.115-.082-.205-.009-.285.11-.122.299-.075.299-.075s-.345-.303-.705-.054c-.32.22-.228.52.06.783.262.237.053.497-.21.463-.18-.023-.252-.167-.21-.256.038-.076.167-.122.167-.122s-.149-.06-.324.005c-.157.06-.286.19-.276.513v1.51s.162-.2.352-.403c.214-.229.311-.384.53-.366.415.026.714-.159.918-.454.391-.569.085-1.2-.178-1.29"
+          fill="#fff"
+        />
+        <circle
+          id="knob"
+          cx="13.6"
+          cy="13.6"
+          transform="translate(${2.5*-t}, ${2.5*-s})"
+          r="10.6"
+          fill="url(#g-knob)"
+          filter="url(#noise)"
+          tabindex="0"
+          @keyup=${e=>this.keyup(e)}
+          @keydown=${e=>this.keydown(e)}
+        />
+        <g fill="none" stroke="#fff" stroke-width=".142">
+          <path
+            d="M7.8 31.7l-.383-.351v-1.31l.617-.656h1.19l.721.656.675-.656h1.18l.708.656.662-.656h1.25l.643.656.63-.656h1.21l.695.656.636-.656h1.17l.753.656v1.3l-.416.39"
+          />
+          <path
+            d="M9.5 31.7l.381-.344.381.331M12.1 31.7l.381-.344.381.331M14.7 31.7l.381-.344.381.331M17.2 31.7l.381-.344.381.331"
+            stroke-linecap="square"
+            stroke-linejoin="bevel"
+          />
+        </g>
+        <g class="controls" stroke-width="0.6" stroke-linejoin="bevel" fill="#aaa">
+          <rect
+            class="region"
+            y="8.5"
+            x="1"
+            height="10"
+            width="7"
+            @mousedown=${e=>this.mousedown(e,1,0)}
+            @mouseup=${()=>this.mouseup(!0,!1)}
+          />
+          <path d="m 7.022,11.459 -3.202,2.497 3.202,2.497" />
+
+          <rect
+            class="region"
+            y="1.38"
+            x="7.9"
+            height="7"
+            width="10"
+            @mousedown=${e=>this.mousedown(e,0,1)}
+            @mouseup=${()=>this.mouseup(!1,!0)}
+          />
+          <path d="m 16.615,7.095 -2.497,-3.202 -2.497,3.202" />
+
+          <rect
+            class="region"
+            y="8.5"
+            x="18"
+            height="10"
+            width="7"
+            @mousedown=${e=>this.mousedown(e,-1,0)}
+            @mouseup=${()=>this.mouseup(!0,!1)}
+          />
+          <path d="m 19.980,16.101 3.202,-2.497 -3.202,-2.497" />
+
+          <rect
+            class="region"
+            y="17"
+            x="7.9"
+            height="7"
+            width="10"
+            @mousedown=${e=>this.mousedown(e,0,-1)}
+            @mouseup=${()=>this.mouseup(!1,!0)}
+          />
+          <path d="m 11.620,20.112 2.497,3.202 2.497,-3.202" />
+
+          <circle
+            cx="13.6"
+            cy="13.6"
+            r="3"
+            stroke="#aaa"
+            class=${this.pressed?"pressed":""}
+            @mousedown=${e=>this.press(e)}
+            @mouseup=${()=>this.release()}
+          />
+        </g>
+        <use xlink:href="#pin" x="0" />
+        <use xlink:href="#pin" x="2.54" />
+        <use xlink:href="#pin" x="5.08" />
+        <use xlink:href="#pin" x="7.62" />
+        <use xlink:href="#pin" x="10.16" />
+      </svg>
+    `}keydown(e){switch(e.key){case"ArrowUp":this.yValue=1,this.valueChanged();break;case"ArrowDown":this.yValue=-1,this.valueChanged();break;case"ArrowLeft":this.xValue=1,this.valueChanged();break;case"ArrowRight":this.xValue=-1,this.valueChanged()}s.SPACE_KEYS.includes(e.key)&&this.press()}keyup(e){switch(e.key){case"ArrowUp":case"ArrowDown":this.yValue=0,this.valueChanged();break;case"ArrowLeft":case"ArrowRight":this.xValue=0,this.valueChanged()}s.SPACE_KEYS.includes(e.key)&&this.release()}mousedown(e,t,s){var o;t&&(this.xValue=t),s&&(this.yValue=s),this.valueChanged(),null===(o=this.knob)||void 0===o||o.focus(),e.preventDefault()}mouseup(e,t){var s;e&&(this.xValue=0),t&&(this.yValue=0),this.valueChanged(),null===(s=this.knob)||void 0===s||s.focus()}press(e){var t;this.pressed=!0,this.dispatchEvent(new InputEvent("button-press")),null===(t=this.knob)||void 0===t||t.focus(),null==e||e.preventDefault()}release(){var e;this.pressed=!1,this.dispatchEvent(new InputEvent("button-release")),null===(e=this.knob)||void 0===e||e.focus()}valueChanged(){this.dispatchEvent(new InputEvent("input"))}};exports.AnalogJoystickElement=n,o([(0,e.property)({type:Number})],n.prototype,"xValue",void 0),o([(0,e.property)({type:Number})],n.prototype,"yValue",void 0),o([(0,e.property)()],n.prototype,"pressed",void 0),o([(0,e.query)("#knob")],n.prototype,"knob",void 0),exports.AnalogJoystickElement=n=o([(0,e.customElement)("wokwi-analog-joystick")],n);
+},{"lit-element":"bhxD","./pin":"xoL4","./utils/keys":"VHTx"}],"rBoD":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.IRReceiverElement=void 0;var t=require("lit-element"),e=require("./pin"),i=function(t,e,i,h){var r,c=arguments.length,f=c<3?e:null===h?h=Object.getOwnPropertyDescriptor(e,i):h;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)f=Reflect.decorate(t,e,i,h);else for(var l=t.length-1;l>=0;l--)(r=t[l])&&(f=(c<3?r(f):c>3?r(e,i,f):r(e,i))||f);return c>3&&f&&Object.defineProperty(e,i,f),f};let h=class extends t.LitElement{constructor(){super(...arguments),this.pinInfo=[{name:"GND",y:87.75,x:20.977,number:1,signals:[(0,e.GND)()]},{name:"VCC",y:87.75,x:30.578,number:2,signals:[(0,e.VCC)()]},{name:"DAT",y:87.75,x:40.18,number:3,signals:[]}]}render(){return t.html`
+      <svg
+        version="1.1"
+        viewBox="0 0 61.1 88.7"
+        width="16.178mm"
+        height="23.482mm"
+        font-family="sans-serif"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g fill="#171514">
+          <path
+            d="m61.1 4.85c0-2.68-2.17-4.85-4.85-4.85h-51.4c-2.68 0-4.85 2.17-4.85 4.85v61c0 2.68 2.17 4.85 4.85 4.85h51.4c2.68 0 4.85-2.17 4.85-4.85zm-7.43 53.3c2.29 0 4.14 1.86 4.14 4.14 0 2.28-1.85 4.14-4.14 4.14s-4.14-1.86-4.14-4.14c0-2.29 1.85-4.14 4.14-4.14zm-46.3 0c2.29 0 4.14 1.86 4.14 4.14 0 2.28-1.85 4.14-4.14 4.14-2.29 0-4.14-1.86-4.14-4.14 0-2.29 1.85-4.14 4.14-4.14z"
+            stroke-width=".987"
+          />
+          <rect x="16.5" y="58.2" width="28.2" height="8.28" stroke="#fff" stroke-width=".888px" />
+          <rect x="14.2" y="23" width="11.3" height="4.66" stroke="#fff" stroke-width=".888px" />
+        </g>
+        <rect x="15.2" y="23.7" width="9.44" height="3.23" fill="#a19e9e" stroke-width=".987" />
+        <g fill="#171514" stroke="#fff" stroke-width=".888px">
+          <rect x="14.2" y="33" width="11.3" height="4.66" />
+          <rect x="31.6" y="23" width="11.3" height="4.66" />
+          <rect x="31.6" y="33" width="11.3" height="4.66" />
+        </g>
+        <g fill="#433b38" stroke-width=".987">
+          <rect x="17.7" y="59.1" width="6.47" height="6.47" />
+          <rect x="27.3" y="59.1" width="6.47" height="6.47" />
+          <rect x="37" y="59.1" width="6.47" height="6.47" />
+        </g>
+        <g fill="#9f9f9f" stroke-width=".987">
+          <path
+            d="m22.4 62.5c0-0.377-0.149-0.739-0.416-1.01-0.268-0.267-0.629-0.417-1.01-0.417-0.377 0-0.739 0.15-1.01 0.417s-0.417 0.629-0.417 1.01v25.8c0 0.231 0.188 0.419 0.418 0.419h2.01c0.231 0 0.418-0.188 0.418-0.419v-25.8z"
+          />
+          <path
+            d="m32 62.5c0-0.377-0.149-0.739-0.416-1.01-0.268-0.267-0.629-0.417-1.01-0.417-0.377 0-0.739 0.15-1.01 0.417s-0.417 0.629-0.417 1.01v25.8c0 0.231 0.188 0.419 0.418 0.419h2.01c0.231 0 0.418-0.188 0.418-0.419v-25.8z"
+          />
+          <path
+            d="m41.6 62.5c0-0.377-0.15-0.739-0.417-1.01s-0.629-0.417-1.01-0.417c-0.377 0-0.739 0.15-1.01 0.417s-0.417 0.629-0.417 1.01v25.8c0 0.231 0.188 0.419 0.419 0.419h2.01c0.231 0 0.419-0.188 0.419-0.419v-25.8z"
+          />
+        </g>
+        <g transform="rotate(90)" fill="#ffffff" font-size="5px">
+          <text x="45.369" y="-37.601">DAT</text>
+          <text x="45.609" y="-28.801">VCC</text>
+          <text x="45.359" y="-20.2">GND</text>
+          <text font-size="5.71px">
+            <tspan
+              x="16.234 18.076 22.422 24.263 28.608 32.018 35.112 36.639 40.05 43.144 46.553"
+              y="-52.266"
+            >
+              IR Reciever
+            </tspan>
+          </text>
+        </g>
+        <g fill="none" stroke="#fff">
+          <path
+            d="m56.3 6.32c-0.654 0.514-1.48 0.82-2.37 0.82-0.895 0-1.72-0.306-2.37-0.82"
+            stroke-width=".316px"
+          />
+          <path
+            d="m57.4 7.97c-0.949 0.745-2.14 1.19-3.44 1.19-1.3 0-2.49-0.445-3.44-1.19"
+            stroke-width=".395px"
+          />
+          <path
+            d="m58.9 9.32c-1.38 1.08-3.11 1.73-5 1.73s-3.62-0.646-5-1.73"
+            stroke-width=".395px"
+          />
+        </g>
+        <path
+          d="m20.4 10.2h-6.13c-0.382 0-0.691 0.309-0.691 0.691v6.2c0 0.382 0.309 0.691 0.691 0.691h13c0.931 0.0563 1.88 0.0563 2.81 0h12.7c0.381 0 0.691-0.309 0.691-0.691v-6.2c0-0.382-0.31-0.691-0.691-0.691h-5.88c-1.39-3.12-4.55-5.31-8.23-5.31-3.68 0-6.84 2.19-8.23 5.31zm0.463 0.691c1.18-3.1 4.21-5.31 7.77-5.31 3.55 0 6.59 2.21 7.76 5.31h6.35v6.2h-12.7c-0.914 0.0563-1.85 0.0563-2.77 0h-13v-6.2z"
+          fill="#fff"
+          stroke-width=".987"
+        />
+        <path
+          d="m28.6 6.32c4.01 0 7.27 3.26 7.27 7.27 0 4.01-14.5 4.01-14.5 0 0-4.01 3.26-7.27 7.27-7.27z"
+          fill="#2d2624"
+          stroke-width=".987"
+        />
+        <clipPath id="b">
+          <path
+            d="m37.2 14.5c4.06 0 7.36 3.3 7.36 7.36 0 4.06-14.7 4.06-14.7 0 0-4.06 3.3-7.36 7.36-7.36z"
+          />
+        </clipPath>
+        <g transform="matrix(.987 0 0 .987 -8.13 -8.03)" clip-path="url(#b)">
+          <path
+            d="m37.2 12.3c-0.069 0.303 0.377 0.714 0.536 0.965 0.504 0.799 0.744 1.43 1.07 2.3 1.01 2.7 0.775 5.41 0.775 8.2 0 0.121 0.155-0.196 0.262-0.254 0.233-0.126 0.484-0.232 0.724-0.345 0.727-0.341 1.47-0.602 2.24-0.833 2.84-0.852 4.9-0.521 6.1-3.77 0.26-0.704 0.404-1.57 0.22-2.31-0.225-0.9-2.44-3.28-3.27-3.7-1.35-0.675-3.05-0.667-4.43-1.01-1.3-0.326-3.08-0.498-4.11 0.524"
+            fill="#483f3c"
+          />
+        </g>
+        <rect x="19.1" y="11" width="19.1" height="5.51" fill="#2d2624" stroke-width=".987" />
+        <clipPath id="a"><rect x="27.6" y="19.3" width="19.3" height="5.58" /></clipPath>
+        <g transform="matrix(.987 0 0 .987 -8.13 -8.03)" clip-path="url(#a)">
+          <path
+            d="m38.1 18.8c0.144 0.284 0.197 0.749 0.286 1.07 0.466 1.68 0.509 3.53 0.399 5.27-0.041 0.653-0.374 1.31-0.374 1.96 0 0.041 0.076-0.032 0.116-0.043 0.154-0.042 0.14-0.034 0.29-0.06 0.375-0.063 0.754-0.104 1.13-0.153 0.884-0.115 1.77-0.241 2.66-0.34 2.32-0.26 5.58 0.4 6.53-2.44 0.185-0.557 0.236-1.13 0.289-1.72 0.054-0.587 0.14-1.38-0.037-1.95-0.922-3-4.9-1.81-7.22-1.81-0.773 0-1.54 0.084-2.3 0.236-0.055 0.011-0.659 0.108-0.659 0.114"
+            fill="#483f3c"
+          />
+        </g>
+        <g fill="#a19e9e" stroke-width=".987">
+          <circle cx="16.5" cy="14" r="1.44" />
+          <circle cx="40.5" cy="14" r="1.44" />
+          <rect x="15.2" y="33.7" width="9.44" height="3.23" />
+          <rect x="32.5" y="23.7" width="9.44" height="3.23" />
+          <rect x="32.5" y="33.7" width="9.44" height="3.23" />
+        </g>
+        <g stroke-width=".987">
+          <rect x="17.9" y="23.7" width="3.93" height="3.23" fill="#8e7147" />
+          <rect x="34.8" y="24.1" width="4.88" height="2.44" fill="#171514" />
+          <rect x="34.8" y="34.1" width="4.88" height="2.44" fill="#171514" />
+          <text fill="#ffffff" font-size="2.2px" stroke-width=".987">
+            <tspan x="35.267719 36.591557 37.915394" y="26.1">103</tspan>
+            <tspan x="35.267719 36.591557 37.915394" y="36.12">102</tspan>
+          </text>
+          <rect x="17.9" y="33.7" width="3.93" height="3.23" fill="#ccf9f9" />
+        </g>
+      </svg>
+    `}};exports.IRReceiverElement=h,exports.IRReceiverElement=h=i([(0,t.customElement)("wokwi-ir-receiver")],h);
+},{"lit-element":"bhxD","./pin":"xoL4"}],"qY16":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.IRRemoteElement=void 0;var t=require("lit-element"),e=require("./utils/keys"),n=function(t,e,n,s){var a,l=arguments.length,i=l<3?e:null===s?s=Object.getOwnPropertyDescriptor(e,n):s;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(t,e,n,s);else for(var f=t.length-1;f>=0;f--)(a=t[f])&&(i=(l<3?a(i):l>3?a(e,n,i):a(e,n))||i);return l>3&&i&&Object.defineProperty(e,n,i),i};const s={power:162,menu:226,test:34,plus:2,back:194,prev:224,play:168,next:144,0:104,minus:152,c:176,1:48,2:24,3:122,4:16,5:56,6:90,7:66,8:74,9:82},a={o:"power",m:"menu",t:"test","+":"plus",b:"back",arrowleft:"prev",p:"play",arrowright:"next",0:"0","-":"minus",c:"c",1:"1",2:"2",3:"3",4:"4",5:"5",6:"6",7:"7",8:"8",9:"9"};let l=class extends t.LitElement{static get styles(){return t.css`
+      use {
+        fill: #fff;
+      }
+
+      use.red {
+        fill: #e6252e;
+      }
+
+      use.black {
+        fill: #121115;
+      }
+
+      use[tabindex] {
+        cursor: pointer;
+      }
+
+      use.active {
+        fill: #8c8;
+      }
+
+      use.red.active,
+      use.black.active {
+        fill: green;
+      }
+
+      use:focus {
+        --circle-stroke-color: cyan;
+        outline: none;
+      }
+    `}eventHandler(t,e,n){t.focus();const a=s[e];switch(n){case"up":t.classList.remove("active"),this.dispatchEvent(new CustomEvent("button-release",{detail:{key:e,irCode:a}}));break;case"down":t.classList.add("active"),this.dispatchEvent(new CustomEvent("button-press",{detail:{key:e,irCode:a}}))}}buttonEvent(t,e){var n;const s=t.target;if(!(s instanceof SVGElement))return null;const a=null!==(n=s.dataset.btn)&&void 0!==n?n:"";null!=a&&(t.preventDefault(),this.eventHandler(s,a,e))}keyboardEvent(t,n){var s;e.SPACE_KEYS.includes(t.key)&&this.buttonEvent(t,n);const l=t.target,i=a[t.key.toLowerCase()];if(!(l instanceof SVGElement)||null==i)return;const f=null===(s=this.shadowRoot)||void 0===s?void 0:s.querySelector(`use[data-btn="${i}"]`);f&&f instanceof SVGElement&&this.eventHandler(f,i,n)}render(){return t.html`
+      <?xml version="1.0" encoding="UTF-8"?>
+      <svg
+        version="1.1"
+        viewBox="0 0 151 316"
+        width="40mm"
+        height="83.653mm"
+        font-family="sans-serif"
+        xmlns="http://www.w3.org/2000/svg"
+        @mousedown=${t=>this.buttonEvent(t,"down")}
+        @mouseup=${t=>this.buttonEvent(t,"up")}
+        @touchstart=${t=>this.buttonEvent(t,"down")}
+        @touchend=${t=>this.buttonEvent(t,"up")}
+        @keydown=${t=>this.keyboardEvent(t,"down")}
+        @keyup=${t=>this.keyboardEvent(t,"up")}
+      >
+        <defs>
+          <g id="button" stroke-width="1.29">
+            <path
+              fill="#272726"
+              d="m0 -17.5c-9.73 0-17.6 7.9-17.6 17.6 0 9.73 7.9 17.6 17.6 17.6 9.73 0 17.6-7.9 17.6-17.6 0-9.73-7.9-17.6-17.6-17.6zm0 1.29c9.01 0 16.3 7.32 16.3 16.3 0 9.01-7.32 16.3-16.3 16.3-9.02 0-16.3-7.32-16.3-16.3 0-9.02 7.32-16.3 16.3-16.3z"
+            />
+            <circle r="16.3" style="stroke: var(--circle-stroke-color)" />
+          </g>
+          <circle id="button2" r="16.3" style="stroke: var(--circle-stroke-color)" />
+        </defs>
+        <path
+          d="m149 21.3c0-10.5-8.52-19-19-19h-109c-10.5 0-19 8.52-19 19v274c0 10.5 8.52 19 19 19h109c10.5 0 19-8.52 19-19z"
+          fill="#fff"
+          stroke="#272726"
+          stroke-width="4.53px"
+        />
+        <use xlink:href="#button2" x="29.6" y="37.9" data-btn="power" class="red" tabindex="0" />
+        <use xlink:href="#button" x="121.4" y="37.9" data-btn="menu" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="29.6" y="75.2" data-btn="test" tabindex="0" fill="#fff" />
+        <use xlink:href="#button2" x="75.5" y="75.2" data-btn="plus" class="black" tabindex="0" />
+        <use xlink:href="#button" x="121.4" y="75.2" data-btn="back" tabindex="0" fill="#fff" />
+        <use xlink:href="#button2" x="29.6" y="113" data-btn="prev" class="black" tabindex="0" />
+        <use xlink:href="#button" x="75.5" y="113" data-btn="play" tabindex="0" fill="#fff" />
+        <use xlink:href="#button2" x="121.4" y="113" data-btn="next" class="black" tabindex="0" />
+        <use xlink:href="#button" x="29.6" y="152" data-btn="0" tabindex="0" fill="#fff" />
+        <use xlink:href="#button2" x="75.5" y="152" data-btn="minus" class="black" tabindex="0" />
+        <use xlink:href="#button" x="121.4" y="152" data-btn="c" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="29.6" y="190" data-btn="1" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="75.5" y="190" data-btn="2" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="121.4" y="190" data-btn="3" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="29.6" y="228" data-btn="4" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="75.5" y="228" data-btn="5" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="121.4" y="228" data-btn="6" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="29.6" y="266" data-btn="7" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="75.5" y="266" data-btn="8" tabindex="0" fill="#fff" />
+        <use xlink:href="#button" x="121.4" y="266" data-btn="9" tabindex="0" fill="#fff" />
+        <g style="pointer-events: none">
+          <g fill="none" stroke="#fff" stroke-width="1.94px">
+            <path
+              d="m33.5 33c2.05 1.28 3.42 3.56 3.42 6.16 0 4.01-3.26 7.26-7.26 7.26-4.01 0-7.26-3.25-7.26-7.26 0-2.49 1.26-4.69 3.17-6"
+            />
+            <path d="m29.6 29.3v7.41" />
+          </g>
+          <path d="m80.9 113-9.58 4.79v-9.58z" fill="#121115" stroke-width="1.29" />
+          <path d="m123.4 113-9.58 4.79v-9.58z" fill="#fff" stroke-width="1.29" />
+          <path d="m129.4 113-8.95 4.79v-9.58z" fill="#fff" stroke-width="1.29" />
+          <path d="m129.4 109v9.58" fill="none" stroke="#fff" stroke-width="1.29" />
+          <path d="m27.9 113 9.58 4.79v-9.58z" fill="#fff" stroke-width="1.29" />
+          <path d="m21.8 113 8.95 4.79v-9.58z" fill="#fff" stroke-width="1.29" />
+          <path d="m22.4 109v9.58" fill="none" stroke="#fff" stroke-width="1.29" />
+          <text fill="#e6252e" font-size="9.72px" font-weight="700" stroke-width="1.29">
+            <tspan x="106.892 115.469 122.432 129.931" y="41.288">
+              MENU
+            </tspan>
+            <tspan x="16.488 22.904 29.866 36.829" y="78.679">
+              TEST
+            </tspan>
+          </text>
+          <g fill="none" stroke="#fff" stroke-width="1.29">
+            <path d="m67.7 152h15.5" />
+            <path d="m67.7 75.2h15.5M75.5 67.4v15.5" />
+          </g>
+          <g fill="#121115" stroke-width="1.29">
+            <path
+              d="m119.4 70.7v -3.25l-6.95 4.84 6.71 4.45 0.111-2.2s6.65-0.357 7.05 3.15c0.397 3.51-6.66 5.21-6.66 5.21s10.9-2.33 10.7-6.82c-0.276-5.4-10.9-5.39-10.9-5.39z"
+            />
+            <text font-size="13.9px" font-weight="700">
+              <tspan x="25.312" y="156.434">0</tspan>
+              <tspan x="116.973" y="156.498">C</tspan>
+              <tspan x="25.312" y="194.685">1</tspan>
+              <tspan x="71.776" y="194.685">2</tspan>
+              <tspan x="118.06" y="194.6">3</tspan>
+              <tspan x="25.312" y="232.851">4</tspan>
+              <tspan x="71.776" y="232.679">5</tspan>
+              <tspan x="118.199" y="232.767">6</tspan>
+              <tspan x="25.312" y="270.931">7</tspan>
+              <tspan x="71.776" y="270.931">8</tspan>
+              <tspan x="118.124" y="270.931">9</tspan>
+            </text>
+          </g>
+          <g fill="#fff" stroke-width="1.29">
+            <path
+              d="m18 28.5c0.687-0.757 1.5-1.41 2.39-1.99 1.26-0.814 2.7-1.43 4.22-1.87 0.974-0.281 1.98-0.481 3-0.607 0.673-0.0828 1.35-0.129 2.03-0.147 0.68-0.0181 1.36-0.0078 2.03 0.0427 1.02 0.0789 2.03 0.243 3 0.511 2.48 0.686 4.72 2.02 6.31 4.19 0.0323 0.0479 0.097 0.0608 0.145 0.0298 0.0479-0.0323 0.0621-0.097 0.0298-0.145-0.846-1.45-1.96-2.62-3.27-3.53-0.894-0.623-1.87-1.12-2.91-1.5-1.19-0.433-2.45-0.709-3.73-0.828-0.543-0.0504-1.09-0.0698-1.64-0.0582-0.728 0.0155-1.46 0.0841-2.18 0.202-1.08 0.177-2.14 0.46-3.16 0.839-0.772 0.288-1.51 0.632-2.21 1.03-1.7 0.965-3.16 2.22-4.22 3.7-0.0362 0.0453-0.0298 0.111 0.0155 0.146 0.0453 0.0362 0.11 0.0298 0.146-0.0155z"
+            />
+            <path
+              d="m64 65.5c0.687-0.757 1.5-1.41 2.39-1.99 1.26-0.814 2.7-1.43 4.22-1.87 0.974-0.281 1.98-0.481 3-0.607 0.673-0.0815 1.35-0.129 2.03-0.147 0.679-0.0181 1.36-0.0078 2.03 0.044 1.02 0.0776 2.03 0.242 3 0.51 2.48 0.686 4.72 2.02 6.31 4.19 0.031 0.0479 0.0957 0.0621 0.145 0.0298 0.0479-0.031 0.0608-0.0957 0.0297-0.145-0.847-1.45-1.97-2.62-3.27-3.53-0.892-0.623-1.87-1.12-2.91-1.5-1.19-0.433-2.45-0.709-3.73-0.828-0.545-0.0504-1.09-0.0698-1.64-0.0582-0.728 0.0155-1.46 0.0841-2.18 0.202-1.08 0.177-2.14 0.46-3.16 0.839-0.772 0.288-1.51 0.632-2.22 1.03-1.7 0.965-3.16 2.22-4.22 3.7-0.0362 0.0453-0.0285 0.111 0.0155 0.147 0.0453 0.0362 0.111 0.0285 0.147-0.0168z"
+            />
+            <path
+              d="m18 104c0.687-0.757 1.5-1.42 2.39-1.99 1.26-0.814 2.7-1.43 4.22-1.87 0.974-0.281 1.98-0.481 3-0.607 0.673-0.0815 1.35-0.129 2.03-0.147 0.68-0.0181 1.36-8e-3 2.03 0.044 1.02 0.0776 2.03 0.242 3 0.51 2.48 0.686 4.72 2.02 6.31 4.19 0.0323 0.0478 0.097 0.0621 0.145 0.0297 0.0479-0.031 0.0621-0.0957 0.0298-0.145-0.846-1.45-1.96-2.62-3.27-3.53-0.894-0.623-1.87-1.12-2.91-1.5-1.19-0.433-2.45-0.709-3.73-0.828-0.543-0.0504-1.09-0.0698-1.64-0.0582-0.728 0.0155-1.46 0.0841-2.18 0.202-1.08 0.177-2.14 0.46-3.16 0.839-0.772 0.288-1.51 0.632-2.21 1.03-1.7 0.965-3.16 2.22-4.22 3.7-0.0362 0.0453-0.0298 0.111 0.0155 0.147 0.0453 0.0362 0.11 0.0285 0.146-0.0168z"
+            />
+            <path
+              d="m110.4 104c0.687-0.757 1.5-1.42 2.39-1.99 1.26-0.814 2.7-1.43 4.22-1.87 0.974-0.281 1.98-0.481 3-0.607 0.673-0.0815 1.35-0.129 2.03-0.147 0.68-0.0181 1.36-8e-3 2.03 0.044 1.02 0.0776 2.03 0.242 3 0.51 2.48 0.686 4.72 2.02 6.31 4.19 0.031 0.0478 0.0957 0.0621 0.145 0.0297 0.0479-0.031 0.0608-0.0957 0.0298-0.145-0.847-1.45-1.97-2.62-3.27-3.53-0.892-0.623-1.87-1.12-2.91-1.5-1.19-0.433-2.45-0.709-3.73-0.828-0.545-0.0504-1.09-0.0698-1.64-0.0582-0.728 0.0155-1.46 0.0841-2.18 0.202-1.08 0.177-2.14 0.46-3.16 0.839-0.772 0.288-1.51 0.632-2.22 1.03-1.7 0.965-3.16 2.22-4.22 3.7-0.0362 0.0453-0.0285 0.111 0.0155 0.147 0.0453 0.0362 0.111 0.0285 0.147-0.0168z"
+            />
+            <path
+              d="m64 142c0.687-0.758 1.5-1.42 2.39-1.99 1.26-0.815 2.7-1.43 4.22-1.87 0.974-0.279 1.98-0.481 3-0.605 0.673-0.0828 1.35-0.129 2.03-0.147 0.679-0.0181 1.36-9e-3 2.03 0.0427 1.02 0.0789 2.03 0.243 3 0.511 2.48 0.686 4.72 2.02 6.31 4.19 0.031 0.0491 0.0957 0.0621 0.145 0.031 0.0479-0.0323 0.0608-0.097 0.0297-0.145-0.847-1.45-1.97-2.62-3.27-3.54-0.892-0.623-1.87-1.12-2.91-1.5-1.19-0.435-2.45-0.71-3.73-0.829-0.545-0.0504-1.09-0.0698-1.64-0.0569-0.728 0.0155-1.46 0.0841-2.18 0.202-1.08 0.177-2.14 0.459-3.16 0.838-0.772 0.29-1.51 0.632-2.22 1.03-1.7 0.965-3.16 2.22-4.22 3.7-0.0362 0.044-0.0285 0.11 0.0155 0.146 0.0453 0.0362 0.111 0.0284 0.147-0.0155z"
+            />
+          </g>
+        </g>
+      </svg>
+    `}};exports.IRRemoteElement=l,exports.IRRemoteElement=l=n([(0,t.customElement)("wokwi-ir-remote")],l);
+},{"lit-element":"bhxD","./utils/keys":"VHTx"}],"whKC":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"SevenSegmentElement",{enumerable:!0,get:function(){return e.SevenSegmentElement}}),Object.defineProperty(exports,"ArduinoUnoElement",{enumerable:!0,get:function(){return t.ArduinoUnoElement}}),Object.defineProperty(exports,"LCD1602Element",{enumerable:!0,get:function(){return r.LCD1602Element}}),Object.defineProperty(exports,"fontA00",{enumerable:!0,get:function(){return n.fontA00}}),Object.defineProperty(exports,"fontA02",{enumerable:!0,get:function(){return o.fontA02}}),Object.defineProperty(exports,"LEDElement",{enumerable:!0,get:function(){return u.LEDElement}}),Object.defineProperty(exports,"NeoPixelElement",{enumerable:!0,get:function(){return i.NeoPixelElement}}),Object.defineProperty(exports,"PushbuttonElement",{enumerable:!0,get:function(){return l.PushbuttonElement}}),Object.defineProperty(exports,"ResistorElement",{enumerable:!0,get:function(){return m.ResistorElement}}),Object.defineProperty(exports,"MembraneKeypadElement",{enumerable:!0,get:function(){return c.MembraneKeypadElement}}),Object.defineProperty(exports,"PotentiometerElement",{enumerable:!0,get:function(){return p.PotentiometerElement}}),Object.defineProperty(exports,"NeopixelMatrixElement",{enumerable:!0,get:function(){return b.NeopixelMatrixElement}}),Object.defineProperty(exports,"SSD1306Element",{enumerable:!0,get:function(){return f.SSD1306Element}}),Object.defineProperty(exports,"BuzzerElement",{enumerable:!0,get:function(){return a.BuzzerElement}}),Object.defineProperty(exports,"RotaryDialerElement",{enumerable:!0,get:function(){return d.RotaryDialerElement}}),Object.defineProperty(exports,"ServoElement",{enumerable:!0,get:function(){return s.ServoElement}}),Object.defineProperty(exports,"Dht22Element",{enumerable:!0,get:function(){return E.DHT22Element}}),Object.defineProperty(exports,"ArduinoMegaElement",{enumerable:!0,get:function(){return g.ArduinoMegaElement}}),Object.defineProperty(exports,"ArduinoNanoElement",{enumerable:!0,get:function(){return y.ArduinoNanoElement}}),Object.defineProperty(exports,"Ds1307Element",{enumerable:!0,get:function(){return x.Ds1307Element}}),Object.defineProperty(exports,"LEDRingElement",{enumerable:!0,get:function(){return P.LEDRingElement}}),Object.defineProperty(exports,"SlideSwitchElement",{enumerable:!0,get:function(){return j.SlideSwitchElement}}),Object.defineProperty(exports,"HCSR04Element",{enumerable:!0,get:function(){return q.HCSR04Element}}),Object.defineProperty(exports,"LCD2004Element",{enumerable:!0,get:function(){return O.LCD2004Element}}),Object.defineProperty(exports,"AnalogJoystickElement",{enumerable:!0,get:function(){return D.AnalogJoystickElement}}),Object.defineProperty(exports,"IRReceiverElement",{enumerable:!0,get:function(){return R.IRReceiverElement}}),Object.defineProperty(exports,"IRRemoteElement",{enumerable:!0,get:function(){return S.IRRemoteElement}}),require("./react-types");var e=require("./7segment-element"),t=require("./arduino-uno-element"),r=require("./lcd1602-element"),n=require("./lcd1602-font-a00"),o=require("./lcd1602-font-a02"),u=require("./led-element"),i=require("./neopixel-element"),l=require("./pushbutton-element"),m=require("./resistor-element"),c=require("./membrane-keypad-element"),p=require("./potentiometer-element"),b=require("./neopixel-matrix-element"),f=require("./ssd1306-element"),a=require("./buzzer-element"),d=require("./rotary-dialer-element"),s=require("./servo-element"),E=require("./dht22-element"),g=require("./arduino-mega-element"),y=require("./arduino-nano-element"),x=require("./ds1307-element"),P=require("./led-ring-element"),j=require("./slide-switch-element"),q=require("./hc-sr04-element"),O=require("./lcd2004-element"),D=require("./analog-joystick-element"),R=require("./ir-receiver-element"),S=require("./ir-remote-element");
+},{"./react-types":"VQ8w","./7segment-element":"mwEU","./arduino-uno-element":"AJVk","./lcd1602-element":"VbbO","./lcd1602-font-a00":"n2M3","./lcd1602-font-a02":"TcZY","./led-element":"xWrt","./neopixel-element":"x1K8","./pushbutton-element":"C6Pt","./resistor-element":"XKDm","./membrane-keypad-element":"V64C","./potentiometer-element":"jniu","./neopixel-matrix-element":"k8Z7","./ssd1306-element":"Uq31","./buzzer-element":"M94H","./rotary-dialer-element":"Dc62","./servo-element":"xPnD","./dht22-element":"HyOI","./arduino-mega-element":"teN6","./arduino-nano-element":"lLXh","./ds1307-element":"Z4zx","./led-ring-element":"WIdb","./slide-switch-element":"mBtK","./hc-sr04-element":"l0iu","./lcd2004-element":"oiOQ","./analog-joystick-element":"X9BM","./ir-receiver-element":"rBoD","./ir-remote-element":"qY16"}],"XKeh":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.CPU=void 0;const t=256;class s{constructor(s,e=8192){this.progMem=s,this.sramBytes=e,this.data=new Uint8Array(this.sramBytes+t),this.data16=new Uint16Array(this.data.buffer),this.dataView=new DataView(this.data.buffer),this.progBytes=new Uint8Array(this.progMem.buffer),this.readHooks=[],this.writeHooks=[],this.pc22Bits=this.progBytes.length>131072,this.gpioTimerHooks=[],this.pc=0,this.cycles=0,this.reset()}reset(){this.data.fill(0),this.SP=this.data.length-1}readData(t){return t>=32&&this.readHooks[t]?this.readHooks[t](t):this.data[t]}writeData(t,s){const e=this.writeHooks[t];e&&e(s,this.data[t],t)||(this.data[t]=s)}get SP(){return this.dataView.getUint16(93,!0)}set SP(t){this.dataView.setUint16(93,t,!0)}get SREG(){return this.data[95]}get interruptsEnabled(){return!!(128&this.SREG)}}exports.CPU=s;
 },{}],"Gmr7":[function(require,module,exports) {
 "use strict";function a(a){return 36864==(65039&a)||37376==(65039&a)||37902==(65038&a)||37900==(65038&a)}function t(t){const e=t.progMem[t.pc];if(7168==(64512&e)){const a=t.data[(496&e)>>4],d=t.data[15&e|(512&e)>>5],i=a+d+(1&t.data[95]),s=255&i;t.data[(496&e)>>4]=s;let c=192&t.data[95];c|=s?0:2,c|=128&s?4:0,c|=(s^d)&(a^s)&128?8:0,c|=c>>2&1^c>>3&1?16:0,c|=256&i?1:0,c|=1&(a&d|d&~s|~s&a)?32:0,t.data[95]=c}else if(3072==(64512&e)){const a=t.data[(496&e)>>4],d=t.data[15&e|(512&e)>>5],i=a+d&255;t.data[(496&e)>>4]=i;let s=192&t.data[95];s|=i?0:2,s|=128&i?4:0,s|=(i^d)&(i^a)&128?8:0,s|=s>>2&1^s>>3&1?16:0,s|=a+d&256?1:0,s|=1&(a&d|d&~i|~i&a)?32:0,t.data[95]=s}else if(38400==(65280&e)){const a=2*((48&e)>>4)+24,d=t.dataView.getUint16(a,!0),i=d+(15&e|(192&e)>>2)&65535;t.dataView.setUint16(a,i,!0);let s=224&t.data[95];s|=i?0:2,s|=32768&i?4:0,s|=~d&i&32768?8:0,s|=s>>2&1^s>>3&1?16:0,s|=~i&d&32768?1:0,t.data[95]=s,t.cycles++}else if(8192==(64512&e)){const a=t.data[(496&e)>>4]&t.data[15&e|(512&e)>>5];t.data[(496&e)>>4]=a;let d=225&t.data[95];d|=a?0:2,d|=128&a?4:0,d|=d>>2&1^d>>3&1?16:0,t.data[95]=d}else if(28672==(61440&e)){const a=t.data[16+((240&e)>>4)]&(15&e|(3840&e)>>4);t.data[16+((240&e)>>4)]=a;let d=225&t.data[95];d|=a?0:2,d|=128&a?4:0,d|=d>>2&1^d>>3&1?16:0,t.data[95]=d}else if(37893==(65039&e)){const a=t.data[(496&e)>>4],d=a>>>1|128&a;t.data[(496&e)>>4]=d;let i=224&t.data[95];i|=d?0:2,i|=128&d?4:0,i|=1&a,i|=i>>2&1^1&i?8:0,i|=i>>2&1^i>>3&1?16:0,t.data[95]=i}else if(38024==(65423&e))t.data[95]&=~(1<<((112&e)>>4));else if(63488==(65032&e)){const a=7&e,d=(496&e)>>4;t.data[d]=~(1<<a)&t.data[d]|(t.data[95]>>6&1)<<a}else if(62464==(64512&e))t.data[95]&1<<(7&e)||(t.pc=t.pc+(((504&e)>>3)-(512&e?64:0)),t.cycles++);else if(61440==(64512&e))t.data[95]&1<<(7&e)&&(t.pc=t.pc+(((504&e)>>3)-(512&e?64:0)),t.cycles++);else if(37896==(65423&e))t.data[95]|=1<<((112&e)>>4);else if(64e3==(65032&e)){const a=t.data[(496&e)>>4],d=7&e;t.data[95]=191&t.data[95]|(a>>d&1?64:0)}else if(37902==(65038&e)){const a=t.progMem[t.pc+1]|(1&e)<<16|(496&e)<<13,d=t.pc+2,i=t.dataView.getUint16(93,!0),{pc22Bits:s}=t;t.data[i]=255&d,t.data[i-1]=d>>8&255,s&&(t.data[i-2]=d>>16&255),t.dataView.setUint16(93,i-(s?3:2),!0),t.pc=a-1,t.cycles+=s?4:3}else if(38912==(65280&e)){const a=248&e,d=7&e,i=t.readData(32+(a>>3));t.writeData(32+(a>>3),i&~(1<<d))}else if(37888==(65039&e)){const a=(496&e)>>4,d=255-t.data[a];t.data[a]=d;let i=225&t.data[95]|1;i|=d?0:2,i|=128&d?4:0,i|=i>>2&1^i>>3&1?16:0,t.data[95]=i}else if(5120==(64512&e)){const a=t.data[(496&e)>>4],d=t.data[15&e|(512&e)>>5],i=a-d;let s=192&t.data[95];s|=i?0:2,s|=128&i?4:0,s|=0!=((a^d)&(a^i)&128)?8:0,s|=s>>2&1^s>>3&1?16:0,s|=d>a?1:0,s|=1&(~a&d|d&i|i&~a)?32:0,t.data[95]=s}else if(1024==(64512&e)){const a=t.data[(496&e)>>4],d=t.data[15&e|(512&e)>>5];let i=t.data[95];const s=a-d-(1&i);i=192&i|(!s&&i>>1&1?2:0)|(d+(1&i)>a?1:0),i|=128&s?4:0,i|=(a^d)&(a^s)&128?8:0,i|=i>>2&1^i>>3&1?16:0,i|=1&(~a&d|d&s|s&~a)?32:0,t.data[95]=i}else if(12288==(61440&e)){const a=t.data[16+((240&e)>>4)],d=15&e|(3840&e)>>4,i=a-d;let s=192&t.data[95];s|=i?0:2,s|=128&i?4:0,s|=(a^d)&(a^i)&128?8:0,s|=s>>2&1^s>>3&1?16:0,s|=d>a?1:0,s|=1&(~a&d|d&i|i&~a)?32:0,t.data[95]=s}else if(4096==(64512&e)){if(t.data[(496&e)>>4]===t.data[15&e|(512&e)>>5]){const e=a(t.progMem[t.pc+1])?2:1;t.pc+=e,t.cycles+=e}}else if(37898==(65039&e)){const a=t.data[(496&e)>>4],d=a-1;t.data[(496&e)>>4]=d;let i=225&t.data[95];i|=d?0:2,i|=128&d?4:0,i|=128===a?8:0,i|=i>>2&1^i>>3&1?16:0,t.data[95]=i}else if(38169===e){const a=t.pc+1,e=t.dataView.getUint16(93,!0),d=t.data[92];t.data[e]=255&a,t.data[e-1]=a>>8&255,t.data[e-2]=a>>16&255,t.dataView.setUint16(93,e-3,!0),t.pc=(d<<16|t.dataView.getUint16(30,!0))-1,t.cycles+=3}else if(37913===e){const a=t.data[92];t.pc=(a<<16|t.dataView.getUint16(30,!0))-1,t.cycles++}else if(38360===e){const a=t.data[91];t.data[0]=t.progBytes[a<<16|t.dataView.getUint16(30,!0)],t.cycles+=2}else if(36870==(65039&e)){const a=t.data[91];t.data[(496&e)>>4]=t.progBytes[a<<16|t.dataView.getUint16(30,!0)],t.cycles+=2}else if(36871==(65039&e)){const a=t.data[91],d=t.dataView.getUint16(30,!0);t.data[(496&e)>>4]=t.progBytes[a<<16|d],t.dataView.setUint16(30,d+1,!0),65535===d&&(t.data[91]=(a+1)%(t.progBytes.length>>16)),t.cycles+=2}else if(9216==(64512&e)){const a=t.data[(496&e)>>4]^t.data[15&e|(512&e)>>5];t.data[(496&e)>>4]=a;let d=225&t.data[95];d|=a?0:2,d|=128&a?4:0,d|=d>>2&1^d>>3&1?16:0,t.data[95]=d}else if(776==(65416&e)){const a=t.data[16+((112&e)>>4)],d=t.data[16+(7&e)],i=a*d<<1;t.dataView.setUint16(0,i,!0),t.data[95]=252&t.data[95]|(65535&i?0:2)|(a*d&32768?1:0),t.cycles++}else if(896==(65416&e)){const a=t.dataView.getInt8(16+((112&e)>>4)),d=t.dataView.getInt8(16+(7&e)),i=a*d<<1;t.dataView.setInt16(0,i,!0),t.data[95]=252&t.data[95]|(65535&i?0:2)|(a*d&32768?1:0),t.cycles++}else if(904==(65416&e)){const a=t.dataView.getInt8(16+((112&e)>>4)),d=t.data[16+(7&e)],i=a*d<<1;t.dataView.setInt16(0,i,!0),t.data[95]=252&t.data[95]|(65535&i?2:0)|(a*d&32768?1:0),t.cycles++}else if(38153===e){const a=t.pc+1,e=t.dataView.getUint16(93,!0),{pc22Bits:d}=t;t.data[e]=255&a,t.data[e-1]=a>>8&255,d&&(t.data[e-2]=a>>16&255),t.dataView.setUint16(93,e-(d?3:2),!0),t.pc=t.dataView.getUint16(30,!0)-1,t.cycles+=d?3:2}else if(37897===e)t.pc=t.dataView.getUint16(30,!0)-1,t.cycles++;else if(45056==(63488&e)){const a=t.readData(32+(15&e|(1536&e)>>5));t.data[(496&e)>>4]=a}else if(37891==(65039&e)){const a=t.data[(496&e)>>4],d=a+1&255;t.data[(496&e)>>4]=d;let i=225&t.data[95];i|=d?0:2,i|=128&d?4:0,i|=127===a?8:0,i|=i>>2&1^i>>3&1?16:0,t.data[95]=i}else if(37900==(65038&e))t.pc=(t.progMem[t.pc+1]|(1&e)<<16|(496&e)<<13)-1,t.cycles+=2;else if(37382==(65039&e)){const a=(496&e)>>4,d=t.data[a],i=t.readData(t.dataView.getUint16(30,!0));t.writeData(t.dataView.getUint16(30,!0),i&255-d),t.data[a]=i}else if(37381==(65039&e)){const a=(496&e)>>4,d=t.data[a],i=t.readData(t.dataView.getUint16(30,!0));t.writeData(t.dataView.getUint16(30,!0),i|d),t.data[a]=i}else if(37383==(65039&e)){const a=t.data[(496&e)>>4],d=t.readData(t.dataView.getUint16(30,!0));t.writeData(t.dataView.getUint16(30,!0),a^d),t.data[(496&e)>>4]=d}else if(57344==(61440&e))t.data[16+((240&e)>>4)]=15&e|(3840&e)>>4;else if(36864==(65039&e)){t.cycles++;const a=t.readData(t.progMem[t.pc+1]);t.data[(496&e)>>4]=a,t.pc++}else if(36876==(65039&e))t.cycles++,t.data[(496&e)>>4]=t.readData(t.dataView.getUint16(26,!0));else if(36877==(65039&e)){const a=t.dataView.getUint16(26,!0);t.cycles++,t.data[(496&e)>>4]=t.readData(a),t.dataView.setUint16(26,a+1,!0)}else if(36878==(65039&e)){const a=t.dataView.getUint16(26,!0)-1;t.dataView.setUint16(26,a,!0),t.cycles++,t.data[(496&e)>>4]=t.readData(a)}else if(32776==(65039&e))t.cycles++,t.data[(496&e)>>4]=t.readData(t.dataView.getUint16(28,!0));else if(36873==(65039&e)){const a=t.dataView.getUint16(28,!0);t.cycles++,t.data[(496&e)>>4]=t.readData(a),t.dataView.setUint16(28,a+1,!0)}else if(36874==(65039&e)){const a=t.dataView.getUint16(28,!0)-1;t.dataView.setUint16(28,a,!0),t.cycles++,t.data[(496&e)>>4]=t.readData(a)}else if(32776==(53768&e)&&7&e|(3072&e)>>7|(8192&e)>>8)t.cycles++,t.data[(496&e)>>4]=t.readData(t.dataView.getUint16(28,!0)+(7&e|(3072&e)>>7|(8192&e)>>8));else if(32768==(65039&e))t.cycles++,t.data[(496&e)>>4]=t.readData(t.dataView.getUint16(30,!0));else if(36865==(65039&e)){const a=t.dataView.getUint16(30,!0);t.cycles++,t.data[(496&e)>>4]=t.readData(a),t.dataView.setUint16(30,a+1,!0)}else if(36866==(65039&e)){const a=t.dataView.getUint16(30,!0)-1;t.dataView.setUint16(30,a,!0),t.cycles++,t.data[(496&e)>>4]=t.readData(a)}else if(32768==(53768&e)&&7&e|(3072&e)>>7|(8192&e)>>8)t.cycles++,t.data[(496&e)>>4]=t.readData(t.dataView.getUint16(30,!0)+(7&e|(3072&e)>>7|(8192&e)>>8));else if(38344===e)t.data[0]=t.progBytes[t.dataView.getUint16(30,!0)],t.cycles+=2;else if(36868==(65039&e))t.data[(496&e)>>4]=t.progBytes[t.dataView.getUint16(30,!0)],t.cycles+=2;else if(36869==(65039&e)){const a=t.dataView.getUint16(30,!0);t.data[(496&e)>>4]=t.progBytes[a],t.dataView.setUint16(30,a+1,!0),t.cycles+=2}else if(37894==(65039&e)){const a=t.data[(496&e)>>4],d=a>>>1;t.data[(496&e)>>4]=d;let i=224&t.data[95];i|=d?0:2,i|=1&a,i|=i>>2&1^1&i?8:0,i|=i>>2&1^i>>3&1?16:0,t.data[95]=i}else if(11264==(64512&e))t.data[(496&e)>>4]=t.data[15&e|(512&e)>>5];else if(256==(65280&e)){const a=2*(15&e),d=2*((240&e)>>4);t.data[d]=t.data[a],t.data[d+1]=t.data[a+1]}else if(39936==(64512&e)){const a=t.data[(496&e)>>4]*t.data[15&e|(512&e)>>5];t.dataView.setUint16(0,a,!0),t.data[95]=252&t.data[95]|(65535&a?0:2)|(32768&a?1:0),t.cycles++}else if(512==(65280&e)){const a=t.dataView.getInt8(16+((240&e)>>4))*t.dataView.getInt8(16+(15&e));t.dataView.setInt16(0,a,!0),t.data[95]=252&t.data[95]|(65535&a?0:2)|(32768&a?1:0),t.cycles++}else if(768==(65416&e)){const a=t.dataView.getInt8(16+((112&e)>>4))*t.data[16+(7&e)];t.dataView.setInt16(0,a,!0),t.data[95]=252&t.data[95]|(65535&a?0:2)|(32768&a?1:0),t.cycles++}else if(37889==(65039&e)){const a=(496&e)>>4,d=t.data[a],i=0-d;t.data[a]=i;let s=192&t.data[95];s|=i?0:2,s|=128&i?4:0,s|=128===i?8:0,s|=s>>2&1^s>>3&1?16:0,s|=i?1:0,s|=1&(i|d)?32:0,t.data[95]=s}else if(0===e);else if(10240==(64512&e)){const a=t.data[(496&e)>>4]|t.data[15&e|(512&e)>>5];t.data[(496&e)>>4]=a;let d=225&t.data[95];d|=a?0:2,d|=128&a?4:0,d|=d>>2&1^d>>3&1?16:0,t.data[95]=d}else if(24576==(61440&e)){const a=t.data[16+((240&e)>>4)]|15&e|(3840&e)>>4;t.data[16+((240&e)>>4)]=a;let d=225&t.data[95];d|=a?0:2,d|=128&a?4:0,d|=d>>2&1^d>>3&1?16:0,t.data[95]=d}else if(47104==(63488&e))t.writeData(32+(15&e|(1536&e)>>5),t.data[(496&e)>>4]);else if(36879==(65039&e)){const a=t.dataView.getUint16(93,!0)+1;t.dataView.setUint16(93,a,!0),t.data[(496&e)>>4]=t.data[a],t.cycles++}else if(37391==(65039&e)){const a=t.dataView.getUint16(93,!0);t.data[a]=t.data[(496&e)>>4],t.dataView.setUint16(93,a-1,!0),t.cycles++}else if(53248==(61440&e)){const a=(2047&e)-(2048&e?2048:0),d=t.pc+1,i=t.dataView.getUint16(93,!0),{pc22Bits:s}=t;t.data[i]=255&d,t.data[i-1]=d>>8&255,s&&(t.data[i-2]=d>>16&255),t.dataView.setUint16(93,i-(s?3:2),!0),t.pc+=a,t.cycles+=s?3:2}else if(38152===e){const{pc22Bits:a}=t,e=t.dataView.getUint16(93,!0)+(a?3:2);t.dataView.setUint16(93,e,!0),t.pc=(t.data[e-1]<<8)+t.data[e]-1,a&&(t.pc|=t.data[e-2]<<16),t.cycles+=a?4:3}else if(38168===e){const{pc22Bits:a}=t,e=t.dataView.getUint16(93,!0)+(a?3:2);t.dataView.setUint16(93,e,!0),t.pc=(t.data[e-1]<<8)+t.data[e]-1,a&&(t.pc|=t.data[e-2]<<16),t.cycles+=a?4:3,t.data[95]|=128}else if(49152==(61440&e))t.pc=t.pc+((2047&e)-(2048&e?2048:0)),t.cycles++;else if(37895==(65039&e)){const a=t.data[(496&e)>>4],d=a>>>1|(1&t.data[95])<<7;t.data[(496&e)>>4]=d;let i=224&t.data[95];i|=d?0:2,i|=128&d?4:0,i|=1&a?1:0,i|=i>>2&1^1&i?8:0,i|=i>>2&1^i>>3&1?16:0,t.data[95]=i}else if(2048==(64512&e)){const a=t.data[(496&e)>>4],d=t.data[15&e|(512&e)>>5];let i=t.data[95];const s=a-d-(1&i);t.data[(496&e)>>4]=s,i=192&i|(!s&&i>>1&1?2:0)|(d+(1&i)>a?1:0),i|=128&s?4:0,i|=(a^d)&(a^s)&128?8:0,i|=i>>2&1^i>>3&1?16:0,i|=1&(~a&d|d&s|s&~a)?32:0,t.data[95]=i}else if(16384==(61440&e)){const a=t.data[16+((240&e)>>4)],d=15&e|(3840&e)>>4;let i=t.data[95];const s=a-d-(1&i);t.data[16+((240&e)>>4)]=s,i=192&i|(!s&&i>>1&1?2:0)|(d+(1&i)>a?1:0),i|=128&s?4:0,i|=(a^d)&(a^s)&128?8:0,i|=i>>2&1^i>>3&1?16:0,i|=1&(~a&d|d&s|s&~a)?32:0,t.data[95]=i}else if(39424==(65280&e)){const a=32+((248&e)>>3);t.writeData(a,t.readData(a)|1<<(7&e)),t.cycles++}else if(39168==(65280&e)){if(!(t.readData(32+((248&e)>>3))&1<<(7&e))){const e=a(t.progMem[t.pc+1])?2:1;t.cycles+=e,t.pc+=e}}else if(39680==(65280&e)){if(t.readData(32+((248&e)>>3))&1<<(7&e)){const e=a(t.progMem[t.pc+1])?2:1;t.cycles+=e,t.pc+=e}}else if(38656==(65280&e)){const a=2*((48&e)>>4)+24,d=t.dataView.getUint16(a,!0),i=15&e|(192&e)>>2,s=d-i;t.dataView.setUint16(a,s,!0);let c=192&t.data[95];c|=s?0:2,c|=32768&s?4:0,c|=d&~s&32768?8:0,c|=c>>2&1^c>>3&1?16:0,c|=i>d?1:0,c|=1&(~d&i|i&s|s&~d)?32:0,t.data[95]=c,t.cycles++}else if(64512==(65032&e)){if(!(t.data[(496&e)>>4]&1<<(7&e))){const e=a(t.progMem[t.pc+1])?2:1;t.cycles+=e,t.pc+=e}}else if(65024==(65032&e)){if(t.data[(496&e)>>4]&1<<(7&e)){const e=a(t.progMem[t.pc+1])?2:1;t.cycles+=e,t.pc+=e}}else if(38280===e);else if(38376===e);else if(38392===e);else if(37376==(65039&e)){const a=t.data[(496&e)>>4],d=t.progMem[t.pc+1];t.writeData(d,a),t.pc++,t.cycles++}else if(37388==(65039&e))t.writeData(t.dataView.getUint16(26,!0),t.data[(496&e)>>4]),t.cycles++;else if(37389==(65039&e)){const a=t.dataView.getUint16(26,!0);t.writeData(a,t.data[(496&e)>>4]),t.dataView.setUint16(26,a+1,!0),t.cycles++}else if(37390==(65039&e)){const a=t.data[(496&e)>>4],d=t.dataView.getUint16(26,!0)-1;t.dataView.setUint16(26,d,!0),t.writeData(d,a),t.cycles++}else if(33288==(65039&e))t.writeData(t.dataView.getUint16(28,!0),t.data[(496&e)>>4]),t.cycles++;else if(37385==(65039&e)){const a=t.data[(496&e)>>4],d=t.dataView.getUint16(28,!0);t.writeData(d,a),t.dataView.setUint16(28,d+1,!0),t.cycles++}else if(37386==(65039&e)){const a=t.data[(496&e)>>4],d=t.dataView.getUint16(28,!0)-1;t.dataView.setUint16(28,d,!0),t.writeData(d,a),t.cycles++}else if(33288==(53768&e)&&7&e|(3072&e)>>7|(8192&e)>>8)t.writeData(t.dataView.getUint16(28,!0)+(7&e|(3072&e)>>7|(8192&e)>>8),t.data[(496&e)>>4]),t.cycles++;else if(33280==(65039&e))t.writeData(t.dataView.getUint16(30,!0),t.data[(496&e)>>4]),t.cycles++;else if(37377==(65039&e)){const a=t.dataView.getUint16(30,!0);t.writeData(a,t.data[(496&e)>>4]),t.dataView.setUint16(30,a+1,!0),t.cycles++}else if(37378==(65039&e)){const a=t.data[(496&e)>>4],d=t.dataView.getUint16(30,!0)-1;t.dataView.setUint16(30,d,!0),t.writeData(d,a),t.cycles++}else if(33280==(53768&e)&&7&e|(3072&e)>>7|(8192&e)>>8)t.writeData(t.dataView.getUint16(30,!0)+(7&e|(3072&e)>>7|(8192&e)>>8),t.data[(496&e)>>4]),t.cycles++;else if(6144==(64512&e)){const a=t.data[(496&e)>>4],d=t.data[15&e|(512&e)>>5],i=a-d;t.data[(496&e)>>4]=i;let s=192&t.data[95];s|=i?0:2,s|=128&i?4:0,s|=(a^d)&(a^i)&128?8:0,s|=s>>2&1^s>>3&1?16:0,s|=d>a?1:0,s|=1&(~a&d|d&i|i&~a)?32:0,t.data[95]=s}else if(20480==(61440&e)){const a=t.data[16+((240&e)>>4)],d=15&e|(3840&e)>>4,i=a-d;t.data[16+((240&e)>>4)]=i;let s=192&t.data[95];s|=i?0:2,s|=128&i?4:0,s|=(a^d)&(a^i)&128?8:0,s|=s>>2&1^s>>3&1?16:0,s|=d>a?1:0,s|=1&(~a&d|d&i|i&~a)?32:0,t.data[95]=s}else if(37890==(65039&e)){const a=(496&e)>>4,d=t.data[a];t.data[a]=(15&d)<<4|(240&d)>>>4}else if(38312===e);else if(37380==(65039&e)){const a=(496&e)>>4,d=t.data[a],i=t.data[t.dataView.getUint16(30,!0)];t.data[t.dataView.getUint16(30,!0)]=d,t.data[a]=i}t.pc=(t.pc+1)%t.progMem.length,t.cycles++}Object.defineProperty(exports,"__esModule",{value:!0}),exports.avrInstruction=t;
