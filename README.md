@@ -7,7 +7,7 @@ version:  0.0.9
 
 language: en
 
-narrator: US English Female
+narrator: US English Male
 
 comment:  LiaScript template for the AVR8js simulator.
 
