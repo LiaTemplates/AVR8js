@@ -51,7 +51,7 @@ for(let i=0; i<name.length; i++) {
 
 AVR8js.build(sketch, files)
    .then((e) => {
-     if (e.stderr) {
+     if (e.hex === "") {
        let msgs = []
 
        for(let i = 0; i<name.length; i++) {
@@ -108,7 +108,7 @@ let id = "@0"
 
 AVR8js.buildASM(`@input`)
    .then((e) => {
-     if (e.stderr) {
+     if (e.hex === "") {
        let msgs = []
 
        let iter = e.stderr.matchAll(/main\.s:(\d+):(\d+): ([^:]+):(.+)/g)
@@ -913,7 +913,7 @@ for(let i=0; i<name.length; i++) {
 
 AVR8js.build(sketch, files)
    .then((e) => {
-     if (e.stderr) {
+     if (e.hex === "") {
        let msgs = []
 
        for(let i = 0; i<name.length; i++) {
@@ -968,7 +968,7 @@ let id = "@0"
 
 AVR8js.buildASM(`@input`)
    .then((e) => {
-     if (e.stderr) {
+     if (e.hex === "") {
        let msgs = []
 
        let iter = e.stderr.matchAll(/main\.s:(\d+):(\d+): ([^:]+):(.+)/g)
