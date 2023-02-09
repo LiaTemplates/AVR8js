@@ -147,7 +147,7 @@ window.AVR8js = {
           LEDs.forEach((e) => {
             let [pin, p] = pinPort(e)
 
-            if (pin && p === PORT) {
+            if (typeof pin === 'number' && p === PORT) {
               e.value = runner.port.get(p)?.pinState(pin) === PinState.High
             }
           })
@@ -155,8 +155,8 @@ window.AVR8js = {
           BUZZER.forEach((e) => {
             let [pin, p] = pinPort(e)
 
-            if (pin && p === PORT) {
-              e.hasSignal = value & (1 << (pin - 8)) ? true : false
+            if (typeof pin === 'number' && p === PORT) {
+              e.hasSignal = runner.port.get(p)?.pinState(pin) || false
             }
           })
 
@@ -180,8 +180,9 @@ window.AVR8js = {
           for (let i = 0; i < NeoMatrix.length; i++) {
             let [pin, p] = pinPort(NeoMatrix[i])
 
-            if (pin && p === PORT) {
+            if (typeof pin === 'number' && p === PORT) {
               NeoMatrixController[i]?.feedValue(
+                // @ts-ignore
                 runner.port.get(p)?.pinState(pin),
                 cpuNanos()
               )
