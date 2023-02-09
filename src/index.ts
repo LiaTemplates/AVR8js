@@ -98,7 +98,7 @@ window.AVR8js = {
     MHZ = MHZ || 16000000
     const cpuNanos = () => Math.round((runner.cpu.cycles / MHZ) * 1000000000)
 
-    const container = document.getElementById(id)
+    const container = document.getElementById(id) || document
 
     const LEDs: Array<LEDElement & HTMLElement> = Array.from(
       container?.querySelectorAll('wokwi-led') || []
