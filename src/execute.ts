@@ -1,5 +1,6 @@
 import {
   avrInstruction,
+  avrInterrupt,
   AVRIOPort,
   AVRTimer,
   AVRUSART,
@@ -33,6 +34,7 @@ export class AVRRunner {
   readonly speed = 16e6 // 16 MHZ
   readonly workUnitCycles = 500000
   readonly taskScheduler = new MicroTaskScheduler()
+  public serialBuffer: Array<number>
 
   constructor(hex: string) {
     loadHex(hex, new Uint8Array(this.program.buffer))
@@ -46,7 +48,12 @@ export class AVRRunner {
     this.port.set('C', new AVRIOPort(this.cpu, portCConfig))
     this.port.set('D', new AVRIOPort(this.cpu, portDConfig))
 
+    this.serialBuffer = []
+
     this.usart = new AVRUSART(this.cpu, usart0Config, this.speed)
+
+    this.cpu.readHooks[usart0Config.UDR] = () => this.serialBuffer.shift() || 0
+
     this.taskScheduler.start()
   }
 
@@ -59,9 +66,24 @@ export class AVRRunner {
 
     callback(this.cpu)
     this.taskScheduler.postTask(() => this.execute(callback))
+
+    const ucsra = this.cpu.data[usart0Config.UCSRA]
+    if (
+      this.cpu.interruptsEnabled &&
+      ucsra & 0x20 &&
+      this.serialBuffer.length > 0
+    ) {
+      avrInterrupt(this.cpu, usart0Config.rxCompleteInterrupt)
+    }
   }
 
   stop() {
     this.taskScheduler.stop()
+  }
+
+  serial(input: string) {
+    for (var i = 0; i < input.length; i++) {
+      this.serialBuffer.push(input.charCodeAt(i))
+    }
   }
 }
