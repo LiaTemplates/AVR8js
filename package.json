@@ -17,8 +17,9 @@
   "author": "André Dietrich",
   "license": "ISC",
   "dependencies": {
-    "@wokwi/elements": "^0.35.0",
-    "avr8js": "^0.13.1"
+    "@swc/helpers": "^0.4.14",
+    "@wokwi/elements": "^1.4.4",
+    "avr8js": "^0.20.1"
   },
   "browserslist": [
     "last 2 years"
