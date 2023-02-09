@@ -11,7 +11,7 @@ narrator: US English Male
 
 comment:  LiaScript template for the AVR8js simulator.
 
-script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.9/dist/index.js
+script:   dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
@@ -75,7 +75,7 @@ AVR8js.build(sketch, files)
        console.debug(e.stdout)
 
        if (e.hex) {
-         let runner = AVR8js.execute(e.hex, console.log, id)
+         let runner = AVR8js.execute(e.hex, console.stream, id)
 
          send.handle("input", (input) => {
             runner.serial(input.slice(0, -1))
@@ -128,7 +128,7 @@ AVR8js.buildASM(`@input`)
        console.debug(e.stdout)
 
        if (e.hex) {
-         let runner = AVR8js.execute(e.hex, console.log, id)
+         let runner = AVR8js.execute(e.hex, console.stream, id)
 
          send.handle("input", (input) => {
             runner.serial(input.slice(0, -1))
@@ -332,6 +332,7 @@ void loop() {
 
 ### LED
 
+<lia-keep>
 <div id="example1">
 <wokwi-led color="red"   pin="13" label="13"></wokwi-led>
 <wokwi-led color="green" pin="12" label="12"></wokwi-led>
@@ -339,6 +340,7 @@ void loop() {
 <wokwi-led color="blue"  pin="10" label="10"></wokwi-led>
 <span id="simulation-time"></span>
 </div>
+</lia-keep>
 
 ``` cpp
 byte leds[] = {13, 12, 11, 10};
@@ -359,11 +361,11 @@ void loop() {
   i = (i + 1) % sizeof(leds);
 }
 ```
-@AVR8js.sketch
+@AVR8js.sketch(example1)
 
 ### Buttons
 
-<div>
+<div id="buttons-experiment">
   <wokwi-pushbutton color="green" pin="2" ></wokwi-pushbutton>
   <wokwi-led        color="green" pin="11"></wokwi-led>
   <wokwi-led        color="blue"  pin="12"></wokwi-led>
@@ -397,7 +399,7 @@ void loop() {
   digitalWrite(12, i % 2);
 }
 ```
-@AVR8js.sketch
+@AVR8js.sketch(buttons-experiment)
 
 ### Assembly
 
@@ -566,7 +568,48 @@ void loop() {
 
 ### Neopixel-Matrix
 
-<wokwi-neopixel-matrix></wokwi-neopixel-matrix>
+<div id="matrix-experiment">
+<wokwi-neopixel-matrix pin="3" cols="9" rows="9"></wokwi-neopixel-matrix>
+<span id="simulation-time"></span>
+</div>
+
+``` cpp
+#include "FastLED.h"
+
+// Matrix size
+#define NUM_ROWS 9
+#define NUM_COLS 9
+
+// LEDs pin
+#define DATA_PIN 3
+
+// LED brightness
+#define BRIGHTNESS 180
+
+#define NUM_LEDS NUM_ROWS * NUM_COLS
+
+// Define the array of leds
+CRGB leds[NUM_LEDS];
+
+void setup() {
+  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  FastLED.setBrightness(BRIGHTNESS);
+}
+
+int counter = 0;
+void loop() {
+  for (byte row = 0; row < NUM_ROWS; row++) {
+    for (byte col = 0; col < NUM_COLS; col++) {
+      int delta = abs(NUM_ROWS - row * 2) + abs(NUM_COLS - col * 2);
+      leds[row * NUM_COLS + col] = CHSV(delta * 4 + counter, 255, 255);
+    }
+  }
+  FastLED.show();
+  delay(5);
+  counter++;
+}
+```
+@AVR8js.sketch(matrix-experiment)
 
 ### Potentiometer
 
@@ -937,7 +980,7 @@ AVR8js.build(sketch, files)
        console.debug(e.stdout)
 
        if (e.hex) {
-         let runner = AVR8js.execute(e.hex, console.log, id)
+         let runner = AVR8js.execute(e.hex, console.stream, id)
 
          send.handle("input", (input) => {
             runner.serial(input.slice(0, -1))
@@ -988,7 +1031,7 @@ AVR8js.buildASM(`@input`)
        console.debug(e.stdout)
 
        if (e.hex) {
-         let runner = AVR8js.execute(e.hex, console.log, id)
+         let runner = AVR8js.execute(e.hex, console.stream, id)
 
          send.handle("input", (input) => {
             runner.serial(input.slice(0, -1))
