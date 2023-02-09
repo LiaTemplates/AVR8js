@@ -65,16 +65,31 @@ window.AVR8js = {
   },
 
   buildASM: async function asmToHex(source: string) {
-    const resp = await fetch('https://hexi.wokwi.com/asm', {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ source }),
-    })
-    return await resp.json()
+    if (!window.__AVR8jsCache) {
+      window.__AVR8jsCache = {}
+    }
+
+    let body = JSON.stringify({ files: [{ name: 'main.S', content: source }] })
+
+    if (window.__AVR8jsCache[body]) {
+      return window.__AVR8jsCache[body]
+    } else {
+      const resp = await fetch('https://hexi.wokwi.com/asm', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      })
+
+      const rslt = await resp.json()
+
+      window.__AVR8jsCache[body] = rslt
+
+      return rslt
+    }
   },
 
   execute: function (hex: string, log: any, id: string, MHZ: any) {
@@ -163,7 +178,7 @@ window.AVR8js = {
           SEG7.forEach((e) => {
             let [pin, p] = pinPort(e)
 
-            if (pin && p === PORT) {
+            if (typeof pin === 'number' && p === PORT) {
               e.values = [
                 value & 1,
                 value & 2,
@@ -200,8 +215,6 @@ window.AVR8js = {
     const timeSpan = container?.querySelector('#simulation-time')
 
     const cpuPerf = new CPUPerformance(runner.cpu, MHZ)
-
-    console.warn('XXXXXXXXX', NeoMatrixController, cpuNanos)
 
     runner.execute((cpu) => {
       const time = formatTime(cpu.cycles / MHZ)

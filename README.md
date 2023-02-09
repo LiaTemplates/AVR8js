@@ -482,8 +482,10 @@ waitininner1:
 
 ### 7-Segment
 
+<div id="7-experiment">
 <wokwi-7segment digits="1" pin="13"></wokwi-7segment>
-
+<span id="simulation-time"></span>
+</div>
 
 ``` cpp
 byte leds[] = {13, 12, 11, 10};
@@ -504,7 +506,7 @@ void loop() {
   i = (i + 1) % sizeof(leds);
 }
 ```
-@AVR8js.sketch
+@AVR8js.sketch(7-experiment)
 
 
 ### Buzzer
@@ -535,7 +537,7 @@ void loop() {
   i = (i + 1) % sizeof(leds);
 }
 ```
-@AVR8js.sketch
+@AVR8js.sketch(example1)
 
 ### Arduino-Mega
 
