@@ -12,6 +12,8 @@ import {
   portCConfig,
   portDConfig,
   usart0Config,
+  AVRTWI,
+  twiConfig,
 } from 'avr8js'
 import { loadHex } from './intelhex'
 import { MicroTaskScheduler } from './task-scheduler'
@@ -36,6 +38,9 @@ export class AVRRunner {
   readonly taskScheduler = new MicroTaskScheduler()
   public serialBuffer: Array<number>
 
+  readonly twi: AVRTWI
+  readonly FREQ = 16000000
+
   constructor(hex: string) {
     loadHex(hex, new Uint8Array(this.program.buffer))
     this.cpu = new CPU(this.program)
@@ -47,6 +52,8 @@ export class AVRRunner {
     this.port.set('B', new AVRIOPort(this.cpu, portBConfig))
     this.port.set('C', new AVRIOPort(this.cpu, portCConfig))
     this.port.set('D', new AVRIOPort(this.cpu, portDConfig))
+
+    this.twi = new AVRTWI(this.cpu, twiConfig, this.FREQ)
 
     this.serialBuffer = []
 

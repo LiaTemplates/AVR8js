@@ -5,6 +5,8 @@ import { formatTime } from './format-time'
 import { CPUPerformance } from './cpu-performance'
 import { PinState } from 'avr8js'
 import { WS2812Controller } from './ws2812'
+import { I2CBus } from './i2c-bus'
+import { SSD1306Controller } from './ssd1306'
 
 import {
   BuzzerElement,
@@ -12,6 +14,7 @@ import {
   NeopixelMatrixElement,
   PushbuttonElement,
   SevenSegmentElement,
+  SSD1306Element,
 } from '@wokwi/elements'
 
 declare const window: any
@@ -37,12 +40,18 @@ function pinPort(e: any): [number | null, string | null] {
 }
 
 window.AVR8js = {
-  build: async function (sketch: string, files = []) {
+  build: async function (
+    sketch: string,
+    files: { name: string; content: string }[] = []
+  ) {
     if (!window.__AVR8jsCache) {
       window.__AVR8jsCache = {}
     }
 
-    let body = JSON.stringify({ sketch: sketch, files })
+    let body = JSON.stringify({
+      sketch,
+      files,
+    })
 
     if (window.__AVR8jsCache[body]) {
       return window.__AVR8jsCache[body]
@@ -131,6 +140,11 @@ window.AVR8js = {
       NeoMatrixController.push(new WS2812Controller(matrix.cols * matrix.rows))
     })
 
+    // Set up the SSD1306
+    const SSD1306 =
+      container?.querySelector<SSD1306Element & HTMLElement>('wokwi-ssd1306') ||
+      null
+
     const runner = new AVRRunner(hex)
 
     for (const PORT of PORTS) {
@@ -212,6 +226,16 @@ window.AVR8js = {
       log(String.fromCharCode(value))
     }
 
+    let ssd1306Controller: SSD1306Controller | null = null
+
+    if (SSD1306) {
+      const cpuMillis = () =>
+        Math.round((runner.cpu.cycles / runner.FREQ) * 1000)
+      const i2cBus = new I2CBus(runner.twi)
+      ssd1306Controller = new SSD1306Controller(cpuMillis)
+      i2cBus.registerDevice(0x3d, ssd1306Controller)
+    }
+
     const timeSpan = container?.querySelector('#simulation-time')
 
     const cpuPerf = new CPUPerformance(runner.cpu, MHZ)
@@ -221,6 +245,14 @@ window.AVR8js = {
       const speed = (cpuPerf.update() * 100).toFixed(0)
       if (timeSpan)
         timeSpan.textContent = `Simulation time: ${time} (${speed}%)`
+
+      if (SSD1306 && ssd1306Controller) {
+        const frame = ssd1306Controller.update()
+        if (frame) {
+          ssd1306Controller.toImageData(SSD1306.imageData)
+          SSD1306.redraw()
+        }
+      }
 
       for (let i = 0; i < NeoMatrix.length; i++) {
         let pixels = NeoMatrixController[i]?.update(cpuNanos())

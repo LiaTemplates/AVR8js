@@ -11,7 +11,7 @@ narrator: US English Male
 
 comment:  LiaScript template for the AVR8js simulator.
 
-script:   https://cdn.jsdelivr.net/gh/liatemplates/avr8js@0.0.10/dist/index.js
+script:   dist/index.js
 
 @AVR8js.sketch: @AVR8js.project(@0,sketch.ino)
 
@@ -46,6 +46,10 @@ for(let i=0; i<name.length; i++) {
     sketch = content[i]
   } else {
     files.push({name: name[i], content: content[i]})
+  }
+
+  if (content[i].match(/#include\s+<Adafruit_SSD1306\.h>/g)) {
+    files.push({ name: 'libraries.txt', content: 'Adafruit SSD1306' })
   }
 }
 
@@ -631,8 +635,45 @@ void loop() {
 
 ### SSD1306
 
-<wokwi-ssd1306></wokwi-ssd1306>
 
+
+<div id="ssd1306-experiment">
+<wokwi-ssd1306></wokwi-ssd1306>
+<span id="simulation-time"></span>
+</div>
+
+``` cpp
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+void setup() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
+  display.display();
+  delay(1000);
+}
+
+int counter = 0;
+void loop() {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(4, 4);
+  display.println(F("Hello, Wokwi!"));
+  display.setTextSize(2);
+  display.setCursor(54, 24);
+  display.println(counter);
+  display.display();
+  counter++;
+  delay(1000);
+}
+```
+@AVR8js.sketch(ssd1306-experiment)
 
 ### Projects
 
