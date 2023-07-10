@@ -151,7 +151,7 @@ export class SSD1306Controller implements I2CDevice {
   }
 
   update() {
-    let result = null
+    let result: any = null
     if (this.scrollActive && this.cpuMillis() > this.nextScrollTime) {
       this.scroll()
       this.calculateNextScroll()

@@ -7,6 +7,7 @@ import { PinState } from 'avr8js'
 import { WS2812Controller } from './ws2812'
 import { I2CBus } from './i2c-bus'
 import { SSD1306Controller } from './ssd1306'
+import { LCD1602Controller, LCD1602_ADDR } from './lcd1602'
 
 import {
   BuzzerElement,
@@ -15,6 +16,7 @@ import {
   PushbuttonElement,
   SevenSegmentElement,
   SSD1306Element,
+  LCD1602Element,
 } from '@wokwi/elements'
 
 declare const window: any
@@ -145,6 +147,9 @@ window.AVR8js = {
       container?.querySelector<SSD1306Element & HTMLElement>('wokwi-ssd1306') ||
       null
 
+    const lcd1602 =
+      container?.querySelector<LCD1602Element>('wokwi-lcd1602') || null
+
     const runner = new AVRRunner(hex)
 
     for (const PORT of PORTS) {
@@ -227,13 +232,21 @@ window.AVR8js = {
     }
 
     let ssd1306Controller: SSD1306Controller | null = null
+    let lcd1602Controller: LCD1602Controller | null = null
 
-    if (SSD1306) {
+    if (SSD1306 && !lcd1602) {
       const cpuMillis = () =>
         Math.round((runner.cpu.cycles / runner.FREQ) * 1000)
       const i2cBus = new I2CBus(runner.twi)
       ssd1306Controller = new SSD1306Controller(cpuMillis)
       i2cBus.registerDevice(0x3d, ssd1306Controller)
+    } else if (lcd1602) {
+      const cpuMillis = () =>
+        Math.round((runner.cpu.cycles / runner.FREQ) * 1000)
+
+      const i2cBus = new I2CBus(runner.twi)
+      lcd1602Controller = new LCD1602Controller(cpuMillis)
+      i2cBus.registerDevice(LCD1602_ADDR, lcd1602Controller)
     }
 
     const timeSpan = container?.querySelector('#simulation-time')
@@ -251,6 +264,33 @@ window.AVR8js = {
         if (frame) {
           ssd1306Controller.toImageData(SSD1306.imageData)
           SSD1306.redraw()
+        }
+      }
+
+      if (lcd1602 && lcd1602Controller) {
+        const lcd = lcd1602Controller.update()
+        // Check component
+        if (lcd) {
+          // Update LCD1602
+          lcd1602.blink = lcd.blink
+          lcd1602.cursor = lcd.cursor
+          lcd1602.cursorX = lcd.cursorX
+          lcd1602.cursorY = lcd.cursorY
+          lcd1602.characters = lcd.characters
+          lcd1602.backlight = lcd.backlight
+
+          // Check custom character
+          if (lcd.cgramUpdated) {
+            const font = lcd1602.font.slice(0)
+            const cgramChars = lcd.cgram.slice(0, 0x40)
+
+            // Set character
+            font.set(cgramChars, 0)
+            font.set(cgramChars, 0x40)
+
+            // Get character
+            lcd1602.font = font
+          }
         }
       }
 
