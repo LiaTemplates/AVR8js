@@ -1,5 +1,6 @@
 import { PinState } from 'avr8js'
 import { Board, Pin } from './board'
+import { avrChart } from './chart'
 import { DS1307Controller, DS1307_ADDR } from './ds1307'
 import { ILI9341Controller } from './ili9341'
 import { LCDController, LCD1602_ADDR } from './lcd1602'
@@ -712,4 +713,5 @@ export const parts: { [tag: string]: Part } = {
   'wokwi-mpu6050': mpu6050,
   'wokwi-ili9341': ili9341,
   'wokwi-microsd-card': sdCard,
+  'avr-chart': avrChart,
 }

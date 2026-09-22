@@ -3,7 +3,7 @@ author:   André Dietrich
 
 email:    LiaScript@web.de
 
-version:  0.2.0
+version:  0.4.0
 
 language: en
 
@@ -458,6 +458,7 @@ Uno by its attributes:
 | [`wokwi-ili9341`](#ili9341)                                                            | SPI, `pin-cs` (10), `pin-dc` (9)                                                                               |
 | [`wokwi-microsd-card`](#microsd-card)                                                  | SPI, `pin-cs` (10), an empty 8 MB FAT16 card                                                                   |
 | [`wokwi-arduino-uno`, `wokwi-arduino-nano`](#arduino-boards)                           | shows the LED on pin 13, the TX LED and the power LED                                                          |
+| [`avr-chart`](#visualizing-the-controller)                                             | `signals`, `window`, `mode`, `trigger`, `speed`, `samples`, `height`, `title`                                  |
 
 Other elements are shown, but not simulated: `wokwi-resistor`,
 `wokwi-ks2e-m-dc5` (relay), and the boards `wokwi-arduino-mega`,
@@ -468,6 +469,205 @@ which have a different microcontroller.
 > `INPUT_PULLUP` a pressed button reads `LOW`), the pins 14 - 19 are A0 - A5
 > as on the Arduino Uno, `wokwi-7segment` and `wokwi-rgb-led` are common
 > anode by default, as on wokwi.com, and assembly programs start at `main`.
+
+## Visualizing the controller
+
+An `<avr-chart>` inside the container plots what happens inside the
+ATmega328p while the simulation runs: timer counters, compare registers,
+pins, interrupts, the ADC or the stack. It is drawn with the charts of
+LiaScript (ECharts).
+
+```` html
+<div id="my-example">
+<avr-chart id="my-chart" signals="TCNT0, OCR0B, OC0B, TOV0" window="4ms"></avr-chart>
+</div>
+
+@AVR8js.control(my-chart, speed, 0.0005, 0.05, 0.002)
+````
+
+<!-- data-type="none" -->
+| Attribute | Meaning                                                                                                   | Default |
+| --------- | --------------------------------------------------------------------------------------------------------- | ------- |
+| `signals` | comma separated list of the signals below                                                                 | `TCNT0` |
+| `window`  | the time span shown, in simulation time: `500us`, `4ms`, `2s`                                             | `2ms`   |
+| `mode`    | `roll`: the last `window` scrolls by, `scope`: a still picture of the `window` after each `trigger`       | `roll`  |
+| `trigger` | for `scope`: an interrupt flag or vector (`TOV0`, `TIMER1_COMPA`) or a pin edge (`D2:rise`, `OC0A:fall`, `A0:change`) | none    |
+| `speed`   | slow motion for the whole simulation, `0.001` runs 1000 times slower, can be changed with a slider        | `1`     |
+| `samples` | samples per window                                                                                        | `400`   |
+| `height`  | total height in px, by default it grows with the number of signals                                        |         |
+| `title`   | a title above the chart                                                                                   |         |
+
+<!-- data-type="none" -->
+| Signals                                        | Shows                                                                                          |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `TCNT0`, `TCNT1`, `TCNT2`                      | the timer counters                                                                             |
+| `OCR0A`, `OCR0B`, `OCR1A`, `OCR1B`, `OCR2A`, `OCR2B`, `ICR1` | the compare and input capture registers                                          |
+| `TOP0`, `TOP1`, `TOP2`                         | the value the timer counts up to in its current mode                                           |
+| `TOV0`, `OCF0A`, `OCF1B`, `INTF0`, `ADIF`, …   | a mark whenever the interrupt flag is raised, the vector names (`TIMER0_OVF`, `INT0`) work too |
+| `D0` - `D13`, `A0` - `A5`                      | the pin levels, like a logic analyzer                                                          |
+| `OC0A`, `OC0B`, `OC1A`, `OC1B`, `OC2A`, `OC2B` | the PWM outputs of the timers (pins 6, 5, 9, 10, 11, 3)                                        |
+| `ADC0` - `ADC5`                                | the voltage at the analog pin, every `analogRead` is marked with the voltage it read           |
+| `ISR`                                          | one lane per interrupt service routine, `HIGH` while it runs                                   |
+| `LOAD`                                         | the share of time spent in interrupt service routines                                          |
+| `STACK`, `SP`                                  | the bytes used on the stack, the stack pointer                                                 |
+| `SREG`, `SREG.I`, `SREG.C`, …                  | the status register flags                                                                      |
+| `MEM:0x0100:u8`                                | a byte in RAM, also `u16`, `i8` and `i16`                                                      |
+
+`ISR`, `LOAD` and `STACK` watch every instruction, which slows the
+simulation down a bit.
+
+### PWM Modes
+
+`analogWrite` uses Timer0 in _Fast PWM_ mode on pin 5 and Timer1 in _Phase
+Correct PWM_ mode on pin 9. In Fast PWM the counter only counts up, the
+output switches off at the compare match and on again at the overflow. In
+Phase Correct mode it counts up and down again, so the pulses are centered.
+The chart shows the window after each overflow of Timer0.
+
+<div id="pwm-chart-example">
+<avr-chart signals="TCNT0, OCR0B, TCNT1, OCR1A, OC0B, OC1A, TOV0"
+           window="4ms" mode="scope" trigger="TOV0"></avr-chart>
+</div>
+
+``` cpp
+void setup() {
+  analogWrite(5, 64);   // Timer0, Fast PWM: 25 %
+  analogWrite(9, 64);   // Timer1, Phase Correct PWM: 25 %
+}
+
+void loop() { }
+```
+@AVR8js.sketch(pwm-chart-example)
+
+### Slow Motion: CTC
+
+In _Clear Timer on Compare_ mode, Timer2 counts up to `OCR2A` and starts over,
+the output on pin 11 toggles at every compare match. With the slider you can
+slow the simulation down and watch the counter grow. Type a new value for
+`OCR2A` into the terminal.
+
+<div id="ctc-chart-example">
+<avr-chart id="ctc-chart" signals="TCNT2, OCR2A, OC2A" window="4ms" speed="0.002"></avr-chart>
+<span id="simulation-time"></span>
+</div>
+
+@AVR8js.control(ctc-chart, speed, 0.0005, 0.05, 0.002)
+
+``` cpp
+void setup() {
+  Serial.begin(9600);
+  pinMode(11, OUTPUT);
+  TCCR2A = _BV(COM2A0) | _BV(WGM21);   // CTC, toggle OC2A on compare match
+  TCCR2B = _BV(CS22);                  // prescaler 64: 250 kHz
+  OCR2A = 124;                         // 250 kHz / 125 = 2 kHz compare matches
+}
+
+void loop() {
+  if (Serial.available()) {
+    int top = Serial.parseInt();
+    if (top > 0 && top < 256) {
+      OCR2A = top;
+      Serial.print("OCR2A = ");
+      Serial.println(top);
+    }
+  }
+}
+```
+@AVR8js.sketch(ctc-chart-example)
+
+### Interrupts
+
+Timer1 raises an interrupt every 2 ms, the button on pin 2 an external
+interrupt. The Arduino core adds its own: `TIMER0_OVF` counts `millis()` and
+`USART_UDRE` sends the serial output. Press the button to see `INT0`.
+
+<div id="isr-chart-example">
+<wokwi-pushbutton pin="2"></wokwi-pushbutton>
+<wokwi-led color="red" pin="13"></wokwi-led>
+<avr-chart signals="ISR, LOAD, D13, D2" window="20ms"></avr-chart>
+</div>
+
+``` cpp
+volatile unsigned long presses = 0;
+
+ISR(TIMER1_COMPA_vect) {
+  digitalWrite(13, !digitalRead(13));
+}
+
+void pressed() {
+  presses++;
+}
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+  pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), pressed, FALLING);
+
+  noInterrupts();
+  TCCR1A = 0;
+  TCCR1B = _BV(WGM12) | _BV(CS11) | _BV(CS10); // CTC, prescaler 64
+  OCR1A = 499;                                 // 16 MHz / 64 / 500 = 500 Hz
+  TIMSK1 = _BV(OCIE1A);
+  interrupts();
+}
+
+void loop() {
+  Serial.println(presses);
+  delay(100);
+}
+```
+@AVR8js.sketch(isr-chart-example)
+
+### ADC
+
+The line is the voltage at A0, the dots are the values `analogRead` got.
+Turn the potentiometer.
+
+<div id="adc-chart-example">
+<wokwi-potentiometer pin="A0"></wokwi-potentiometer>
+<avr-chart signals="ADC0" window="500ms"></avr-chart>
+</div>
+
+``` cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println(analogRead(A0));
+  delay(20);
+}
+```
+@AVR8js.sketch(adc-chart-example)
+
+### Stack
+
+Every call of `depth` puts its return address and its local variables on the
+stack. Interrupts use the stack too.
+
+<div id="stack-chart-example">
+<avr-chart signals="STACK, ISR" window="100ms"></avr-chart>
+</div>
+
+``` cpp
+int depth(int n) {
+  volatile char buffer[8];
+  buffer[0] = n;
+  if (n == 0) return 0;
+  return buffer[0] + depth(n - 1);
+}
+
+void setup() { }
+
+void loop() {
+  for (int n = 0; n < 30; n++) {
+    depth(n);
+    delay(1);
+  }
+}
+```
+@AVR8js.sketch(stack-chart-example)
 
 ## Examples
 

@@ -1,6 +1,7 @@
 import {
   ADCMuxInputType,
   AVRIOPort,
+  CPU,
   PinState,
   portBConfig,
   portCConfig,
@@ -21,6 +22,8 @@ export interface SPIDevice {
 
 type Watcher = { mask: number; fn: () => void }
 
+export type AVRInterruptConfig = Parameters<CPU['setInterruptFlag']>[0]
+
 /**
  * Glue between the wokwi elements and the simulated ATmega328p. Every part
  * handler in parts.ts receives one Board instance per run.
@@ -32,6 +35,9 @@ export class Board {
   private claimed = new Map<AVRIOPort, number>()
   private analogSources: Array<() => number> = []
   private spiDevices: Array<{ cs: Pin; device: SPIDevice }> = []
+  private probes: Array<() => void> = []
+  private interruptListeners: Array<(interrupt: AVRInterruptConfig) => void> = []
+  private analogListeners: Array<(channel: number, volts: number) => void> = []
   private frameStart = 0
   frameCycles = 1
   serialActivity = false
@@ -76,6 +82,8 @@ export class Board {
       if (input.type === ADCMuxInputType.SingleEnded) {
         const source = this.analogSources[input.channel]
         adc.channelValues[input.channel] = source ? source() : Math.random() * 5
+        for (const fn of this.analogListeners)
+          fn(input.channel, adc.channelValues[input.channel])
       }
       convert(input)
     }
@@ -228,6 +236,37 @@ export class Board {
   /** voltage source (0-5V) for an analog pin, sampled on every analogRead */
   analog(p: Pin | undefined, volts: () => number) {
     if (p && p.adc !== undefined) this.analogSources[p.adc] = volts
+  }
+
+  /** fn runs before every instruction, this slows the simulation down */
+  probe(fn: () => void) {
+    const probes = this.probes
+    probes.push(fn)
+    this.runner.probe = probes.length === 1 ? fn : () => probes.forEach((p) => p())
+  }
+
+  /** called whenever a peripheral raises an interrupt flag (TOV0, INTF0, ...) */
+  onInterrupt(fn: (interrupt: AVRInterruptConfig) => void) {
+    if (!this.interruptListeners.length) {
+      const cpu = this.runner.cpu
+      const raise = cpu.setInterruptFlag.bind(cpu)
+      cpu.setInterruptFlag = (interrupt) => {
+        for (const listener of this.interruptListeners) listener(interrupt)
+        raise(interrupt)
+      }
+    }
+    this.interruptListeners.push(fn)
+  }
+
+  /** called on every analogRead with the channel and the sampled voltage */
+  onAnalogRead(fn: (channel: number, volts: number) => void) {
+    this.analogListeners.push(fn)
+  }
+
+  /** the voltage an analog source currently delivers, undefined if unconnected */
+  voltage(channel: number): number | undefined {
+    const source = this.analogSources[channel]
+    return source && source()
   }
 
   spi(cs: Pin | undefined, device: SPIDevice) {

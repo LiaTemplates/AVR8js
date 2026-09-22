@@ -45,7 +45,12 @@ export class AVRRunner {
   readonly taskScheduler = new MicroTaskScheduler()
   readonly onStop: Array<() => void> = []
   public serialBuffer: Array<number> = []
+  /** slow motion factor, 1 is real time */
+  public speed = 1
+  /** called before every instruction, only set when a chart needs it */
+  public probe?: () => void
   private stopped = false
+  private lastSpeed = 1
   private startTime = performance.now()
   private startCycles = 0
 
@@ -79,7 +84,14 @@ export class AVRRunner {
     // run in real time: wait if the simulation is ahead of the wall clock,
     // start over if it fell behind (slow computer, background tab)
     const now = performance.now()
-    const ahead = ((this.cpu.cycles - this.startCycles) / this.FREQ) * 1000 - (now - this.startTime)
+    const speed = this.speed > 0 ? this.speed : 1
+    if (speed !== this.lastSpeed) {
+      this.lastSpeed = speed
+      this.startTime = now
+      this.startCycles = this.cpu.cycles
+    }
+    const ahead =
+      ((this.cpu.cycles - this.startCycles) / this.FREQ / speed) * 1000 - (now - this.startTime)
     if (ahead > 1) {
       setTimeout(() => this.execute(callback), ahead)
       return
@@ -89,10 +101,21 @@ export class AVRRunner {
       this.startCycles = this.cpu.cycles
     }
 
-    const cyclesToRun = this.cpu.cycles + this.workUnitCycles
-    while (this.cpu.cycles < cyclesToRun) {
-      avrInstruction(this.cpu)
-      this.cpu.tick()
+    // in slow motion, smaller slices keep the frames coming (about 30 ms each)
+    const slice = Math.min(this.workUnitCycles, Math.max(256, Math.round(this.FREQ * speed * 0.03)))
+    const cyclesToRun = this.cpu.cycles + slice
+    const { cpu, probe } = this
+    if (probe) {
+      while (cpu.cycles < cyclesToRun) {
+        probe()
+        avrInstruction(cpu)
+        cpu.tick()
+      }
+    } else {
+      while (cpu.cycles < cyclesToRun) {
+        avrInstruction(cpu)
+        cpu.tick()
+      }
     }
 
     callback(this.cpu)
